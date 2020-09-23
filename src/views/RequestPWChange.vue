@@ -1,14 +1,12 @@
 <template>
-	<div id="signin">
+	<div id="requestpwchange">
 		<form class="form-signin text-center">
 			<img id="logo" class="mt-5" src="../assets/logo_at-motors.png" alt="" width="100%" height="auto">
 			<div class="form">
+				<p>Ingrese su correo electrónico y se le enviará un enlace para cambiar la contraseña.</p>
 				<label for="inputEmail" class="sr-only">Correo electrónico</label>
 				<input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus>
-				<label for="inputPassword" class="sr-only">Contraseña</label>
-				<input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-				<button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit">Iniciar Sesión</button>
-				<a href="/requestpwchange">¿Olvidaste tu contraseña?</a>
+				<button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit" v-on:click="requestPWChange()">Enviar Correo</button>
 			</div>
 		</form>
 	</div>
@@ -16,13 +14,21 @@
 
 <script>
 export default {
-	name: "SignIn"
+	name: "RequestPWChange",
+	methods: {
+		requestPWChange() {
+			location.href = "/pwchange";
+		}
+	}
 }
 </script>
 
 <style scoped>
-#signin {
+#requestpwchange {
 	display: flex;
+}
+p {
+	font-size: 15px;
 }
 .form {
 	padding-top: 40%;
@@ -40,17 +46,7 @@ export default {
 	padding: 10px;
 	font-size: 16px;
 }
-.form-signin .form-control:focus {
-	z-index: 2;
-}
 .form-signin input[type="email"] {
 	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
 }
 </style>
