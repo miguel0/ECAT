@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import William from '../views/William';
+import SignIn from '../views/SignIn';
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        component: William
+        component: SignIn
     }
 ];
 
