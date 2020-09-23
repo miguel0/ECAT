@@ -4,9 +4,8 @@ import VueRouter from 'vue-router';
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
 import Catalog from '../views/Catalog';
-import RequestPWChange from '../views/RequestPWChange.vue'
-import PWChange from '../views/PWChange.vue'
-import Home from '../views/Home'
+import RequestPWChange from '../views/RequestPWChange.vue';
+import PWChange from '../views/PWChange.vue';
 
 Vue.use(VueRouter);
 
