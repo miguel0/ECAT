@@ -9,11 +9,6 @@
         name: 'Home',
         components: {
             Navbar
-        },
-        methods: {
-            goTo: function(route) {
-                window.location.href = route;
-            }
         }
     }
 </script>
