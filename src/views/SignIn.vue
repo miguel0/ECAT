@@ -36,6 +36,7 @@ export default {
 		onSubmit(evt) {
 			evt.preventDefault();
 			console.log("log in details: " + this.form.email + " " + this.form.password);
+			location.href = "/catalog";
 		}
 	}
 }
