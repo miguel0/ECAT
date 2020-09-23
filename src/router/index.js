@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import SignIn from '../views/SignIn';
-import Home from '../views/Home'
+import Home from '../views/Home';
+import Catalog from '../views/Catalog';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,10 @@ const routes = [
     {
         path: '/home',
         component: Home
+    },
+    {
+        path: '/catalog',
+        component: Catalog
     }
 ];
 
