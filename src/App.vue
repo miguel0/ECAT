@@ -1,5 +1,13 @@
 <template>
-	<b-container>
-		<p>Hello, Bootstrap-Vue</p>
-	</b-container>
+	<div id='app'>
+		<router-view />
+	</div>
 </template>
+<script>
+
+export default {
+	name: 'app',
+	components: {
+	}
+}
+</script>
