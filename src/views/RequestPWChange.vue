@@ -1,22 +1,34 @@
 <template>
-	<div id="requestpwchange">
-		<form class="form-signin text-center">
-			<img id="logo" class="mt-5" src="../assets/logo_at-motors.png" alt="" width="100%" height="auto">
-			<div class="form">
-				<p>Ingrese su correo electrónico y se le enviará un enlace para cambiar la contraseña.</p>
-				<label for="inputEmail" class="sr-only">Correo electrónico</label>
-				<input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus>
-				<button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit" v-on:click="requestPWChange()">Enviar Correo</button>
-			</div>
-		</form>
+	<div id="reqpwchange">
+		<b-img id="logo" src="../assets/logo_at-motors.png" center></b-img>
+
+		<div id="content">
+			<p>Ingrese su correo electrónico y se le enviará un enlace para cambiar la contraseña.</p>
+
+			<b-form @submit="onSubmit">
+				<b-form-group>
+					<b-form-input id="top" class="input" v-model="form.email" type="email" placeholder="Correo electrónico" required autofocus></b-form-input>
+				</b-form-group>
+				<b-button id="submit" type="submit" variant="primary">Enviar correo</b-button>		
+			</b-form>
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
 	name: "RequestPWChange",
+	data() {
+		return {
+			form: {
+				email: ''
+			}
+		}
+	},
 	methods: {
-		requestPWChange() {
+		onSubmit(evt) {
+			evt.preventDefault();
+			console.log("email to change pw: " + this.form.email);
 			location.href = "/pwchange";
 		}
 	}
@@ -24,29 +36,29 @@ export default {
 </script>
 
 <style scoped>
-#requestpwchange {
+#reqpwchange {
 	display: flex;
+	flex-direction: column;
 }
-p {
-	font-size: 15px;
+#logo {
+	padding-top: 5%;
 }
-.form {
-	padding-top: 40%;
-}
-.form-signin {
+#content {
+	padding-top: 8%;
 	width: 100%;
 	max-width: 330px;
-	padding: 15px;
 	margin: auto;
+	text-align: center;
+	position: relative;
 }
-.form-signin .form-control {
+#submit {
+	margin-top: 5%;
+}
+.input {
 	position: relative;
 	box-sizing: border-box;
 	height: auto;
 	padding: 10px;
 	font-size: 16px;
-}
-.form-signin input[type="email"] {
-	margin-bottom: -1px;
 }
 </style>

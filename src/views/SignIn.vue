@@ -12,7 +12,7 @@
 					<b-form-input id="bottom" class="input" v-model="form.password" type="password" placeholder="Contraseña" required></b-form-input>
 				</b-form-group>		
 
-				<b-button id="submit" type="submit" variant="primary">Iniciar Sesión</b-button>		
+				<b-button id="submit" type="submit" variant="primary">Iniciar sesión</b-button>		
 			</b-form>
 			<div id="link">
 				<b-link href="/requestpwchange">¿Olvidaste tu contraseña?</b-link>
@@ -35,7 +35,7 @@ export default {
 	methods: {
 		onSubmit(evt) {
 			evt.preventDefault();
-			console.log(this.form.email + " " + this.form.password);
+			console.log("log in details: " + this.form.email + " " + this.form.password);
 		}
 	}
 }

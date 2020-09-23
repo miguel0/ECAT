@@ -1,60 +1,82 @@
 <template>
-	<div id="pwchange">
-		<form class="form-signin text-center">
-			<img id="logo" class="mt-5" src="../assets/logo_at-motors.png" alt="" width="100%" height="auto">
-			<div class="form">
-				<label for="toppw" class="sr-only">Nueva Contraseña</label>
-				<input id="toppw" type="password" class="form-control" placeholder="Nueva Contraseña" required autofocus>
-				<label for="botpw" class="sr-only">Confirmar Nueva Contraseña</label>
-				<input id="botpw" type="password" class="form-control" placeholder="Confirmar Nueva Contraseña" required>
-				<button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit" v-on:click="PWChange()">Cambiar Contraseña</button>
-			</div>
-		</form>
+	<div id="signin">
+		<b-img id="logo" src="../assets/logo_at-motors.png" center></b-img>
+
+		<div id="content">
+			<b-form @submit="onSubmit">
+				<b-form-group>
+					<b-form-input id="top" class="input" v-model="form.newpw" type="password"
+					placeholder="Nueva Contraseña" required autofocus></b-form-input>
+				</b-form-group>
+
+				<b-form-group>
+					<b-form-input id="bottom" class="input" v-model="form.confnewpw" type="password"
+					placeholder="Confirmar Nueva Contraseña" required></b-form-input>
+				</b-form-group>		
+
+				<b-button id="submit" type="submit" variant="primary">Cambiar contraseña</b-button>		
+			</b-form>
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	name: "PWChange",
+	name: "SignIn",
+	data() {
+		return {
+			form: {
+				newpw: '',
+				confnewpw: ''
+			}
+		}
+	},
 	methods: {
-		PWChange() {
-			location.href = "/";
+		onSubmit(evt) {
+			evt.preventDefault();
+			console.log("New PW: " + this.form.newpw + " " + this.form.confnewpw);
+			location.href = "/"
 		}
 	}
 }
 </script>
 
 <style scoped>
-#pwchange {
+#signin {
 	display: flex;
+	flex-direction: column;
 }
-.form {
-	padding-top: 40%;
+#logo {
+	padding-top: 5%;
 }
-.form-signin {
+#content {
+	padding-top: 8%;
 	width: 100%;
 	max-width: 330px;
-	padding: 15px;
 	margin: auto;
+	text-align: center;
+	position: relative;
 }
-.form-signin .form-control {
+#top {
+	margin-bottom: -17px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#bottom {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+#submit {
+	margin-top: 10%;
+}
+.input {
 	position: relative;
 	box-sizing: border-box;
 	height: auto;
 	padding: 10px;
 	font-size: 16px;
 }
-.form-signin .form-control:focus {
+.input:focus {
 	z-index: 2;
-}
-#toppw {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-#botpw {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
 }
 </style>
