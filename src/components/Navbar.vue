@@ -2,13 +2,13 @@
     <div>
         <b-navbar type='dark' variant='primary'>
             <b-navbar-brand href="#">ecat</b-navbar-brand>
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item href="#">Catálogos</b-nav-item>
-                <b-nav-item href="#" disabled>Administración</b-nav-item>
-                <!--<b-nav-item-dropdown text="Manuel Córdoba" right>
-                    <b-dropdown-item href="#">Cambiar Contraseña</b-dropdown-item>
-                    <b-dropdown-item href="#">Cerrar Sesión</b-dropdown-item>
-                </b-nav-item-dropdown>-->
+            <b-navbar-nav class='ml-auto'>
+                <template v-for='section in sections'>
+                    <b-nav-item v-if='!section.children' :key='section' v-bind:href=section.route>{{section.name}}</b-nav-item>
+                    <b-nav-item-dropdown v-else :key='section' v-bind:text="section.name" right>
+                        <b-dropdown-item v-for='child in section.children' :key='child' v-bind:href='child.route'>{{child.name}}</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                </template>
             </b-navbar-nav>
         </b-navbar>
     </div>
@@ -55,3 +55,14 @@ export default {
     }
 }
 </script>
+<style scoped>
+.raw {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav > li{
+  padding-left: 20px;
+}
+</style>
