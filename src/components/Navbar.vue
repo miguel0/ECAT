@@ -32,7 +32,7 @@ export default {
                             name: 'Agregar Datos'
                         },
                         {
-                            route: '/admin/usuarios',
+                            route: '/users',
                             name: 'Manejo de Usuarios'
                         }
                     ]

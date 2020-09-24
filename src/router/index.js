@@ -6,8 +6,9 @@ import Home from '../views/Home';
 import Catalog from '../views/Catalog';
 import RequestPWChange from '../views/RequestPWChange.vue';
 import PWChange from '../views/PWChange.vue';
-import AddData from '../views/AddData.vue'
-import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue'
+import AddData from '../views/AddData.vue';
+import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
+import UserPanel from '../views/UserPanel';
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,10 @@ const routes = [
 	{
 		path: '/changepwli',
 		component: ChangePWLoggedIn
+	},
+	{
+		path: '/users',
+		component: UserPanel
 	}
 ];
 

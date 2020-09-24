@@ -10,7 +10,7 @@
                     <h5>Buscando</h5>
                     <br>
                     <b-list-group horizontal>
-                        <b-list-group-item v-for="(filter, index) of sampleFilters" :key="`filter-${index}`" :ref="`ref-filters`" v-on:click="selectFilter(index)" class="clickable">{{filter}}</b-list-group-item>
+                        <b-list-group-item v-for="(filter, index) of sampleFilters" :key="`filter-${index}`" ref="ref-filters" v-on:click="selectFilter(index)" class="clickable">{{filter}}</b-list-group-item>
                     </b-list-group>
                     <br><br>
                     <h5>Resultados encontrados ({{sampleVehicleList.length}})</h5>
@@ -62,6 +62,9 @@ export default {
                 'Piezas'
             ]
         }
+    },
+    mounted() {
+        this.$refs['ref-filters'][0].classList.add('active');
     },
     methods: {
         selectFilter: function(filterIndex) {
