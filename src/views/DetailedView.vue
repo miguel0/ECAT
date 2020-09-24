@@ -4,15 +4,17 @@
 
 		<div id="detailed">
 			<div class="detailed_part main_data">
-				<b-img :src="image" style="max-width: 300px;"></b-img>
+				<div id="img">
+					<b-img :src="image" fluid></b-img>
+				</div>
 				<div class="main_data_no_pic">
 					<b-form-group label="Tipo:">
 						<b-form-input v-model="type" readonly></b-form-input>
 					</b-form-group>
 
 					<div class="data_hor">
-						<b-form-group label="Nombre:">
-							<b-form-input v-model="name" readonly></b-form-input>
+						<b-form-group label="Descripción:">
+							<b-form-input v-model="desc" readonly></b-form-input>
 						</b-form-group>
 
 						<b-form-group label="Existencias:">
@@ -33,38 +35,39 @@
 							<b-form-input v-model="cn" readonly></b-form-input>
 						</b-form-group>
 					</div>
+
+					<b-form-group label="Otros nombres:">
+						<b-form-input v-model="other" readonly></b-form-input>
+					</b-form-group>
 				</div>
 			</div>
 
-			<div class="detailed_part">
-				<b-form-group label="Otros nombres:">
-					<b-form-input v-model="other" readonly></b-form-input>
-				</b-form-group>
-			</div>
-
-			<div class="detailed_part">
-				<b-form-group label="Descripción:">
-					<b-form-input v-model="desc" readonly></b-form-input>
-				</b-form-group>
-			</div>
-
 			<div class="detailed_part lists">
-				<b-list-group>
-					<b-list-group-item v-for="i in parents" :key="i">
-						{{ i }}
-					</b-list-group-item>
-				</b-list-group>
+				<div class="my_list">
+					<b-list-group>
+						<b-list-group-item v-for="i in parents" :key="i">
+							{{ i }}
+						</b-list-group-item>
+					</b-list-group>
+				</div>
 
-				<b-list-group>
-					<b-list-group-item v-for="i in children" :key="i">
-						{{ i }}
-					</b-list-group-item>
-				</b-list-group>
+				<div class="my_list">
+					<b-list-group>
+						<b-list-group-item v-for="i in children" :key="i">
+							{{ i }}
+						</b-list-group-item>
+					</b-list-group>
+				</div>
 			</div>
 			
 			<div class="detailed_part buttons">
-				<b-button variant="primary">Editar</b-button>
-				<b-button variant="danger">Eliminar</b-button>
+				<div class="btn_div">
+					<b-button class="btn" variant="danger">Eliminar</b-button>
+				</div>
+
+				<div class="btn_div">
+					<b-button class="btn" variant="primary">Editar</b-button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -87,13 +90,12 @@ export default {
 		return {
 			image: '',
 			type: '',
-			name: '',
+			desc: '',
 			stock: '',
 			partno: '',
 			en: '',
 			cn: '',
 			other: '',
-			desc: '',
 			parents: [],
 			children: []
 		}
@@ -109,13 +111,12 @@ export default {
 
 			this.image = 'https://cdn.shopify.com/s/files/1/1520/5960/articles/most-badass-best-bigfoot-4x4-videos-ever_1024x1024.jpg?v=1521569389';
 			this.type = 'Unidad';
-			this.name = 'TRACTOR C7H';
+			this.desc = 'TRACTOR C7H';
 			this.stock = '2';
 			this.partno = '123-456';
 			this.en = 'TRACTOR C7H';
 			this.cn = '你好';
 			this.other = tmp.substring(0, tmp.length - 2);
-			this.desc = 'Un tractor.';
 			this.parents = ['Otro tractor 1', 'Otro tractor 2', 'Otro tractor 3'];
 			this.children = ['Motor', 'Llantas', 'Cofre'];
 		});
@@ -130,6 +131,8 @@ export default {
 }
 .detailed_part {
 	width: 100%;
+	justify-content: center;
+	padding-top: 1%;
 }
 .main_data {
 	display: flex;
@@ -150,5 +153,24 @@ export default {
 .buttons {
 	display: flex;
 	flex-direction: row;
+}
+#img {
+	padding-top: 5%;
+	padding-right: 5%;
+	height:400px;
+	width:400px;
+	overflow:hidden;
+}
+.my_list {
+	width: 300px;
+	padding-left: 0.5%;
+	padding-right: 0.5%;
+}
+.btn_div {
+	padding-left: 2%;
+	padding-right: 2%;
+}
+.btn {
+	min-width: 100px;
 }
 </style>
