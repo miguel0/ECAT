@@ -9,6 +9,7 @@ import PWChange from '../views/PWChange.vue';
 import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
+import DetailedView from '../views/DetailedView.vue';
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,10 @@ const routes = [
 	{
 		path: '/users',
 		component: UserPanel
+	},
+	{
+		path: '/details',
+		component: DetailedView
 	}
 ];
 
