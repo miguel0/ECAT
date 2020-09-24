@@ -3,7 +3,7 @@
         <b-row>
             <b-col>
                 <b-form-input :placeholder="searchPlaceHolder" type='search'></b-form-input><br>
-                <b-list-group>
+                <b-list-group class="overflow-auto">
                     <b-list-group-item v-for="(user) of sampleUsers" :key="`user_id-${user.id}`" ref="ref-users" class="clickable d-flex align-items-center">
                             <b-avatar variant="primary" class="mr-3" :text="user.name[0]"></b-avatar>
                             <span class="mr-auto">{{user.name}}</span>
@@ -136,6 +136,9 @@ export default {
 <style scoped>
 .clickable {
     cursor: pointer;
+}
+.overflow-auto {
+	max-height: 550px;
 }
 </style>
 

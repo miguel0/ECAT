@@ -5,7 +5,7 @@
         <b-container>
             <b-row>
                 <b-col>
-                    <b-form-input :placeholder="searchPlaceHolder" type='search'></b-form-input>
+                    <b-form-input :placeholder="searchPlaceHolder" type='search' v-on:keyup.enter="search()"></b-form-input>
                     <br><br>
                     <h5>Buscando</h5>
                     <br>
@@ -16,7 +16,7 @@
                     <h5>Resultados encontrados ({{sampleVehicleList.length}})</h5>
                     <br>
                     <b-card-group>
-                        <b-card no-body v-for="(vehicle, index) in sampleVehicleList" :key="index" img-left class="overflow-hidden clickable">
+                        <b-card no-body v-for="(vehicle, index) in sampleVehicleList" :key="index" img-left class="overflow-hidden clickable" v-on:click="goToDetails()">
                             <b-row no-gutters>
                                 <b-card-img :src="sampleImg" class="thumb"></b-card-img>
                                 <b-col>
@@ -48,12 +48,7 @@ export default {
     data() {
         return {
             searchPlaceHolder: 'Busca por VIN...',
-            sampleVehicleList: [
-                {
-                    name: 'TRACTOR C7H',
-                    vin: 'CYMS18010001-C7H 6X2 MT13.43-50 ZF16S2231TO HR7 MCY13Q(4.11)'
-                }
-            ],
+            sampleVehicleList: [],
             //sampleImg: '../assets/img/test/truck.png'
             sampleImg: 'https://placekitten.com/300/300',
             sampleFilters: [
@@ -79,8 +74,16 @@ export default {
                     e.classList.remove(theClass);
                 }
             }
-
-        }
+		},
+		search: function() {
+			this.sampleVehicleList = [{
+				name: 'TRACTOR C7H',
+				vin: 'CYMS18010001-C7H 6X2 MT13.43-50 ZF16S2231TO HR7 MCY13Q(4.11)'
+			}];
+		},
+		goToDetails: function() {
+			location.href = '/details';
+		}
     }
 }
 </script>

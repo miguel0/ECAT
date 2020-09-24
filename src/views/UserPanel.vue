@@ -38,6 +38,6 @@ export default {
     padding-top: 5%;
 }
 .profile {
-    padding-top: 20%;
+    padding-top: 5%;
 }
 </style>
