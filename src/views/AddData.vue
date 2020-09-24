@@ -15,6 +15,7 @@
 									placeholder="Selecciona un archivo o arrastralo aquí..."
 									drop-placeholder="Drop file here..."
 									accept=".xlsx"
+									browse-text="Examinar"
 									required
 								></b-form-file>
 								<div class="mt-3">Archivo seleccionado: {{ file ? file.name : '' }}</div>

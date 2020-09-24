@@ -13,12 +13,12 @@
 
 				<b-form-group>
 					<b-form-input id="top" class="input" v-model="form.newpw" type="password"
-					placeholder="Nueva Contraseña" required></b-form-input>
+					placeholder="Nueva contraseña" required></b-form-input>
 				</b-form-group>
 
 				<b-form-group>
 					<b-form-input id="bottom" class="input" v-model="form.confnewpw" type="password"
-					placeholder="Confirmar Nueva Contraseña" required></b-form-input>
+					placeholder="Confirmar nueva contraseña" required></b-form-input>
 				</b-form-group>		
 
 				<div id="pw_btns">
