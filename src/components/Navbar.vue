@@ -28,7 +28,7 @@ export default {
                     name: 'Administración',
                     children: [
                         {
-                            route: '/admin/datos',
+                            route: '/adddata',
                             name: 'Agregar Datos'
                         },
                         {

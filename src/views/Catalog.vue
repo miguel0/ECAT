@@ -10,13 +10,13 @@
                     <h5>Buscando</h5>
                     <br>
                     <b-list-group horizontal>
-                        <b-list-group-item v-for="(filter, index) of sampleFilters" :key="`filter-${index}`" >{{filter}}</b-list-group-item>
+                        <b-list-group-item v-for="(filter, index) of sampleFilters" :key="`filter-${index}`" :ref="`ref-filters`" v-on:click="selectFilter(index)" class="clickable">{{filter}}</b-list-group-item>
                     </b-list-group>
                     <br><br>
-                    <h4>Resultados encontrados ({{sampleVehicleList.length}})</h4>
+                    <h5>Resultados encontrados ({{sampleVehicleList.length}})</h5>
                     <br>
                     <b-card-group>
-                        <b-card no-body v-for="(vehicle, index) in sampleVehicleList" :key="index" img-left class="overflow-hidden">
+                        <b-card no-body v-for="(vehicle, index) in sampleVehicleList" :key="index" img-left class="overflow-hidden clickable">
                             <b-row no-gutters>
                                 <b-card-img :src="sampleImg" class="thumb"></b-card-img>
                                 <b-col>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-
 import Navbar from '../components/Navbar' 
 
 export default {
@@ -48,7 +47,7 @@ export default {
     },
     data() {
         return {
-            searchPlaceHolder: 'Busca por VIN',
+            searchPlaceHolder: 'Busca por VIN...',
             sampleVehicleList: [
                 {
                     name: 'TRACTOR C7H',
@@ -63,6 +62,22 @@ export default {
                 'Piezas'
             ]
         }
+    },
+    methods: {
+        selectFilter: function(filterIndex) {
+            let ref = 'ref-filters';
+            let theClass = 'active';
+            let element = this.$refs[ref][filterIndex];
+
+            element.classList.add(theClass);
+
+            for(let e of this.$refs[ref]) {
+                if(e != element) {
+                    e.classList.remove(theClass);
+                }
+            }
+
+        }
     }
 }
 </script>
@@ -73,4 +88,7 @@ export default {
     width: 150px;
 }
 
+.clickable {
+    cursor: pointer;
+}
 </style>
