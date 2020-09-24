@@ -6,6 +6,7 @@ import Home from '../views/Home';
 import Catalog from '../views/Catalog';
 import RequestPWChange from '../views/RequestPWChange.vue';
 import PWChange from '../views/PWChange.vue';
+import AddData from '../views/AddData.vue'
 
 Vue.use(VueRouter);
 
@@ -29,7 +30,11 @@ const routes = [
     {
         path: '/catalog',
         component: Catalog
-    }
+	},
+	{
+		path: '/adddata',
+		component: AddData
+	}
 ];
 
 const router = new VueRouter({
