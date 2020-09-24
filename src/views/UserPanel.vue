@@ -3,11 +3,15 @@
         <Navbar/>
         <b-container>
             <b-row>
-                <b-col>
-                    <UserList/>
+                <b-col class="list">
+                    <div>
+                        <UserList/>
+                    </div>
                 </b-col>
                 <b-col>
-                    <UserProfile/>
+                    <div class="profile">
+                        <UserProfile/>
+                    </div>
                 </b-col>
             </b-row>
         </b-container>
@@ -28,3 +32,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.list {
+    padding-top: 5%;
+}
+.profile {
+    padding-top: 20%;
+}
+</style>
