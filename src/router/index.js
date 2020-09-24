@@ -7,6 +7,7 @@ import Catalog from '../views/Catalog';
 import RequestPWChange from '../views/RequestPWChange.vue';
 import PWChange from '../views/PWChange.vue';
 import AddData from '../views/AddData.vue'
+import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue'
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,10 @@ const routes = [
 	{
 		path: '/adddata',
 		component: AddData
+	},
+	{
+		path: '/changepwli',
+		component: ChangePWLoggedIn
 	}
 ];
 

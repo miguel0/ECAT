@@ -41,7 +41,7 @@ export default {
                     name: 'Manuel Córdoba', // TODO: change, hardcoded name,
                     children: [
                         {
-                            route: '/contraseña',
+                            route: '/changepwli',
                             name: 'Cambiar Contraseña',
                         },
                         {
