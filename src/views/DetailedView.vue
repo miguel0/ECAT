@@ -8,30 +8,30 @@
 					<b-img :src="image" fluid></b-img>
 				</div>
 				<div class="main_data_no_pic">
-					<b-form-group label="Tipo:">
-						<b-form-input v-model="type" readonly></b-form-input>
-					</b-form-group>
-
 					<div class="data_hor">
-						<b-form-group label="Descripción:">
-							<b-form-input v-model="desc" readonly></b-form-input>
+						<b-form-group class="left" label="Tipo:">
+							<b-form-input v-model="type" readonly></b-form-input>
 						</b-form-group>
 
+						<b-form-group class="left" label="Número de parte:">
+							<b-form-input v-model="partno" readonly></b-form-input>
+						</b-form-group>
+						
 						<b-form-group label="Existencias:">
 							<b-form-input v-model="stock" readonly></b-form-input>
 						</b-form-group>
 					</div>
 
-					<b-form-group label="Número de parte:">
-						<b-form-input v-model="partno" readonly></b-form-input>
+					<b-form-group label="Descripción:">
+						<b-form-input v-model="desc" readonly></b-form-input>
 					</b-form-group>
 
 					<div class="data_hor">
-						<b-form-group label="Inglés:">
+						<b-form-group class="left lang" label="Inglés:">
 							<b-form-input v-model="en" readonly></b-form-input>
 						</b-form-group>
 
-						<b-form-group label="Chino:">
+						<b-form-group class="lang" label="Chino:">
 							<b-form-input v-model="cn" readonly></b-form-input>
 						</b-form-group>
 					</div>
@@ -44,19 +44,25 @@
 
 			<div class="detailed_part lists">
 				<div class="my_list">
-					<b-list-group>
-						<b-list-group-item v-for="i in parents" :key="i">
-							{{ i }}
-						</b-list-group-item>
-					</b-list-group>
+					<p>Unidades a las que pertenece:</p>
+					<div class="list_no_title overflow-auto">
+						<b-list-group>
+							<b-list-group-item v-for="i in parents" :key="i">
+								{{ i }}
+							</b-list-group-item>
+						</b-list-group>
+					</div>
 				</div>
 
 				<div class="my_list">
-					<b-list-group>
-						<b-list-group-item v-for="i in children" :key="i">
-							{{ i }}
-						</b-list-group-item>
-					</b-list-group>
+					<p>Componentes que contiene:</p>
+					<div class="list_no_title overflow-auto">
+						<b-list-group>
+							<b-list-group-item v-for="i in children" :key="i">
+								{{ i }}
+							</b-list-group-item>
+						</b-list-group>
+					</div>
 				</div>
 			</div>
 			
@@ -117,8 +123,8 @@ export default {
 			this.en = 'TRACTOR C7H';
 			this.cn = '你好';
 			this.other = tmp.substring(0, tmp.length - 2);
-			this.parents = ['Otro tractor 1', 'Otro tractor 2', 'Otro tractor 3'];
-			this.children = ['Motor', 'Llantas', 'Cofre'];
+			this.parents = ['Otro tractor 1', 'Otro tractor 2'];
+			this.children = ['Motor', 'Llantas', 'Cofre', 'Clutch', 'Ventana'];
 		});
 	}
 }
@@ -137,10 +143,12 @@ export default {
 .main_data {
 	display: flex;
 	flex-direction: row;
+	margin-bottom: -3%;
 }
 .main_data_no_pic {
 	display: flex;
 	flex-direction: column;
+	width: 40%;
 }
 .data_hor {
 	display: flex;
@@ -153,6 +161,7 @@ export default {
 .buttons {
 	display: flex;
 	flex-direction: row;
+	margin-top: 2%;
 }
 #img {
 	padding-top: 5%;
@@ -172,5 +181,14 @@ export default {
 }
 .btn {
 	min-width: 100px;
+}
+.left {
+	margin-right: 5%;
+}
+.lang {
+	width: 100%;
+}
+.list_no_title {
+	max-height: 150px;
 }
 </style>
