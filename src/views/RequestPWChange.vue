@@ -9,7 +9,11 @@
 				<b-form-group>
 					<b-form-input id="top" class="input" v-model="form.email" type="email" placeholder="Correo electrónico" required autofocus></b-form-input>
 				</b-form-group>
-				<b-button id="submit" type="submit" variant="primary">Enviar correo</b-button>		
+
+				<div id="request_btns">
+					<b-button class="btns mr-3" v-on:click="goBack()">Atrás</b-button>
+					<b-button class="btns ml-3" type="submit" variant="primary">Enviar correo</b-button>
+				</div>
 			</b-form>
 		</div>
 	</div>
@@ -26,6 +30,9 @@ export default {
 		}
 	},
 	methods: {
+		goBack() {
+			window.history.back();
+		},
 		onSubmit(evt) {
 			evt.preventDefault();
 			console.log("email to change pw: " + this.form.email);
@@ -51,8 +58,9 @@ export default {
 	text-align: center;
 	position: relative;
 }
-#submit {
-	margin-top: 5%;
+.btns {
+	margin-top: 3%;
+	min-width: 130px;
 }
 .input {
 	position: relative;
@@ -60,5 +68,8 @@ export default {
 	height: auto;
 	padding: 10px;
 	font-size: 16px;
+}
+#request_btns {
+	flex-direction: row;
 }
 </style>
