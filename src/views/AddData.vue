@@ -155,7 +155,7 @@ export default {
 
 						// get component data
 						let ws = wb.getWorksheet(groupn);
-						let j = 2;
+						let j = 1;
 						let grouphead = "";
 						while((grouphead = ws.getCell('A' + (++j).toString()).value) != null) {
 							let component = {};
@@ -190,8 +190,8 @@ export default {
 
 						v["groups"].push(group);
 					}
-
-					console.log(v);
+					
+					console.log(JSON.stringify(v));
 				}).catch((error)=> {
 					console.log("readFile fail", error);
 				})
