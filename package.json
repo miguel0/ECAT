@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.6.5",
+    "exceljs": "^4.1.1",
     "vue": "^2.6.11",
     "vue-router": "^3.4.3"
   },
