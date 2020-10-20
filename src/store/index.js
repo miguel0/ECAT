@@ -47,5 +47,15 @@ export default new Vuex.Store({
 				router.push('/catalog');
 			}
 		},
+		async changePW({ dispatch }, form) {
+			fb.auth.sendPasswordResetEmail(form.email).then(function() {
+				// Email sent.
+				alert('¡Se ha enviado un correo para cambiar su contraseña!')
+				dispatch('logout');
+			}).catch(function(error) {
+				// An error happened.
+				console.log(error);
+			});
+		}
 	}
 });
