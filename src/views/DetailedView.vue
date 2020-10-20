@@ -81,6 +81,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
+import PartApi from '../services/api/part.api';
 
 export default {
 	name: 'DetailedView',
@@ -105,6 +106,18 @@ export default {
 			parents: [],
 			children: []
 		}
+	},
+	created: function() {
+		let partApi = new PartApi();
+
+		partApi.getAllParts()
+		.then(res => {
+			let parts = res.data;
+			console.log("These are the parts: ", parts);
+		})
+		.catch((err) => {
+			console.log(err.response.data.message);
+		});
 	},
 	mounted: function() {
 		this.$nextTick(function () {
