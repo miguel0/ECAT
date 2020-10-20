@@ -34,13 +34,18 @@ export default new Vuex.Store({
 		},
 		async logout({ commit }) {
 			// log user out
-			await fb.auth.signOut()
+			await fb.auth.signOut();
 
 			// clear user data from state
-			commit('setUserProfile', {})
+			commit('setUserProfile', {});
 
 			// redirect to login view
-			router.push('/')
+			router.push('/');
+		},
+		async checkLoggedIn() {
+			if(this.state.userProfile != null) {
+				router.push('/catalog');
+			}
 		},
 	}
 });
