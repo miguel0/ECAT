@@ -35,9 +35,14 @@ export default {
 	methods: {
 		onSubmit(evt) {
 			evt.preventDefault();
-			console.log("log in details: " + this.form.email + " " + this.form.password);
-			location.href = "/catalog";
+			this.$store.dispatch('login', {
+				email: this.form.email,
+				password: this.form.password
+			});
 		}
+	},
+	mounted() {
+		this.$store.dispatch('checkLoggedIn');
 	}
 }
 </script>

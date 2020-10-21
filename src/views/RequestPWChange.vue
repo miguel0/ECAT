@@ -35,8 +35,9 @@ export default {
 		},
 		onSubmit(evt) {
 			evt.preventDefault();
-			console.log("email to change pw: " + this.form.email);
-			location.href = "/pwchange";
+			this.$store.dispatch('changePW', {
+				email: this.form.email
+			});
 		}
 	}
 }

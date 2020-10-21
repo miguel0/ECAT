@@ -6,7 +6,7 @@
                 <template v-for='(section, index) in sections'>
                     <b-nav-item v-if='!section.children' :key="`section-${index}`" :href=section.route>{{section.name}}</b-nav-item>
                     <b-nav-item-dropdown v-else :key="`section-${index}`" :text="section.name" right>
-                        <b-dropdown-item v-for='(child, i) in section.children' :key="`child-${i}`" :href='child.route'>{{child.name}}</b-dropdown-item>
+                        <b-dropdown-item v-for='(child, i) in section.children' :key="`child-${i}`" @click='dropdownClick(child.route)'>{{child.name}}</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </template>
             </b-navbar-nav>
@@ -45,14 +45,23 @@ export default {
                             name: 'Cambiar Contraseña',
                         },
                         {
-                            route: '/',
+                            route: 'logout',
                             name: 'Cerrar Sesión',
                         }
                     ]
                 }
             ]
         }
-    }
+	},
+	methods: {
+		dropdownClick(str) {
+			if (str == 'logout') {
+				this.$store.dispatch('logout');
+			} else {
+				location.href = str;
+			}			
+		}
+	}
 }
 </script>
 <style scoped>
