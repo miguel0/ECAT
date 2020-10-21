@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { auth } from '../firebase';
 
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
@@ -14,9 +15,9 @@ import DetailedView from '../views/DetailedView.vue';
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        component: SignIn
+	{
+		path: '/',
+		component: SignIn
 	},
 	{
 		path: '/requestpwchange',
@@ -26,36 +27,64 @@ const routes = [
 		path: '/pwchange',
 		component: PWChange
 	},
-    {
-        path: '/home',
-        component: Home
-    },
-    {
-        path: '/catalog',
-        component: Catalog
+	{
+		path: '/home',
+		component: Home,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/catalog',
+		component: Catalog,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/adddata',
-		component: AddData
+		component: AddData,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/changepwli',
-		component: ChangePWLoggedIn
+		component: ChangePWLoggedIn,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/users',
-		component: UserPanel
+		component: UserPanel,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/details',
-		component: DetailedView
+		component: DetailedView,
+		meta: {
+			requiresAuth: true
+		}
 	}
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
+
+router.beforeEach((to, from, next) => {
+	const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+
+	if (requiresAuth && !auth.currentUser) {
+		next('/');
+	} else {
+		next();
+	}
+});
 
 export default router;
