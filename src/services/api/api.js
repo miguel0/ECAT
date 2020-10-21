@@ -1,10 +1,7 @@
-import axios from 'axios';
-import { apiOrigin } from '../../variables';
+import partsApi from './src/parts.api';
+import componentsApi from './src/components.api';
 
-export default axios.create({
-    baseURL: apiOrigin,
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-});
+export default {
+    partsApi : partsApi,
+    componentsApi: componentsApi
+}
