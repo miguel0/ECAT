@@ -5,7 +5,7 @@ import router from '../router/index';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
 	state: {
 		userProfile: {}
 	},
@@ -30,7 +30,9 @@ export default new Vuex.Store({
 			commit('setUserProfile', userProfile);
 			
 			// change route to dashboard
-			router.push('/catalog');
+			if (router.currentRoute.path === '/') {
+				router.push('/catalog')
+			}
 		},
 		async logout({ commit }) {
 			// log user out
@@ -41,11 +43,6 @@ export default new Vuex.Store({
 
 			// redirect to login view
 			router.push('/');
-		},
-		async checkLoggedIn() {
-			if(this.state.userProfile != null) {
-				router.push('/catalog');
-			}
 		},
 		async changePW({ dispatch }, form) {
 			fb.auth.sendPasswordResetEmail(form.email).then(function() {
@@ -59,3 +56,5 @@ export default new Vuex.Store({
 		}
 	}
 });
+
+export default store;
