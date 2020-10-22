@@ -11,6 +11,7 @@ import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import DetailedView from '../views/DetailedView.vue';
+import Vehicle from '../views/Vehicle';
 
 Vue.use(VueRouter);
 
@@ -68,6 +69,10 @@ const routes = [
 		meta: {
 			requiresAuth: true
 		}
+	},
+	{
+		path: '/vehicle',
+		component: Vehicle
 	}
 ];
 
