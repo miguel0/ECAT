@@ -40,9 +40,6 @@ export default {
 				password: this.form.password
 			});
 		}
-	},
-	mounted() {
-		this.$store.dispatch('checkLoggedIn');
 	}
 }
 </script>
