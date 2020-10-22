@@ -29,15 +29,11 @@
 			</b-form-group>
 		</div>
 
-		<div id='btn-cont'>
-			<b-button id='btn' class='mb-3' @click='filter()' variant='primary'>Buscar</b-button>
-		</div>
-
-		<h4>Se encontraron ({{filteredTrucks.length}}) vehículos</h4>
+		<h4>Se encontraron ({{trucksFound}}) vehículos</h4>
 
 		<div id='search-results'>
 			<b-card
-				v-for='t in filteredTrucks'
+				v-for='t in filter()'
 				:key='t.id'
 				class='search-card m-3'
 				v-bind:img-src='t.imageURL'
@@ -63,7 +59,7 @@ export default {
 	data() {
 		return {
 			allTrucks: [],
-			filteredTrucks: [],
+			trucksFound: 0,
 			searchText: '',
 			type: '',
 			motorConfig: '',
@@ -89,9 +85,22 @@ export default {
 		}
 	},
 	methods: {
-		// TODO: implement filter method
 		filter() {
-			this.filteredTrucks = this.allTrucks;
+			let trucks = [];
+			for(let i = 0; i < this.allTrucks.length; i++) {
+				if(
+					this.allTrucks[i].name.includes(this.searchText) &&
+					this.allTrucks[i].type.includes(this.type) &&
+					this.allTrucks[i].motorConfig.includes(this.motorConfig) &&
+					this.allTrucks[i].motorPower >= this.motorPowerMin &&
+					this.allTrucks[i].motorPower <= this.motorPowerMax &&
+					this.allTrucks[i].transmission.includes(this.transmission)
+				) {
+					trucks.push(this.allTrucks[i]);
+				}
+			}
+			this.trucksFound = trucks.length;
+			return trucks;
 		}
 	},
 	computed: {
@@ -107,36 +116,64 @@ export default {
 			{
 				id: 'buenas1',
 				name: 'troka1',
+				type: 'MT GAS',
+				motorConfig: '6x4',
+				motorPower: 20,
+				transmission: 'ZH',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas2',
 				name: 'troka2',
+				type: 'MT GAS',
+				motorConfig: '6x4',
+				motorPower: 200,
+				transmission: 'AL',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas3',
 				name: 'troka3',
+				type: 'MC DIESEL',
+				motorConfig: '4x2',
+				motorPower: 15,
+				transmission: 'ZH',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas4',
 				name: 'troka4',
+				type: 'MC DIESEL',
+				motorConfig: '6x4',
+				motorPower: 201,
+				transmission: 'HW',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas5',
 				name: 'troka5',
+				type: 'MT GAS',
+				motorConfig: '4x2',
+				motorPower: 50,
+				transmission: 'ZH',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas6',
 				name: 'troka6',
+				type: 'MT GAS',
+				motorConfig: '6x4',
+				motorPower: 1,
+				transmission: 'AL',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			},
 			{
 				id: 'buenas7',
 				name: 'troka7',
+				type: 'MC DIESEL',
+				motorConfig: '4x2',
+				motorPower: 90,
+				transmission: 'HW',
 				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
 			}
 		);
@@ -165,13 +202,6 @@ export default {
 #motor-form {
 	width: 10%;
 	min-width: 200px;
-}
-#btn-cont {
-	margin-left: auto;
-	margin-right: auto;
-}
-#btn {
-	min-width: 300px;
 }
 #search-results {
 	display: flex;
