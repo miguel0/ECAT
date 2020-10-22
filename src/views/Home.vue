@@ -1,6 +1,7 @@
 <template>
     <div>
         <Navbar/>
+		<div>hello world</div>
     </div>
     
 </template>
