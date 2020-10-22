@@ -31,7 +31,7 @@ const store = new Vuex.Store({
 			
 			// change route to dashboard
 			if (router.currentRoute.path === '/') {
-				router.push('/catalog')
+				router.push('/home')
 			}
 		},
 		async logout({ commit }) {
