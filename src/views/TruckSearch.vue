@@ -1,7 +1,55 @@
 <template>
-	<div>
-		<Navbar />
-	</div>
+<div>
+	<Navbar />
+	<b-container id='content' class='p-5'>
+		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+
+		<div id='filters'>
+			<b-form-group class='mr-2' label='Tipo'>
+				<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
+			</b-form-group>
+			
+			<b-form-group class='mr-4' label='Configuración del motor'>
+				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
+			</b-form-group>
+
+			<b-form-group id='motor-form' class='mr-4' label='Poder del motor'>
+				<div id='motor-power'>
+					<b-form-group class='mr-1' label='Min'>
+						<b-form-input v-model='motorPowerMin' type='number' :state='motorPowerState'></b-form-input>
+					</b-form-group>
+					<b-form-group label='Max'>
+						<b-form-input v-model='motorPowerMax' type='number' :state='motorPowerState'></b-form-input>
+					</b-form-group>
+				</div>
+			</b-form-group>
+
+			<b-form-group label='Transmisión'>
+				<b-form-select v-model='transmission' :options='transmissionOptions'></b-form-select>
+			</b-form-group>
+		</div>
+
+		<div id='btn-cont'>
+			<b-button id='btn' class='mb-3' @click='filter()' variant='primary'>Buscar</b-button>
+		</div>
+
+		<h4>Se encontraron ({{filteredTrucks.length}}) vehículos</h4>
+
+		<div id='search-results'>
+			<b-card
+				v-for='t in filteredTrucks'
+				:key='t.id'
+				class='search-card m-3'
+				v-bind:img-src='t.imageURL'
+				img-top>
+
+				<b-card-text>
+					{{t.name}}
+				</b-card-text>
+			</b-card>
+		</div>
+	</b-container>
+</div>
 </template>
 
 <script>
@@ -11,10 +59,128 @@ export default {
 	name: 'TruckSearch',
 	components: {
 		Navbar
+	},
+	data() {
+		return {
+			allTrucks: [],
+			filteredTrucks: [],
+			searchText: '',
+			type: '',
+			motorConfig: '',
+			motorPowerMin: '0',
+			motorPowerMax: '100',
+			transmission: '',
+			typeOptions: [
+				{ text: 'MT GAS', value: 'MT GAS' },
+				{ text: 'MC DIESEL', value: 'MC DIESEL' },
+				{ text: 'Cualquiera', value: '' }
+			],
+			motorConfigOptions: [	
+				{ text: 'Cualquiera', value: '' },
+				{ text: '4x2', value: '4x2' },
+				{ text: '6x4', value: '6x4' }
+			],
+			transmissionOptions: [
+				{ text: 'Cualquiera', value: '' },
+				{ text: 'ZH', value: 'ZH' },
+				{ text: 'HW', value: 'HW' },
+				{ text: 'AL', value: 'AL' }
+			],
+		}
+	},
+	methods: {
+		// TODO: implement filter method
+		filter() {
+			this.filteredTrucks = this.allTrucks;
+		}
+	},
+	computed: {
+		motorPowerState() {
+			let min = parseFloat(this.motorPowerMin);
+			let max = parseFloat(this.motorPowerMax);
+			return (min >= 0 && max >= 0) && (max >= min) ? null : false;
+		}
+	},
+	mounted() {
+		// TODO: get trucks from db
+		this.allTrucks.push(
+			{
+				id: 'buenas1',
+				name: 'troka1',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas2',
+				name: 'troka2',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas3',
+				name: 'troka3',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas4',
+				name: 'troka4',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas5',
+				name: 'troka5',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas6',
+				name: 'troka6',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			},
+			{
+				id: 'buenas7',
+				name: 'troka7',
+				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+			}
+		);
 	}
 }
 </script>
 
 <style scoped>
-
+#content {
+	width: 85%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#filters {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-around;
+}
+#motor-power {
+	display: flex;
+	flex-direction: row;
+}
+#motor-form {
+	width: 10%;
+	min-width: 200px;
+}
+#btn-cont {
+	margin-left: auto;
+	margin-right: auto;
+}
+#btn {
+	min-width: 300px;
+}
+#search-results {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.search-card {
+	max-width: 30%;
+	min-width: 180px;
+}
 </style>
