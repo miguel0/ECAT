@@ -21,9 +21,13 @@
                 </b-col>
             </b-row>
             <br><br>
-            <h4>Grupos</h4>
+            <h4>Grupos ({{vehicle.groups.length}})</h4>
             <br>
-            <p v-for="group of vehicle.groups" :key="group.id">{{group.localNo}} {{group.name}}</p>
+            <b-list-group class="overflow-auto">
+                <b-list-group-item v-for="group of vehicle.groups" :key="`group-${group.id}`" @click='selectGroup(group)' ref="ref-groups" class="clickable d-flex align-items-center">
+                    <span class="mr-auto">{{group.localNo}} {{group.name}}</span>
+                </b-list-group-item>
+            </b-list-group>
         </div>
 
     </div>
@@ -32,10 +36,20 @@
 <script>
 export default {
     name: "VehicleDetails",
-    props: ['vehicle']
+    props: ['vehicle'],
+    methods: {
+        selectGroup: function(selectedGroup) {
+            this.$emit('onGroupSelected', selectedGroup);
+        }
+    }
 }
 </script>
 
 <style scoped>
-
+.overflow-auto {
+	max-height: 200px;
+}
+.clickable {
+    cursor: pointer;
+}
 </style>
