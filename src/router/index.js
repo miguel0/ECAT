@@ -11,6 +11,7 @@ import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import DetailedView from '../views/DetailedView.vue';
+import PartView from '../views/PartView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 
@@ -72,6 +73,10 @@ const routes = [
 		}
 	},
 	{
+		path: '/parts',
+		component: PartView,
+  },
+  {
 		path: '/vehicle',
 		component: Vehicle
 	},
