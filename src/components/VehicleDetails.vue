@@ -25,7 +25,14 @@
             <br>
             <b-list-group class="overflow-auto">
                 <b-list-group-item v-for="group of vehicle.groups" :key="`group-${group.id}`" @click='selectGroup(group)' ref="ref-groups" class="clickable d-flex align-items-center">
-                    <span class="mr-auto">{{group.localNo}} {{group.name}}</span>
+                    <b-row>
+                        <b-col class="text-center">
+                            {{group.localNo}} 
+                        </b-col>
+                        <b-col>
+                            <span class="mr-auto">{{group.name}}</span>
+                        </b-col>
+                    </b-row>
                 </b-list-group-item>
             </b-list-group>
         </div>
