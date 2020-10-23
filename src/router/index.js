@@ -12,6 +12,8 @@ import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import DetailedView from '../views/DetailedView.vue';
 import PartView from '../views/PartView.vue';
+import Vehicle from '../views/Vehicle';
+import TruckSearch from '../views/TruckSearch.vue';
 
 Vue.use(VueRouter);
 
@@ -73,6 +75,14 @@ const routes = [
 	{
 		path: '/parts',
 		component: PartView,
+  },
+  {
+		path: '/vehicle',
+		component: Vehicle
+	},
+	{
+		path: '/trucksearch',
+		component: TruckSearch,
 		meta: {
 			requiresAuth: true
 		}
