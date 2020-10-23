@@ -46,7 +46,7 @@ export default {
         Navbar
     },
     created: function() {
-        api.vehiclesApi.getVehicle('CYMS18010001-C7H 6X2 MT13.43-50 ZF16S2231TO HR7 MCY13Q(4.11)')
+        api.vehiclesApi.getVehicle(this.$route.params.id)
         .then(data => {
             this.vehicle = data;
         })

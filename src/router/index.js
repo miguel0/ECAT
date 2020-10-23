@@ -13,6 +13,7 @@ import UserPanel from '../views/UserPanel';
 import DetailedView from '../views/DetailedView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
+import Component from '../views/Component';
 
 Vue.use(VueRouter);
 
@@ -72,12 +73,22 @@ const routes = [
 		}
 	},
 	{
-		path: '/vehicle',
-		component: Vehicle
+		path: '/vehicles/:id',
+		component: Vehicle,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/trucksearch',
 		component: TruckSearch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/vehicles/:vid/components/:cid',
+		component: Component,
 		meta: {
 			requiresAuth: true
 		}
