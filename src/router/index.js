@@ -11,7 +11,6 @@ import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import DetailedView from '../views/DetailedView.vue';
-import PartView from '../views/PartView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
@@ -76,13 +75,6 @@ const routes = [
 	{
 		path: '/vehicles/:id',
 		component: Vehicle,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/parts',
-		component: PartView,
 		meta: {
 			requiresAuth: true
 		}

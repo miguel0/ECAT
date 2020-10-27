@@ -1,29 +1,29 @@
 <template>
-    <div class="ver">
+    <div v-if="part" class="ver">
         <div class="hor">
             <div>
                 <small class="form-text text-muted">
                     Parte
                 </small>
-                <p class="title">{{desc}}</p>
+                <p class="title">{{part.spName}}</p>
             </div>
             <div>
                 <small class="form-text text-muted">
                     Nombre en inglés
                 </small>
-                <p class="name">{{en}}</p>
+                <p class="name">{{part.name}}</p>
             </div>
             <div>
                 <small class="form-text text-muted">
                     Nombre en chino
                 </small>
-                <p class="name">{{cn}}</p>
+                <p class="name">{{part.chName}}</p>
             </div>
             <div>
                 <small class="form-text text-muted">
                     Nombre alterno
                 </small>
-                <p class="name">{{other}}</p>
+                <p class="name">{{part.otherName}}</p>
             </div>
             <div id="img">
                     <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
@@ -34,13 +34,13 @@
                 <small class="form-text text-muted">
                     Número de parte
                 </small>
-                <p class="partno" id="myInput">{{partno}}</p>
+                <p class="partno" id="myInput">{{part.id}}</p>
             </div>
             <div class="my_list">
                 <p style="text-align: center">Se encuentra en:</p>
                 <div class="list_no_title overflow-auto">
                     <b-list-group>
-                        <b-list-group-item v-for="i in children" :key="i">
+                        <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
                             <div class="list-hor"><p>{{ i }}</p><p>x20</p></div>
                         </b-list-group-item>
                     </b-list-group>
@@ -51,18 +51,24 @@
 </template>>
 
 <script>
+import api from '../services/api/api';
 
 export default {
     name: 'Part',
+    props: ['id_part'],
+    created() {
+        api.partsApi.getPart(this.id_part).then(data => this.part = data);
+    },
     data() {
 		return {
+            part: null,
 			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			desc: 'Tornillo',
+			/*desc: 'Tornillo',
 			partno: 'Q218B0820',
 			en: 'Screw',
 			cn: '内六角圆柱头螺钉',
 			other: 'Tornillo de prueba',
-			parents: [],
+			parents: [],*/
 			children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH' ]
 		}
     }
