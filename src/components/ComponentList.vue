@@ -8,7 +8,7 @@
         <h4>Componentes</h4>
         <br>
         <b-list-group class="overflow-auto">
-            <b-list-group-item v-for="component of group.components" :key="`component-${component.id}`" ref="ref-components" class="clickable d-flex align-items-center">
+            <b-list-group-item v-for="component of group.components" :key="`component-${component.id}`" ref="ref-components" class="clickable d-flex align-items-center" @click='goToComponent(component.id)'>
                 <b-row>
                     <b-col sm="2" class="text-center">
                         {{component.localNo}} 
@@ -41,7 +41,12 @@
 <script>
 export default {
     name: "ComponentList",
-    props: ['group', 'localNoBase']
+    props: ['group', 'localNoBase'],
+    methods: {
+        goToComponent(componentId) {
+            window.location.href = `/components/${componentId}`;
+        }
+    }
 }
 </script>
 <style scoped>

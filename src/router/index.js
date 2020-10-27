@@ -14,6 +14,7 @@ import DetailedView from '../views/DetailedView.vue';
 import PartView from '../views/PartView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
+import Component from '../views/Component';
 
 Vue.use(VueRouter);
 
@@ -73,16 +74,29 @@ const routes = [
 		}
 	},
 	{
+		path: '/vehicles/:id',
+		component: Vehicle,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
 		path: '/parts',
 		component: PartView,
-  },
-  {
-		path: '/vehicle',
-		component: Vehicle
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/trucksearch',
 		component: TruckSearch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/components/:cid',
+		component: Component,
 		meta: {
 			requiresAuth: true
 		}
