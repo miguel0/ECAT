@@ -49,8 +49,6 @@ export default {
 .ver {
 	display: flex;
 	flex-direction: column;
-    border-color: red;
-    border-style: dashed;
     align-items: center;
     justify-content: start;
     height: 100vh;

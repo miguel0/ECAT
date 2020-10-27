@@ -36,6 +36,14 @@
                 </b-card>
             </div>
         </b-card-group>
+
+        <div>
+        <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+
+        <b-modal id="modal-1" size="lg" hide-footer="true" title="Vista de parte">
+            <Part/>
+        </b-modal>
+        </div>
 		
     </div>
     
@@ -43,11 +51,13 @@
 
 <script>
     import Navbar from '../components/Navbar'
+    import Part from '../components/Part'
 
     export default {
         name: 'Home',
         components: {
-            Navbar
+            Navbar,
+            Part
         },
 
         methods:{
