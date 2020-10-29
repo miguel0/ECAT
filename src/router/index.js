@@ -14,6 +14,7 @@ import DetailedView from '../views/DetailedView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
+import EditPart from '../views/EditPart';
 
 Vue.use(VueRouter);
 
@@ -89,6 +90,13 @@ const routes = [
 	{
 		path: '/components/:cid',
 		component: Component,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/editpart/:pid',
+		component: EditPart,
 		meta: {
 			requiresAuth: true
 		}
