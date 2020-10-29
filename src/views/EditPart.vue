@@ -1,6 +1,35 @@
 <template>
 <div>
 	<Navbar />
+	<div class="p-5">
+		<b-form @submit="onSubmit">
+			<b-form-group label="Número de parte:">
+				<b-form-input v-model="partId" readonly></b-form-input>
+			</b-form-group>
+
+			<b-form-group label="Número de reemplazo:">
+				<b-form-input v-model="replaceNo" placeholder="Escriba el número de reemplazo..."></b-form-input>
+			</b-form-group>
+
+			<b-form-group label="Nombre en inglés:">
+				<b-form-input v-model="name" placeholder="Escriba el nombre en inglés..."></b-form-input>
+			</b-form-group>
+
+			<b-form-group label="Nombre en español:">
+				<b-form-input v-model="spName" placeholder="Escriba el nombre en español..."></b-form-input>
+			</b-form-group>
+
+			<b-form-group label="Nombre en chino:">
+				<b-form-input v-model="chName" placeholder="Escriba el nombre en chino..."></b-form-input>
+			</b-form-group>
+
+			<b-form-group label="Otros nombres:">
+				<b-form-input v-model="otherName" placeholder="Escriba el otros nombres..."></b-form-input>
+			</b-form-group>
+
+			<b-button type="submit" variant="primary">Submit</b-button>
+		</b-form>
+	</div>
 </div>
 </template>
 
@@ -38,8 +67,14 @@ export default {
 		})
 	},
 	methods: {
-		submit: function() {
-			
+		onSubmit: function(evt) {
+			evt.preventDefault();
+
+			if(this.partId === this.replaceNo) {
+				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+			} else {
+				api.partsApi.editPart(this.partId, this.repalceNo, this.name, this.chName, this.spName, this.otherName);
+			}
 		}
 	}
 }
