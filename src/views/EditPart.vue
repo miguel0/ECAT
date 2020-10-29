@@ -74,6 +74,7 @@ export default {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
 				api.partsApi.editPart(this.partId, this.repalceNo, this.name, this.chName, this.spName, this.otherName);
+				window.history.back();
 			}
 		}
 	}
