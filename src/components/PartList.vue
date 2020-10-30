@@ -2,19 +2,36 @@
     <div>
         <b-table 
             id="partTable" 
-            hover 
+            hover
+			small
             :items='parts' 
             :fields='fields'
             per-page="5"
             :current-page="currentPage"
+			:sort-by.sync="sortBy"
+			:sort-desc.sync="sortDesc"
             @row-clicked="openModal"
-        ></b-table>
+        >
+
+        <template #cell(buttons)="row">
+            <b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
+                <img src="../assets/img/bxs-edit.svg" />
+            </b-button>
+
+            <b-button size="sm" @click="deletePart(row.item.cpid)" variant="danger" class="m-1">
+                <img src="../assets/img/bxs-trash.svg" />
+            </b-button>
+        </template>
+
+        </b-table>
+
         <b-pagination
             v-model="currentPage"
             per-page="5"
             aria-controls="partTable"
             :total-rows="parts.length"
-        ></b-pagination>
+        >
+        </b-pagination>
 
         <b-modal ref="partModal" size="lg" :hide-footer="true" title="Vista de parte">
             <Part v-if="selectedPart" :id_part="selectedPart"/>
@@ -24,6 +41,7 @@
 
 <script>
 import Part from '../components/Part';
+import api from '../services/api/api';
 
 export default {
     name: "PartList",
@@ -33,10 +51,13 @@ export default {
     },
     data() {
         return {
+			sortBy: 'localNo',
+			sortDesc: false,
             fields: [
                 {
                     key: 'localNo',
-                    label: 'No.'
+					label: 'No.',
+					sortable: true
                 },
                 {
                     key: 'id',
@@ -65,6 +86,10 @@ export default {
                 {
                     key: 'remark',
                     label: 'Remark'
+                },
+                {
+                    key: 'buttons',
+                    label: 'Acciones'
                 }
             ],
             currentPage: 1,
@@ -75,6 +100,26 @@ export default {
         openModal(row) {
             this.selectedPart = row.id;
             this.$refs.partModal.show();
+        },
+
+        editPart(id) {
+            location.href = '/editpart/' + id;
+        },
+
+        deletePart(id) {
+			api.componentPartsApi.deleteComponentPart(id)
+			.then(res => {
+				if(res === true) {
+					location.reload();
+				} else if(res.includes('child record found')) {
+					alert('No puede borrar una pieza con subpiezas. Trate borrando esas primero.');
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
         }
     }
 }

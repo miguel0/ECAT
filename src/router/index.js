@@ -4,16 +4,14 @@ import { auth } from '../firebase';
 
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
-import Catalog from '../views/Catalog';
 import RequestPWChange from '../views/RequestPWChange.vue';
-import PWChange from '../views/PWChange.vue';
 import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
-import DetailedView from '../views/DetailedView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
+import EditPart from '../views/EditPart';
 
 Vue.use(VueRouter);
 
@@ -27,19 +25,8 @@ const routes = [
 		component: RequestPWChange
 	},
 	{
-		path: '/pwchange',
-		component: PWChange
-	},
-	{
 		path: '/home',
 		component: Home,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/catalog',
-		component: Catalog,
 		meta: {
 			requiresAuth: true
 		}
@@ -66,13 +53,6 @@ const routes = [
 		}
 	},
 	{
-		path: '/details',
-		component: DetailedView,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
 		path: '/vehicles/:id',
 		component: Vehicle,
 		meta: {
@@ -89,6 +69,13 @@ const routes = [
 	{
 		path: '/components/:cid',
 		component: Component,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/editpart/:pid',
+		component: EditPart,
 		meta: {
 			requiresAuth: true
 		}

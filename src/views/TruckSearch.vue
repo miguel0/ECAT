@@ -119,7 +119,8 @@ export default {
 		api.vehiclesApi.getVehicle('CYMS18010001')
 		.then(vehicle => {
 			vehicle.imageURL = 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg';
-			this.allTrucks.push(vehicle);	
+			vehicle.motorConfig = '6x4';
+			this.allTrucks.push(vehicle);
 		})
 	},
 	mounted() {

@@ -4,7 +4,7 @@
         <b-container v-if='component' style="padding-top: 3%;">
             <b-row>
                 <b-col>
-                    <b-img src="../assets/img/test/component.png" fuild round></b-img>
+                    <b-img src="../assets/img/test/component.png" fluid round></b-img>
                 </b-col>
                 <b-col>
                     <h4><b>{{component.name}}</b></h4>
@@ -19,7 +19,6 @@
                     <PartList :parts='component.parts'/>
                 </b-col>
             </b-row>
-
             
         </b-container>
     </div>
@@ -46,7 +45,7 @@ export default {
         api.componentsApi.getComponent(this.$route.params.cid)
         .then(component => {
             component.parts = this.setDefaults(component);
-            this.component = component;
+			this.component = component;
         })
         .catch(err => {
             console.log(err);
