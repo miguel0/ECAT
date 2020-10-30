@@ -4,13 +4,10 @@ import { auth } from '../firebase';
 
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
-import Catalog from '../views/Catalog';
 import RequestPWChange from '../views/RequestPWChange.vue';
-import PWChange from '../views/PWChange.vue';
 import AddData from '../views/AddData.vue';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
-import DetailedView from '../views/DetailedView.vue';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
@@ -28,19 +25,8 @@ const routes = [
 		component: RequestPWChange
 	},
 	{
-		path: '/pwchange',
-		component: PWChange
-	},
-	{
 		path: '/home',
 		component: Home,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/catalog',
-		component: Catalog,
 		meta: {
 			requiresAuth: true
 		}
@@ -62,13 +48,6 @@ const routes = [
 	{
 		path: '/users',
 		component: UserPanel,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/details',
-		component: DetailedView,
 		meta: {
 			requiresAuth: true
 		}

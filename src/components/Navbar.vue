@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-navbar type='dark' variant='primary'>
-            <b-navbar-brand href="/catalog">ecat</b-navbar-brand>
+            <b-navbar-brand href="/home">ecat</b-navbar-brand>
             <b-navbar-nav class='ml-auto'>
                 <template v-for='(section, index) in sections'>
                     <b-nav-item v-if='!section.children' :key="`section-${index}`" :href=section.route>{{section.name}}</b-nav-item>
@@ -21,8 +21,8 @@ export default {
         return {
             sections: [
                 {
-                    route: '/catalog',
-                    name: 'Catálogos'
+                    route: '/home',
+                    name: 'Búsqueda'
                 },
                 {
                     name: 'Administración',
