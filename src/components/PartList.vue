@@ -8,6 +8,8 @@
             :fields='fields'
             per-page="5"
             :current-page="currentPage"
+			:sort-by.sync="sortBy"
+			:sort-desc.sync="sortDesc"
             @row-clicked="openModal"
         >
 
@@ -39,6 +41,7 @@
 
 <script>
 import Part from '../components/Part';
+import api from '../services/api/api';
 
 export default {
     name: "PartList",
@@ -48,10 +51,13 @@ export default {
     },
     data() {
         return {
+			sortBy: 'localNo',
+			sortDesc: false,
             fields: [
                 {
                     key: 'localNo',
-                    label: 'No.'
+					label: 'No.',
+					sortable: true
                 },
                 {
                     key: 'id',
@@ -97,11 +103,23 @@ export default {
         },
 
         editPart(id) {
-            console.log(id);
+            location.href = '/editpart/' + id;
         },
 
         deletePart(id) {
-            console.log(id);
+			api.componentPartsApi.deleteComponentPart(id)
+			.then(res => {
+				if(res === true) {
+					location.reload();
+				} else if(res.includes('child record found')) {
+					alert('No puede borrar una pieza con subpiezas. Trate borrando esas primero.');
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
         }
     }
 }
