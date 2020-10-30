@@ -2,7 +2,8 @@
     <div>
         <b-table 
             id="partTable" 
-            hover 
+            hover
+			small
             :items='parts' 
             :fields='fields'
             per-page="5"
@@ -10,12 +11,12 @@
             @row-clicked="openModal"
         >
 
-        <template #cell(buttons)="">
-            <b-button size="sm" @click="editPart()" class="btn btn-primary mr-1 mb-2">
+        <template #cell(buttons)="row">
+            <b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
                 <img src="../assets/img/bxs-edit.svg" />
             </b-button>
 
-            <b-button size="sm" @click="deletePart()" class="btn btn-danger mr-1">
+            <b-button size="sm" @click="deletePart(row.item.cpid)" variant="danger" class="m-1">
                 <img src="../assets/img/bxs-trash.svg" />
             </b-button>
         </template>
@@ -82,7 +83,7 @@ export default {
                 },
                 {
                     key: 'buttons',
-                    label: 'Actions'
+                    label: 'Acciones'
                 }
             ],
             currentPage: 1,
@@ -95,12 +96,12 @@ export default {
             this.$refs.partModal.show();
         },
 
-        editPart() {
-            console.log('Editado');
+        editPart(id) {
+            console.log(id);
         },
 
-        deletePart() {
-            console.log('Eliminado');
+        deletePart(id) {
+            console.log(id);
         }
     }
 }
