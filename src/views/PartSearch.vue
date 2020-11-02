@@ -21,23 +21,30 @@
 			</b-card>
 		</div>
 	</b-container>
+
+	<b-modal ref="partModal" size="lg" :hide-footer="true" title="Vista de parte">
+		<Part v-if="selectedPart" :id_part="selectedPart"/>
+	</b-modal>
 </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
+import Part from '../components/Part';
 import api from '../services/api/api';
 
 export default {
 	name: 'PartSearch',
 	components: {
-		Navbar
+		Navbar,
+		Part
 	},
 	data() {
 		return {
 			allParts: [],
 			partsFound: 0,
 			searchText: '',
+			selectedPart: null
 		}
 	},
 	methods: {
@@ -67,8 +74,8 @@ export default {
 				.toUpperCase();
 		},
 		goToPart(partId) {
-			// TODO: open part modal
-			console.log(partId);
+			this.selectedPart = partId;
+			this.$refs.partModal.show();
 		}
 	},
 	created() {
