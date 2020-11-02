@@ -124,7 +124,6 @@ export default {
 		})
 	},
 	mounted() {
-		// TODO: get trucks from db
 		this.allTrucks.push(
 			{
 				id: 'buenas1',
