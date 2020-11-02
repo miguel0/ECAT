@@ -1,53 +1,62 @@
 <template>
-    <div v-if="part" class="ver">
-        <div class="hor">
-            <div>
-                <small class="form-text text-muted">
-                    Parte
-                </small>
-                <p class="title">{{part.spName}}</p>
-            </div>
-            <div>
-                <small class="form-text text-muted">
-                    Nombre en inglés
-                </small>
-                <p class="name">{{part.name}}</p>
-            </div>
-            <div>
-                <small class="form-text text-muted">
-                    Nombre en chino
-                </small>
-                <p class="name">{{part.chName}}</p>
-            </div>
-            <div>
-                <small class="form-text text-muted">
-                    Nombre alterno
-                </small>
-                <p class="name">{{part.otherName}}</p>
-            </div>
-            <div id="img">
+    <b-container style="padding-top: 3%;">
+        <div v-if="part" class="ver">
+            <div class="hor">
+                <div v-if="part.spName">
+                    <small class="form-text text-muted">
+                        Parte
+                    </small>
+                    <p class="title">{{part.spName}}</p>
+                </div>
+                <div v-if="part.name">
+                    <small class="form-text text-muted">
+                        Nombre en inglés
+                    </small>
+                    <p class="name">{{part.name}}</p>
+                </div>
+                <div v-if="part.chName">
+                    <small class="form-text text-muted">
+                        Nombre en chino
+                    </small>
+                    <p class="name">{{part.chName}}</p>
+                </div>
+                <div v-if="part.otherName">
+                    <small class="form-text text-muted">
+                        Nombre alterno
+                    </small>
+                    <p class="name">{{part.otherName}}</p>
+                </div>
+                <div v-if="part.replaceNo">
+                    <small class="form-text text-muted">
+                        Número de reemplazo
+                    </small>
+                    <p class="name">{{part.replaceNo}}</p>
+                </div>
+                <div id="img">
                     <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
+                </div>
             </div>
-        </div>
-        <div class="hor-right">
-            <div class="right">
-                <small class="form-text text-muted">
-                    Número de parte
-                </small>
-                <p class="partno" id="myInput">{{part.id}}</p>
-            </div>
-            <div class="my_list">
-                <p style="text-align: center">Se encuentra en:</p>
-                <div class="list_no_title overflow-auto">
-                    <b-list-group>
-                        <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
-                            <div class="list-hor"><p>{{ i }}</p><p>x20</p></div>
-                        </b-list-group-item>
-                    </b-list-group>
+            <div class="hor-right">
+                <!--<div class="right">
+                    <small class="form-text text-muted">
+                        Número de parte
+                    </small>
+                    <p class="partno" id="myInput">{{part.id}}</p>
+                </div>-->
+                <div class="my_list">
+                    <p style="text-align: center">Se encuentra en:</p>
+                    <div class="list_no_title overflow-auto">
+                        <b-list-group>
+                            <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
+                                <div class="list-hor"><p>{{ i }}</p><p>x20</p></div>
+                            </b-list-group-item>
+                        </b-list-group>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </b-container>
+    
 </template>>
 
 <script>
@@ -57,7 +66,10 @@ export default {
     name: 'Part',
     props: ['id_part'],
     created() {
-        api.partsApi.getPart(this.id_part).then(data => this.part = data);
+        api.partsApi.getPart(this.id_part).then(data => {
+            this.part = data;
+            this.part.replaceNo = '810-62530-4357D'
+        });
     },
     data() {
 		return {
