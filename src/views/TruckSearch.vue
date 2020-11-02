@@ -66,7 +66,7 @@ export default {
 			type: '',
 			motorConfig: '',
 			motorPowerMin: '0',
-			motorPowerMax: '100',
+			motorPowerMax: '1000',
 			transmission: '',
 			typeOptions: [
 				{ text: 'MT GAS', value: 'MT GAS' },
@@ -90,8 +90,15 @@ export default {
 		filter() {
 			let trucks = [];
 			for(let i = 0; i < this.allTrucks.length; i++) {
+				const search = this.getSimpleString(this.searchText);
 				if(
-					this.allTrucks[i].name.includes(this.searchText) &&
+					(
+						this.getSimpleString(this.allTrucks[i].name).includes(search) ||
+						this.getSimpleString(this.allTrucks[i].spName).includes(search) ||
+						this.getSimpleString(this.allTrucks[i].otherName).includes(search) ||
+						this.getSimpleString(this.allTrucks[i].id).includes(search) ||
+						this.getSimpleString(this.allTrucks[i].model).includes(search)
+					) &&
 					this.allTrucks[i].type.includes(this.type) &&
 					this.allTrucks[i].motorConfig.includes(this.motorConfig) &&
 					this.allTrucks[i].motorPower >= this.motorPowerMin &&
@@ -103,6 +110,12 @@ export default {
 			}
 			this.trucksFound = trucks.length;
 			return trucks;
+		},
+		getSimpleString(str) {
+			return str.replaceAll('/', '')
+				.replaceAll('.', '')
+				.replaceAll('-', '')
+				.toUpperCase();
 		},
 		goToVehicle(vehicleId) {
 			window.location.href = `/vehicles/${vehicleId}`;
@@ -118,7 +131,7 @@ export default {
 	created() {
 		api.vehiclesApi.getVehicle('CYMS18010001')
 		.then(vehicle => {
-			vehicle.imageURL = 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg';
+			vehicle.imageURL = 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI';
 			vehicle.motorConfig = '6x4';
 			this.allTrucks.push(vehicle);
 		})
@@ -127,66 +140,66 @@ export default {
 		this.allTrucks.push(
 			{
 				id: 'buenas1',
-				name: 'troka1',
+				name: 'truck 01',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 20,
 				transmission: 'ZH',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas2',
-				name: 'troka2',
+				name: 'truck 02',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 200,
 				transmission: 'AL',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas3',
-				name: 'troka3',
+				name: 'truck 03',
 				type: 'MC DIESEL',
 				motorConfig: '4x2',
 				motorPower: 15,
 				transmission: 'ZH',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas4',
-				name: 'troka4',
+				name: 'truck 04',
 				type: 'MC DIESEL',
 				motorConfig: '6x4',
 				motorPower: 201,
 				transmission: 'HW',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas5',
-				name: 'troka5',
+				name: 'truck 05',
 				type: 'MT GAS',
 				motorConfig: '4x2',
 				motorPower: 50,
 				transmission: 'ZH',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas6',
-				name: 'troka6',
+				name: 'truck 06',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 1,
 				transmission: 'AL',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			},
 			{
 				id: 'buenas7',
-				name: 'troka7',
+				name: 'truck 07',
 				type: 'MC DIESEL',
 				motorConfig: '4x2',
 				motorPower: 90,
 				transmission: 'HW',
-				imageURL: 'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2020/07/26/Pictures/_fbf9798a-cf40-11ea-8f16-bf30a6fcabb3.jpeg'
+				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
 			}
 		);
 	}
