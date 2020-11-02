@@ -9,30 +9,32 @@
         <br>
         <b-list-group class="overflow-auto">
             <b-list-group-item v-for="component of group.components" :key="`component-${component.id}`" ref="ref-components" class="clickable d-flex align-items-center" @click='goToComponent(component.id)'>
-                <b-row>
-                    <b-col sm="2" class="text-center">
-                        {{component.localNo}} 
+                <b-row class="text-break" style="width: 100%">
+                    <b-col cols="2" class="text-center">
+                        <span>{{component.localNo}}</span>
                     </b-col>
                     <b-col>
-                        <b-row>
-                            <span class="mr-auto nameDefault">
-                                <b>{{component.name}}</b>
-                            </span>
-                        </b-row>
-                        <b-row class="text-secondary nameAlt">
+                        <b-row class="nameDefault" no-gutters>
                             <b-col>
-                                <span class="mr-auto">
-                                    {{component.spName}}
-                                </span>
-                                <br>
-                                <span class="mr-auto">
+                                <span>{{component.name}}</span>
+                            </b-col>
+                        </b-row>
+                        <b-row class="text-secondary nameAlt" >
+                            <b-col>
+                                <template v-if="component.spName">
+                                    <span>
+                                        {{component.spName}}
+                                    </span>
+                                    <br>
+                                </template>
+                                <span v-if="component.chName">
                                     {{component.chName}}
                                 </span>
                             </b-col>
                         </b-row>
-                        
                     </b-col>
                 </b-row>
+
             </b-list-group-item>
         </b-list-group>
     </div>
@@ -56,5 +58,12 @@ export default {
 
 .nameAlt {
     font-size: small;
+}
+.index {
+    float: left;
+    background: #aafed6;
+}
+.names {
+    display: flex;
 }
 </style>
