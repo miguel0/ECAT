@@ -13,7 +13,7 @@
 				class='search-card m-3'
 				v-bind:img-src='p.imageURL'
 				img-top
-				@click='goToVehicle(p.id)'
+				@click='goToPart(p.id)'
 				>
 				<b-card-text>
 					{{p.name}}
@@ -26,7 +26,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
-// import api from '../services/api/api';
+import api from '../services/api/api';
 
 export default {
 	name: 'PartSearch',
@@ -47,6 +47,7 @@ export default {
 				const search = this.getSimpleString(this.searchText);
 				if(
 					this.getSimpleString(this.allParts[i].id).includes(search) ||
+					this.getSimpleString(this.allParts[i].replaceNo).includes(search) ||
 					this.getSimpleString(this.allParts[i].name).includes(search) ||
 					this.getSimpleString(this.allParts[i].chName).includes(search) ||
 					this.getSimpleString(this.allParts[i].spName).includes(search) ||
@@ -59,17 +60,25 @@ export default {
 			return parts;
 		},
 		getSimpleString(str) {
-			return str.replaceAll('/', '')
+			return !str ? '' : str.replaceAll('/', '')
 				.replaceAll('.', '')
 				.replaceAll('-', '')
+				.replaceAll(' ', '')
 				.toUpperCase();
 		},
 		goToPart(partId) {
-			// TODO: show part modal
+			// TODO: open part modal
+			console.log(partId);
 		}
 	},
 	created() {
-		// TODO: get parts from db
+		api.partsApi.getAllParts()
+		.then(parts => {
+			for(let i = 0; i < parts.length; i++) {
+				parts[i].imageURL = !parts[i].imageURL ? 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG' : parts[i].imageURL;
+				this.allParts.push(parts[i]);
+			}
+		});
 	}
 }
 </script>

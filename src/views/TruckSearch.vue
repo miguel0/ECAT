@@ -112,9 +112,10 @@ export default {
 			return trucks;
 		},
 		getSimpleString(str) {
-			return str.replaceAll('/', '')
+			return !str ? '' : str.replaceAll('/', '')
 				.replaceAll('.', '')
 				.replaceAll('-', '')
+				.replaceAll(' ', '')
 				.toUpperCase();
 		},
 		goToVehicle(vehicleId) {
@@ -141,6 +142,9 @@ export default {
 			{
 				id: 'buenas1',
 				name: 'truck 01',
+				spName: 'buenas--1',
+				otherName: '',
+				model: 'tE/st-1',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 20,
@@ -150,6 +154,9 @@ export default {
 			{
 				id: 'buenas2',
 				name: 'truck 02',
+				spName: 'buenas--2',
+				otherName: '',
+				model: 'tE/st-2',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 200,
@@ -159,6 +166,9 @@ export default {
 			{
 				id: 'buenas3',
 				name: 'truck 03',
+				spName: 'buenas--3',
+				otherName: '',
+				model: 'tE/st-3',
 				type: 'MC DIESEL',
 				motorConfig: '4x2',
 				motorPower: 15,
@@ -168,6 +178,9 @@ export default {
 			{
 				id: 'buenas4',
 				name: 'truck 04',
+				spName: 'buenas--4',
+				otherName: '',
+				model: 'tE/st-4',
 				type: 'MC DIESEL',
 				motorConfig: '6x4',
 				motorPower: 201,
@@ -177,6 +190,9 @@ export default {
 			{
 				id: 'buenas5',
 				name: 'truck 05',
+				spName: 'buenas--5',
+				otherName: '',
+				model: 'tE/st-5',
 				type: 'MT GAS',
 				motorConfig: '4x2',
 				motorPower: 50,
@@ -186,6 +202,9 @@ export default {
 			{
 				id: 'buenas6',
 				name: 'truck 06',
+				spName: 'buenas--6',
+				otherName: '',
+				model: 'tE/st-6',
 				type: 'MT GAS',
 				motorConfig: '6x4',
 				motorPower: 1,
@@ -195,6 +214,9 @@ export default {
 			{
 				id: 'buenas7',
 				name: 'truck 07',
+				spName: 'buenas--7',
+				otherName: '',
+				model: 'tE/st-7',
 				type: 'MC DIESEL',
 				motorConfig: '4x2',
 				motorPower: 90,
