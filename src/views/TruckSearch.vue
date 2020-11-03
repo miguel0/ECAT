@@ -132,7 +132,7 @@ export default {
 	created() {
 		api.vehiclesApi.getVehicle('CYMS18010001')
 		.then(vehicle => {
-			vehicle.imageURL = 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI';
+			vehicle.imageURL = 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg';
 			vehicle.motorConfig = '6x4';
 			this.allTrucks.push(vehicle);
 		})
@@ -149,7 +149,7 @@ export default {
 				motorConfig: '6x4',
 				motorPower: 20,
 				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas2',
@@ -161,7 +161,7 @@ export default {
 				motorConfig: '6x4',
 				motorPower: 200,
 				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas3',
@@ -173,7 +173,7 @@ export default {
 				motorConfig: '4x2',
 				motorPower: 15,
 				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas4',
@@ -185,7 +185,7 @@ export default {
 				motorConfig: '6x4',
 				motorPower: 201,
 				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas5',
@@ -197,7 +197,7 @@ export default {
 				motorConfig: '4x2',
 				motorPower: 50,
 				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas6',
@@ -209,7 +209,7 @@ export default {
 				motorConfig: '6x4',
 				motorPower: 1,
 				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			},
 			{
 				id: 'buenas7',
@@ -221,7 +221,7 @@ export default {
 				motorConfig: '4x2',
 				motorPower: 90,
 				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
+				imageURL: 'https://www.cn-sinotruk.com/wp-content/uploads/2018/12/Sinotruk-STR-M5G-6x4-tractor-truck.jpg'
 			}
 		);
 	}
