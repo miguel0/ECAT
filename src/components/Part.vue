@@ -6,13 +6,13 @@
                     <small class="form-text text-muted">
                         Parte
                     </small>
-                    <p class="title">{{part.spName}}</p>
+                    <p class="title">{{part.name}}</p>
                 </div>
                 <div v-if="part.name">
                     <small class="form-text text-muted">
-                        Nombre en inglés
+                        Nombre en español
                     </small>
-                    <p class="name">{{part.name}}</p>
+                    <p class="name">{{part.spName}}</p>
                 </div>
                 <div v-if="part.chName">
                     <small class="form-text text-muted">
