@@ -22,7 +22,7 @@
 		</div>
 	</b-container>
 
-	<b-modal ref="partModal" size="lg" :hide-footer="true" title="Vista de parte">
+	<b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
 		<Part v-if="selectedPart" :id_part="selectedPart"/>
 	</b-modal>
 </div>
