@@ -18,7 +18,8 @@
 					></b-form-file>
 					<div class="mt-3 mb-4">Archivo seleccionado: {{ file ? file.name : '' }}</div>
 					<div id="btn_div">
-						<b-button type="submit" variant="primary" style="min-width:100px">Subir</b-button>
+						<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+						<b-button type="submit" variant="primary">Aceptar</b-button>
 					</div>
 				</b-form>
 			</div>
