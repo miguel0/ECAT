@@ -81,7 +81,7 @@ import Navbar from '../components/Navbar';
 const Excel = require('exceljs');
 
 export default {
-	name: "AddData",
+	name: "AddDataFile",
 	data() {
 		return {
 			file: null,
