@@ -41,6 +41,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
+import api from '../services/api/api';
 
 export default {
 	name: 'AddDataManual',
@@ -62,6 +63,20 @@ export default {
 			evt.preventDefault();
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+			} else {
+				api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
+				.then(res => {
+					if(res === true) {
+						window.history.back();
+					} else if(res.includes('value too large for column')) {
+						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+					} else {
+						alert("Ocurrió un error.");
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
 			}
 		}
 	}

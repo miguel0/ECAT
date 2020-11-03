@@ -13,6 +13,7 @@ import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
 import AddDataManual from '../views/AddDataManual';
+import PartSearch from '../views/PartSearch.vue';
 
 Vue.use(VueRouter);
 
@@ -84,6 +85,13 @@ const routes = [
 	{
 		path: '/editpart/:pid',
 		component: EditPart,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/partsearch',
+		component: PartSearch,
 		meta: {
 			requiresAuth: true
 		}
