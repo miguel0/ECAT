@@ -14,7 +14,7 @@
 					</b-form-group>
 
 					<b-form-group label="Nombre en inglés:">
-						<b-form-input v-model="name"></b-form-input>
+						<b-form-input v-model="name" required></b-form-input>
 					</b-form-group>
 
 					<b-form-group label="Nombre en español:">
@@ -70,7 +70,10 @@ export default {
 						window.history.back();
 					} else if(res.includes('value too large for column')) {
 						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+					} else if(res.includes('unique constraint')) {
+						alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
 					} else {
+						console.log(res);
 						alert("Ocurrió un error.");
 					}
 				})

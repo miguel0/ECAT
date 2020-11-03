@@ -33,7 +33,7 @@ export default {
 						},
 						{
                             route: '/adddatamanual',
-                            name: 'Agregar datos manualmente'
+                            name: 'Agregar una parte manualmente'
                         },
                         {
                             route: '/users',
