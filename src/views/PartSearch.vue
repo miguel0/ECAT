@@ -41,6 +41,7 @@ export default {
 	},
 	data() {
 		return {
+			placeholderImg: 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG',
 			allParts: [],
 			partsFound: 0,
 			searchText: '',
@@ -82,7 +83,7 @@ export default {
 		api.partsApi.getAllParts()
 		.then(parts => {
 			for(let i = 0; i < parts.length; i++) {
-				parts[i].imageURL = !parts[i].imageURL ? 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG' : parts[i].imageURL;
+				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
 				this.allParts.push(parts[i]);
 			}
 		});
