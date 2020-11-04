@@ -12,11 +12,7 @@ import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
-<<<<<<< Updated upstream
 import PartSearch from '../views/PartSearch.vue';
-=======
-import EditComponent from '../views/EditComponent';
->>>>>>> Stashed changes
 
 Vue.use(VueRouter);
 
@@ -86,8 +82,8 @@ const routes = [
 		}
 	},
 	{
-		path: '/editcomponent/:cid',
-		component: EditComponent,
+		path: '/partsearch',
+		component: PartSearch,
 		meta: {
 			requiresAuth: true
 		}

@@ -11,16 +11,5 @@ export default {
             .then(res => { return res.data })
             .catch(err => { throw err.response.data })
     },
-	
-	editComponent: (id, name, chName, spName, otherName) => {
-		return axios.put(`/components/${id}`, {
-			name: name,
-			chName: chName,
-			spName: spName,
-			otherName: otherName,
-		})
-			.then(res => { return res.data })
-			.catch(err => { throw err.response.data })
-	}
 
 } 
