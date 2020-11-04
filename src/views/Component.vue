@@ -11,7 +11,7 @@
                     <b-row class="text-secondary">
                         <b-col>{{component.spName}} | {{component.chName}} | {{component.otherName}}</b-col>
                     </b-row>
-                    <b-button size="sm" @click="editComponent(component.localNo)" variant="primary" class="m-1">
+                    <b-button size="sm" @click="editComponent(component.id)" variant="primary" class="m-1">
                         <img src="../assets/img/bxs-edit.svg" />
                     </b-button>
                 </b-col>

@@ -49,14 +49,13 @@ export default {
 		Navbar
 	},
 	created: function() {
-		api.partsApi.getPart(this.$route.params.pid)
-		.then(part => {
-			this.partId = part.id ? part.id : '';
-			this.replaceNo = part.replaceNo ? part.replaceNo : '';
-			this.name = part.name ? part.name : '';
-			this.spName = part.spName ? part.spName : '';
-			this.chName = part.chName ? part.chName : '';
-			this.otherName = part.otherName ? part.otherName : '';
+		api.componentsApi.getComponent(this.$route.params.cid)
+		.then(component => {
+			this.componentId = component.id ? component.id : '';
+			this.name = component.name ? component.name : '';
+			this.spName = component.spName ? component.spName : '';
+			this.chName = component.chName ? component.chName : '';
+			this.otherName = component.otherName ? component.otherName : '';
 		})
 		.catch(err => {
 			console.log(err);
@@ -66,23 +65,20 @@ export default {
 		onSubmit: function(evt) {
 			evt.preventDefault();
 
-			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
-			} else {
-				api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
-				.then(res => {
-					if(res === true) {
-						window.history.back();
-					} else if(res.includes('value too large for column')) {
-						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-					} else {
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
+			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
+			.then(res => {
+				if(res === true) {
+					window.history.back();
+				} else if(res.includes('value too large for column')) {
+					alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+			
 		}
 	}
 }
