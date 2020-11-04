@@ -42,7 +42,8 @@
 </template>
 
 <script>
-    import Navbar from '../components/Navbar'
+    import Navbar from '../components/Navbar';
+    import api from '../services/api/api';
 
     export default {
         name: 'Home',
