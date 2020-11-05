@@ -29,6 +29,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
+import api from '../services/api/api';
 const Excel = require('exceljs');
 
 export default {
@@ -46,9 +47,6 @@ export default {
 			evt.preventDefault();
 
 			this.readXlsx();
-
-			this.file = null;
-			console.log("added file");
 		},
 		async readXlsx() {
 			if (!this.file) {
@@ -130,7 +128,7 @@ export default {
 						v["groups"].push(group);
 					}
 					
-					this.sendToBack(JSON.stringify(v));
+					this.sendToBack(v);
 				}).catch((error)=> {
 					this.sendToBack("readFile fail" + error);
 				})
@@ -138,7 +136,24 @@ export default {
 			fileReader.readAsArrayBuffer(f);
 		},
 		async sendToBack(str) {
-			console.log(str);
+			if (typeof str === 'string' || str instanceof String) {
+				alert('Ocurrió un error al leer el archivo.')
+			} else {
+				api.vehiclesApi.addVehicle(v['id'], v)
+				.then(res => {
+					this.file = null;
+					console.log(res);
+
+					if(res === true) {
+						console.log('yay');
+					} else {
+						alert("Ocurrió un error.");
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			}
 		}
 	}
 }
