@@ -135,11 +135,11 @@ export default {
 			};
 			fileReader.readAsArrayBuffer(f);
 		},
-		async sendToBack(str) {
-			if (typeof str === 'string' || str instanceof String) {
+		async sendToBack(vehicle) {
+			if (typeof vehicle === 'string' || vehicle instanceof String) {
 				alert('Ocurrió un error al leer el archivo.')
 			} else {
-				api.vehiclesApi.addVehicle(v['id'], v)
+				api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
 				.then(res => {
 					this.file = null;
 					console.log(res);
