@@ -28,12 +28,16 @@ export default {
                     name: 'Administración',
                     children: [
                         {
-                            route: '/adddata',
-                            name: 'Agregar Datos'
+                            route: '/adddatafile',
+                            name: 'Agregar datos con un archivo'
+						},
+						{
+                            route: '/adddatamanual',
+                            name: 'Agregar una parte manualmente'
                         },
                         {
                             route: '/users',
-                            name: 'Manejo de Usuarios'
+                            name: 'Manejo de usuarios'
                         }
                     ]
                 },
@@ -42,11 +46,11 @@ export default {
                     children: [
                         {
                             route: '/changepwli',
-                            name: 'Cambiar Contraseña',
+                            name: 'Cambiar contraseña',
                         },
                         {
                             route: 'logout',
-                            name: 'Cerrar Sesión',
+                            name: 'Cerrar sesión',
                         }
                     ]
                 }

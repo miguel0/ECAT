@@ -20,8 +20,14 @@ export default {
 		})
 	},
 
-	test: () => {
-		return axios.get('/parts');
+	addPart: (id, repalceNo, name, chName, spName, otherName) => {
+		return axios.post(`/parts/${id}`, {
+			repalceNo: repalceNo,
+			name: name,
+			chName: chName,
+			spName: spName,
+			otherName: otherName,
+		});
 	}
     
 }
