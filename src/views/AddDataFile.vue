@@ -48,7 +48,6 @@ export default {
 			this.readXlsx();
 
 			this.file = null;
-			this.type1 = null;
 			console.log("added file");
 		},
 		async readXlsx() {

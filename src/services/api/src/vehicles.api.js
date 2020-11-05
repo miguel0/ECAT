@@ -11,5 +11,10 @@ export default {
         return axios.get('/vehicles')
         .then(res => {return res.data})
         .catch(err => { throw err.response.data });
-    }
+	},
+	addVehicle: (id, vehicle) => {
+		return axios.post(`/vehicles/${id}`, vehicle)
+		.then(res => {return res.data})
+        .catch(err => { throw err.response.data });
+	}
 }
