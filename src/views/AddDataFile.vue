@@ -69,13 +69,13 @@ export default {
 
 					v["name"] = index.getCell('A3').value;
 					v["id"] = index.getCell('B3').value;
-					v["sp"] = index.getCell('C3').value;
-					v["other"] = index.getCell('D3').value;
+					v["spName"] = index.getCell('C3').value;
+					v["otherName"] = index.getCell('D3').value;
 					v["model"] = index.getCell('E3').value;
 					v["type"] = index.getCell('F3').value;
-					v["motor"] = index.getCell('G3').value;
-					v["motorp"] = index.getCell('H3').value;
-					v["trans"] = index.getCell('I3').value;
+					v["motorConfig"] = index.getCell('G3').value;
+					v["motorPower"] = index.getCell('H3').value;
+					v["transmission"] = index.getCell('I3').value;
 					v["groups"] = [];
 
 					// get group data
@@ -84,11 +84,11 @@ export default {
 					while((groupn = index.getCell('B' + (++i).toString()).value) != null) {
 						let group = {};
 
-						group["localno"] = index.getCell('A' + i.toString()).value;
+						group["localNo"] = index.getCell('A' + i.toString()).value;
 						group["name"] = groupn;
-						group["sp"] = index.getCell('C' + i.toString()).value;
-						group["ch"] = index.getCell('D' + i.toString()).value;
-						group["other"] = index.getCell('E' + i.toString()).value;
+						group["spName"] = index.getCell('C' + i.toString()).value;
+						group["chName"] = index.getCell('D' + i.toString()).value;
+						group["otherName"] = index.getCell('E' + i.toString()).value;
 						group["components"] = [];
 
 						// get component data
@@ -98,11 +98,12 @@ export default {
 						while((grouphead = ws.getCell('A' + (++j).toString()).value) != null) {
 							let component = {};
 
-							component["localno"] = grouphead.substring(0, grouphead.indexOf(" "));
-							component["ch"] = grouphead.substring(grouphead.indexOf(" ") + 1, grouphead.lastIndexOf("/"));
+							const localNo = grouphead.substring(0, grouphead.indexOf(" ")).toString();
+							component["localNo"] = localNo.substring(localNo.lastIndexOf('.') + 1, localNo.length);
+							component["chName"] = grouphead.substring(grouphead.indexOf(" ") + 1, grouphead.lastIndexOf("/"));
 							component["name"] = grouphead.substring(grouphead.lastIndexOf("/") + 1, grouphead.length);
-							component["sp"] = ws.getCell('G' + j.toString()).value;
-							component["other"] = ws.getCell('H' + j.toString()).value;
+							component["spName"] = ws.getCell('G' + j.toString()).value;
+							component["otherName"] = ws.getCell('H' + j.toString()).value;
 							component["parts"] = [];
 
 							// get part data
@@ -111,14 +112,15 @@ export default {
 							while((localno = ws.getCell('A' + (++j).toString()).value) != null) {
 								let part = {};
 
-								part["localno"] = localno;
-								part["partno"] = ws.getCell('B' + j.toString()).value;
-								part["ch"] = ws.getCell('C' + j.toString()).value;
+								part["localNo"] = localno.toString();
+								part["id"] = ws.getCell('B' + j.toString()).value;
+								part["chName"] = ws.getCell('C' + j.toString()).value;
 								part["name"] = ws.getCell('D' + j.toString()).value;
-								part["qty"] = ws.getCell('E' + j.toString()).value;
+								part["localQty"] = ws.getCell('E' + j.toString()).value;
 								part["remark"] = ws.getCell('F' + j.toString()).value;
-								part["sp"] = ws.getCell('G' + j.toString()).value;
-								part["other"] = ws.getCell('H' + j.toString()).value;
+								part["spName"] = ws.getCell('G' + j.toString()).value;
+								part["otherName"] = ws.getCell('H' + j.toString()).value;
+								part["replaceNo"] = ws.getCell('I' + j.toString()).value;
 
 								component["parts"].push(part);
 							}
@@ -129,12 +131,15 @@ export default {
 						v["groups"].push(group);
 					}
 					
-					console.log(JSON.stringify(v));
+					this.sendToBack(JSON.stringify(v));
 				}).catch((error)=> {
-					console.log("readFile fail", error);
+					this.sendToBack("readFile fail" + error);
 				})
 			};
 			fileReader.readAsArrayBuffer(f);
+		},
+		async sendToBack(str) {
+			console.log(str);
 		}
 	}
 }
