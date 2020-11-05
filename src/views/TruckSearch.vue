@@ -60,6 +60,7 @@ export default {
 	},
 	data() {
 		return {
+			placeholderImg: 'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg',
 			allTrucks: [],
 			trucksFound: 0,
 			searchText: '',
@@ -130,101 +131,105 @@ export default {
 		}
 	},
 	created() {
-		api.vehiclesApi.getVehicle('CYMS18010001')
-		.then(vehicle => {
-			vehicle.imageURL = 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI';
-			vehicle.motorConfig = '6x4';
-			this.allTrucks.push(vehicle);
+		api.vehiclesApi.getAllVehicles()
+		.then(vehicles => {
+			for(let i = 0; i < vehicles.length; i++) {
+				vehicles[i].imageURL = !vehicles[i].imageURL ? this.placeholderImg : vehicles[i].imageURL;
+
+				// TODO: remove this once we make sure that type, motorconfig, motorpower, and transmission exist
+				vehicles[i].motorConfig = !vehicles[i].motorConfig ? '' : vehicles[i].motorConfig;
+				this.allTrucks.push(vehicles[i]);
+			}
+
+			// Placeholder data
+			this.allTrucks.push(
+				{
+					id: 'buenas1',
+					name: 'truck 01',
+					spName: 'buenas--1',
+					otherName: '',
+					model: 'tE/st-1',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 20,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas2',
+					name: 'truck 02',
+					spName: 'buenas--2',
+					otherName: '',
+					model: 'tE/st-2',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 200,
+					transmission: 'AL',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas3',
+					name: 'truck 03',
+					spName: 'buenas--3',
+					otherName: '',
+					model: 'tE/st-3',
+					type: 'MC DIESEL',
+					motorConfig: '4x2',
+					motorPower: 15,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas4',
+					name: 'truck 04',
+					spName: 'buenas--4',
+					otherName: '',
+					model: 'tE/st-4',
+					type: 'MC DIESEL',
+					motorConfig: '6x4',
+					motorPower: 201,
+					transmission: 'HW',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas5',
+					name: 'truck 05',
+					spName: 'buenas--5',
+					otherName: '',
+					model: 'tE/st-5',
+					type: 'MT GAS',
+					motorConfig: '4x2',
+					motorPower: 50,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas6',
+					name: 'truck 06',
+					spName: 'buenas--6',
+					otherName: '',
+					model: 'tE/st-6',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 1,
+					transmission: 'AL',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas7',
+					name: 'truck 07',
+					spName: 'buenas--7',
+					otherName: '',
+					model: 'tE/st-7',
+					type: 'MC DIESEL',
+					motorConfig: '4x2',
+					motorPower: 90,
+					transmission: 'HW',
+					imageURL: this.placeholderImg
+				}
+			);
 		})
 	},
-	mounted() {
-		this.allTrucks.push(
-			{
-				id: 'buenas1',
-				name: 'truck 01',
-				spName: 'buenas--1',
-				otherName: '',
-				model: 'tE/st-1',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 20,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas2',
-				name: 'truck 02',
-				spName: 'buenas--2',
-				otherName: '',
-				model: 'tE/st-2',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 200,
-				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas3',
-				name: 'truck 03',
-				spName: 'buenas--3',
-				otherName: '',
-				model: 'tE/st-3',
-				type: 'MC DIESEL',
-				motorConfig: '4x2',
-				motorPower: 15,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas4',
-				name: 'truck 04',
-				spName: 'buenas--4',
-				otherName: '',
-				model: 'tE/st-4',
-				type: 'MC DIESEL',
-				motorConfig: '6x4',
-				motorPower: 201,
-				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas5',
-				name: 'truck 05',
-				spName: 'buenas--5',
-				otherName: '',
-				model: 'tE/st-5',
-				type: 'MT GAS',
-				motorConfig: '4x2',
-				motorPower: 50,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas6',
-				name: 'truck 06',
-				spName: 'buenas--6',
-				otherName: '',
-				model: 'tE/st-6',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 1,
-				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas7',
-				name: 'truck 07',
-				spName: 'buenas--7',
-				otherName: '',
-				model: 'tE/st-7',
-				type: 'MC DIESEL',
-				motorConfig: '4x2',
-				motorPower: 90,
-				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			}
-		);
-	}
 }
 </script>
 
