@@ -44,7 +44,6 @@ export default {
         PartList
     },
     created: function() {
-        
         api.componentsApi.getComponent(this.$route.params.cid)
         .then(component => {
             component.parts = this.setDefaults(component);

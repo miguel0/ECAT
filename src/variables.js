@@ -1,1 +1,1 @@
-export const apiOrigin = "localhost:3000/";
+export const apiOrigin = "http://localhost:3000/";

@@ -5,7 +5,7 @@ import { auth } from '../firebase';
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
 import RequestPWChange from '../views/RequestPWChange.vue';
-import AddData from '../views/AddData.vue';
+import AddDataFile from '../views/AddDataFile';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import Vehicle from '../views/Vehicle';
@@ -33,8 +33,8 @@ const routes = [
 		}
 	},
 	{
-		path: '/adddata',
-		component: AddData,
+		path: '/adddatafile',
+		component: AddDataFile,
 		meta: {
 			requiresAuth: true
 		}

@@ -6,13 +6,13 @@
                     <small class="form-text text-muted">
                         Parte
                     </small>
-                    <p class="title">{{part.spName}}</p>
+                    <p class="title">{{part.name}}</p>
                 </div>
                 <div v-if="part.name">
                     <small class="form-text text-muted">
-                        Nombre en inglés
+                        Nombre en español
                     </small>
-                    <p class="name">{{part.name}}</p>
+                    <p class="name">{{part.spName}}</p>
                 </div>
                 <div v-if="part.chName">
                     <small class="form-text text-muted">
@@ -43,8 +43,8 @@
                     </small>
                     <p class="partno" id="myInput">{{part.id}}</p>
                 </div>-->
+				<p class="pl-5" style="width:100%;">Se encuentra en:</p>
                 <div class="my_list">
-                    <p style="text-align: center">Se encuentra en:</p>
                     <div class="list_no_title overflow-auto">
                         <b-list-group>
                             <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
@@ -93,7 +93,7 @@ export default {
 	flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 70vh;
+	height: 100%;
     padding-left: 4%;
     padding-right: 4%;
 }
@@ -114,6 +114,7 @@ export default {
     justify-content: start;
     width: 100%;
     height: 100%;
+	max-height: 500px;
     padding-right: 0%;
     margin-bottom: 4%;
 }
@@ -152,6 +153,8 @@ export default {
     padding-right: 0%;
     padding-left: 15%;
     padding-top: 5%;
+	overflow: hidden;
+	overflow-y: scroll;
 }
 .list_no_title {
 	max-height: 50%;

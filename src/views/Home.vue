@@ -25,7 +25,8 @@
                 id="individual-search"
                 img-alt="Card image" 
                 class="text-center position-relative p-2"
-                img-top>
+                img-top
+				@click="goToPart()">
                     <b-card-img 
                     :src="require('../assets/img/test/individual-parts-default.png')">
                     </b-card-img>
@@ -41,20 +42,20 @@
 </template>
 
 <script>
-    import Navbar from '../components/Navbar'
+    import Navbar from '../components/Navbar';
 
     export default {
         name: 'Home',
         components: {
             Navbar
         },
-
         methods:{
-
             goToVehicle(){
                 location.href = "/trucksearch";
+			},
+			goToPart(){
+                location.href = "/partsearch";
             }
-
         }
     }
 </script>
