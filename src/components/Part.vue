@@ -2,35 +2,35 @@
     <b-container style="padding-top: 3%;">
         <div v-if="part" class="ver">
             <div class="hor">
-                <div v-if="part.spName">
+                <div v-if="getName()">
                     <small class="form-text text-muted">
                         Parte
                     </small>
-                    <p class="title">{{part.name}}</p>
+                    <p class="title">{{getName()}}</p>
                 </div>
-                <div v-if="part.name">
+                <div v-if="getSpName()">
                     <small class="form-text text-muted">
                         Nombre en español
                     </small>
-                    <p class="name">{{part.spName}}</p>
+                    <p class="name">{{getSpName()}}</p>
                 </div>
-                <div v-if="part.chName">
+                <div v-if="getChName()">
                     <small class="form-text text-muted">
                         Nombre en chino
                     </small>
-                    <p class="name">{{part.chName}}</p>
+                    <p class="name">{{getChName()}}</p>
                 </div>
-                <div v-if="part.otherName">
+                <div v-if="getOtherName()">
                     <small class="form-text text-muted">
                         Nombre alterno
                     </small>
-                    <p class="name">{{part.otherName}}</p>
+                    <p class="name">{{getOtherName()}}</p>
                 </div>
-                <div v-if="part.replaceNo">
+                <div v-if="getReplaceNo()">
                     <small class="form-text text-muted">
                         Número de reemplazo
                     </small>
-                    <p class="name">{{part.replaceNo}}</p>
+                    <p class="name">{{getReplaceNo()}}</p>
                 </div>
                 <div id="img">
                     <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
@@ -75,16 +75,31 @@ export default {
 		return {
             part: null,
 			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			/*desc: 'Tornillo',
-			partno: 'Q218B0820',
-			en: 'Screw',
-			cn: '内六角圆柱头螺钉',
-			other: 'Tornillo de prueba',
-			parents: [],*/
 			children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH' ]
 		}
+    },
+    methods: {
+        getName() {
+            return this.part.name;
+        },
+        getSpName() {
+            return this.part.spName;
+        },
+        getChName() {
+            return this.part.chName;
+        },
+        getOtherName() {
+            return this.part.otherName;
+        },
+        getId() {
+            return this.part.id;
+        },
+        getReplaceNo() {
+            return this.part.replaceNo;
+        }
     }
 }
+
 </script>
 
 <style scoped>
@@ -101,7 +116,7 @@ export default {
 	display: flex;
 	flex-direction: column;
     align-items: flex-start;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
     padding-left: 0%;
@@ -111,7 +126,7 @@ export default {
 	display: flex;
 	flex-direction: column;
     align-items: flex-end;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
 	max-height: 500px;
