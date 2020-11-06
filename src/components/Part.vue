@@ -116,7 +116,7 @@ export default {
 	display: flex;
 	flex-direction: column;
     align-items: flex-start;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
     padding-left: 0%;
@@ -126,7 +126,7 @@ export default {
 	display: flex;
 	flex-direction: column;
     align-items: flex-end;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
 	max-height: 500px;
