@@ -30,8 +30,8 @@
 			</b-form-group>
 
 			<div class="separate">
-			<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-			<b-button type="submit" variant="primary">Aceptar</b-button>
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
 			</div>
 		</b-form>
 	</div>
@@ -103,9 +103,9 @@ export default {
 	margin: auto;
 }
 .separate{
-    display: flex;
+	display: flex;
 	flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

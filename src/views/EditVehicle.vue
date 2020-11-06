@@ -1,49 +1,49 @@
 <template>
 <div>
-	<Navbar />
-	<div class="form-content p-5">
+    <Navbar />
+    <div class="form-content p-5">
         <h3>Editando vehículo</h3>
         <br>
 		<b-form @submit="onSubmit">
-			<b-form-group label="ID del vehículo:">
-				<b-form-input v-model="vehicleId" readonly></b-form-input>
-			</b-form-group>
+            <b-form-group label="ID del vehículo:">
+                <b-form-input v-model="vehicleId" readonly></b-form-input>
+            </b-form-group>
 
-			<b-form-group label="Nombre en inglés:">
-				<b-form-input required=true v-model="name"></b-form-input>
-			</b-form-group>
+            <b-form-group label="Nombre en inglés:">
+                <b-form-input required=true v-model="name"></b-form-input>
+            </b-form-group>
 
-			<b-form-group label="Nombre en español:">
-				<b-form-input required=true v-model="spName"></b-form-input>
-			</b-form-group>
+            <b-form-group label="Nombre en español:">
+                <b-form-input required=true v-model="spName"></b-form-input>
+            </b-form-group>
 
-			<b-form-group label="Otros nombres:">
-				<b-form-input required=true v-model="otherName"></b-form-input>
-			</b-form-group>
+            <b-form-group label="Otros nombres:">
+                <b-form-input required=true v-model="otherName"></b-form-input>
+            </b-form-group>
 
-			<b-form-group label="Modelo:">
+            <b-form-group label="Modelo:">
                 <b-form-select v-model="model" :options="modelOptions"></b-form-select>
-			</b-form-group>
+            </b-form-group>
 
-			<b-form-group label="Tipo:">
+            <b-form-group label="Tipo:">
                 <b-form-select v-model="type" :options="typeOptions"></b-form-select>
-			</b-form-group>
+            </b-form-group>
 
             <b-form-group label="Configuración del motor:">
                 <b-form-select v-model="motorConfig" :options="motorConfigOptions"></b-form-select>
-			</b-form-group>
+            </b-form-group>
             
             <b-form-group label="Poder del motor:">
                 <b-form-select v-model="motorPower" :options="motorPowerOptions"></b-form-select>
-			</b-form-group>
+            </b-form-group>
 
             <b-form-group label="Transmisión:">
                 <b-form-select v-model="transmission" :options="transmissionOptions"></b-form-select>
 			</b-form-group>
             
             <div class="separate">
-			<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-			<b-button type="submit" variant="primary">Aceptar</b-button>
+			    <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+			    <b-button type="submit" variant="primary">Aceptar</b-button>
             </div>
 		</b-form>
 	</div>
@@ -58,9 +58,9 @@ export default {
 	name: 'EditVehicle',
 	data() {
 		return {
-			vehicleId: null,
-			name: null,
-			spName: null,
+            vehicleId: null,
+            name: null,
+            spName: null,
             otherName: null,
             model: null,
             type: null,
@@ -103,8 +103,8 @@ export default {
 		api.vehiclesApi.getVehicle(this.$route.params.vid)
 		.then(vehicle => {
             this.vehicleId = vehicle.id ? vehicle.id : '';
-			this.name = vehicle.name ? vehicle.name : '';
-			this.spName = vehicle.spName ? vehicle.sp : '';
+            this.name = vehicle.name ? vehicle.name : '';
+            this.spName = vehicle.spName ? vehicle.sp : '';
             this.otherName = vehicle.otherName ? vehicle.otherName : '';
             this.model = vehicle.model ? vehicle.motorPower : '';
             this.type = vehicle.type ? vehicle.type : '';
@@ -150,7 +150,7 @@ export default {
 
 .separate{
     display: flex;
-	flex-direction: row;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
