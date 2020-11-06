@@ -9,7 +9,7 @@ export default {
         return axios.get('/vehicles');
     },
 	editVehicle: (id, name, spName, otherName, model, type, motorConfig, motorPower, transmission) => {
-		return axios.put(`/vehicles/${id}`, {
+        return axios.put(`/vehicles/${id}`, {
             name: name,
             spName: spName,
             otherName: otherName,
