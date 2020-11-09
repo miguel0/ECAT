@@ -14,6 +14,7 @@ import Component from '../views/Component';
 import EditPart from '../views/EditPart';
 import AddDataManual from '../views/AddDataManual';
 import PartSearch from '../views/PartSearch.vue';
+import EditVehicle from '../views/EditVehicle';
 
 Vue.use(VueRouter);
 
@@ -92,6 +93,13 @@ const routes = [
 	{
 		path: '/partsearch',
 		component: PartSearch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/editvehicle/:vid',
+		component: EditVehicle,
 		meta: {
 			requiresAuth: true
 		}
