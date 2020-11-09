@@ -18,7 +18,7 @@
             </b-form-group>
 
             <b-form-group label="Otros nombres:">
-                <b-form-input required=true v-model="otherName"></b-form-input>
+                <b-form-input v-model="otherName"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Modelo:">
@@ -104,7 +104,7 @@ export default {
 		.then(vehicle => {
             this.vehicleId = vehicle.id ? vehicle.id : '';
             this.name = vehicle.name ? vehicle.name : '';
-            this.spName = vehicle.spName ? vehicle.sp : '';
+            this.spName = vehicle.spName ? vehicle.spName : '';
             this.otherName = vehicle.otherName ? vehicle.otherName : '';
             this.model = vehicle.model ? vehicle.motorPower : '';
             this.type = vehicle.type ? vehicle.type : '';
