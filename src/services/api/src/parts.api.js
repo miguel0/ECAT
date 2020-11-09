@@ -14,9 +14,9 @@ export default {
             .catch(err => { throw err.response.data })
 	},
 	
-	editPart: (id, repalceNo, name, chName, spName, otherName) => {
+	editPart: (id, replaceNo, name, chName, spName, otherName) => {
 		return axios.put(`/parts/${id}`, {
-			repalceNo: repalceNo,
+			replaceNo: replaceNo,
 			name: name,
 			chName: chName,
 			spName: spName,
@@ -26,9 +26,9 @@ export default {
 			.catch(err => { throw err.response.data })
 	},
 
-	addPart: (id, repalceNo, name, chName, spName, otherName) => {
+	addPart: (id, replaceNo, name, chName, spName, otherName) => {
 		return axios.post(`/parts/${id}`, {
-			repalceNo: repalceNo,
+			replaceNo: replaceNo,
 			name: name,
 			chName: chName,
 			spName: spName,
