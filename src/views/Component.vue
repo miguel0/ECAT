@@ -11,9 +11,6 @@
                     <b-row class="text-secondary">
                         <b-col>{{component.spName}} | {{component.chName}} | {{component.otherName}}</b-col>
                     </b-row>
-                    <b-button size="sm" @click="editComponent(component.id)" variant="primary" class="m-1">
-                        <img src="../assets/img/bxs-edit.svg" />
-                    </b-button>
                 </b-col>
             </b-row>
             <br>
@@ -44,6 +41,7 @@ export default {
         PartList
     },
     created: function() {
+        
         api.componentsApi.getComponent(this.$route.params.cid)
         .then(component => {
             component.parts = this.setDefaults(component);
@@ -63,10 +61,6 @@ export default {
                 });
             });
             return component.parts;
-        },
-
-        editComponent(id) {
-            location.href = '/editcomponent/' + id;
         }
     }
 }
