@@ -16,6 +16,7 @@ myAxios.interceptors.request.use(
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
+        console.log('Component Test VICTOR & WILSON');
         return config;
     },
     () => {
@@ -26,9 +27,11 @@ myAxios.interceptors.request.use(
 // Response interceptor
 myAxios.interceptors.response.use(
     response => {
+        console.log('Component Test 2 VICTOR & WILSON');
         return response.data;
     },
     async error => {
+        console.log(error);
         const ogRequest = error.config;
         if(error.response.status === 403 && !ogRequest._retry) {
             /*ogRequest._retry = true;
@@ -40,6 +43,7 @@ myAxios.interceptors.response.use(
             // TODO take to login screen
         }
         //TODO: Filter 
+        console.log('Component Test 3 VICTOR & WILSON');
         throw error.response.data;
         
     }
