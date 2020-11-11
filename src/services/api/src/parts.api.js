@@ -3,27 +3,31 @@ import axios from '../config/axios';
 export default {
     
     getAllParts: () => {
-        return axios.get('/parts')
-            .then(res => { return res.data })
-            .catch(err => { throw err.response.data })
+        return axios.get('/parts');
     },
 
     getPart: (id) => {
-        return axios.get(`/parts/${id}`)
-            .then(res => { return res.data })
-            .catch(err => { throw err.response.data })
+        return axios.get(`/parts/${id}`);
 	},
 	
-	editPart: (id, repalceNo, name, chName, spName, otherName) => {
+	editPart: (id, replaceNo, name, chName, spName, otherName) => {
 		return axios.put(`/parts/${id}`, {
-			repalceNo: repalceNo,
+			replaceNo: replaceNo,
 			name: name,
 			chName: chName,
 			spName: spName,
 			otherName: otherName,
 		})
-			.then(res => { return res.data })
-			.catch(err => { throw err.response.data })
+	},
+
+	addPart: (id, replaceNo, name, chName, spName, otherName) => {
+		return axios.post(`/parts/${id}`, {
+			replaceNo: replaceNo,
+			name: name,
+			chName: chName,
+			spName: spName,
+			otherName: otherName,
+		});
 	}
     
 }

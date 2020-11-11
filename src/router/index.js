@@ -5,14 +5,16 @@ import { auth } from '../firebase';
 import SignIn from '../views/SignIn';
 import Home from '../views/Home';
 import RequestPWChange from '../views/RequestPWChange.vue';
-import AddData from '../views/AddData.vue';
+import AddDataFile from '../views/AddDataFile';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
+import AddDataManual from '../views/AddDataManual';
 import PartSearch from '../views/PartSearch.vue';
+import EditVehicle from '../views/EditVehicle';
 
 Vue.use(VueRouter);
 
@@ -33,8 +35,15 @@ const routes = [
 		}
 	},
 	{
-		path: '/adddata',
-		component: AddData,
+		path: '/adddatafile',
+		component: AddDataFile,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/adddatamanual',
+		component: AddDataManual,
 		meta: {
 			requiresAuth: true
 		}
@@ -84,6 +93,13 @@ const routes = [
 	{
 		path: '/partsearch',
 		component: PartSearch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/editvehicle/:vid',
+		component: EditVehicle,
 		meta: {
 			requiresAuth: true
 		}

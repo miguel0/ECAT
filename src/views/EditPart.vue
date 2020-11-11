@@ -2,6 +2,8 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
+		<h3>Editando parte</h3>
+		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Número de parte:">
 				<b-form-input v-model="partId" readonly></b-form-input>
@@ -27,8 +29,10 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-			<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-			<b-button type="submit" variant="primary">Aceptar</b-button>
+			<div class="separate">
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
+			</div>
 		</b-form>
 	</div>
 </div>
@@ -97,5 +101,11 @@ export default {
 .form-content {
 	max-width: 600px;
 	margin: auto;
+}
+.separate{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

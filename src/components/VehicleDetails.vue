@@ -7,6 +7,11 @@
             <b-row class="text-secondary">
                 <b-col>{{vehicle.name}} | {{vehicle.spName}} | {{vehicle.otherName}}</b-col>
             </b-row>
+            <div>
+            <b-button size="sm" @click="editVehicle(vehicle.id)" variant="primary" class="m-1">
+                <img src="../assets/img/bxs-edit.svg" />
+            </b-button>
+            </div>
             <br><br>
             <h4>Detalles</h4>
             <br>
@@ -47,6 +52,10 @@ export default {
     methods: {
         selectGroup: function(selectedGroup) {
             this.$emit('onGroupSelected', selectedGroup);
+        },
+
+        editVehicle(id) {
+            location.href = '/editvehicle/' + id;
         }
     }
 }
