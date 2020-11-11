@@ -12,7 +12,9 @@ import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
-import EditComponent from '../views/EditComponent';
+import AddDataManual from '../views/AddDataManual';
+import PartSearch from '../views/PartSearch.vue';
+import EditVehicle from '../views/EditVehicle';
 
 Vue.use(VueRouter);
 
@@ -35,6 +37,13 @@ const routes = [
 	{
 		path: '/adddatafile',
 		component: AddDataFile,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/adddatamanual',
+		component: AddDataManual,
 		meta: {
 			requiresAuth: true
 		}
@@ -82,8 +91,8 @@ const routes = [
 		}
 	},
 	{
-		path: '/editcomponent/:cid',
-		component: EditComponent,
+		path: '/partsearch',
+		component: PartSearch,
 		meta: {
 			requiresAuth: true
 		}
