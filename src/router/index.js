@@ -87,6 +87,13 @@ const routes = [
 		meta: {
 			requiresAuth: true
 		}
+	},
+	{
+		path: '/editvehicle/:vid',
+		component: EditVehicle,
+		meta: {
+			requiresAuth: true
+		}
 	}
 ];
 

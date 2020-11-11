@@ -13,15 +13,8 @@
 				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
 			</b-form-group>
 
-			<b-form-group id='motor-form' class='mr-4' label='Poder del motor'>
-				<div id='motor-power'>
-					<b-form-group class='mr-1' label='Min'>
-						<b-form-input v-model='motorPowerMin' type='number' :state='motorPowerState'></b-form-input>
-					</b-form-group>
-					<b-form-group label='Max'>
-						<b-form-input v-model='motorPowerMax' type='number' :state='motorPowerState'></b-form-input>
-					</b-form-group>
-				</div>
+			<b-form-group class='mr-4' label='Potencia del motor'>
+				<b-form-select v-model='motorPower' :options='motorPowerOptions'></b-form-select>
 			</b-form-group>
 
 			<b-form-group label='Transmisión'>
@@ -66,8 +59,7 @@ export default {
 			searchText: '',
 			type: '',
 			motorConfig: '',
-			motorPowerMin: '0',
-			motorPowerMax: '1000',
+			motorPower: '',
 			transmission: '',
 			typeOptions: [
 				{ text: 'MT GAS', value: 'MT GAS' },
@@ -76,12 +68,23 @@ export default {
 			],
 			motorConfigOptions: [	
 				{ text: 'Cualquiera', value: '' },
-				{ text: '4x2', value: '4x2' },
-				{ text: '6x4', value: '6x4' }
+				{ text: '6x2', value: '6x2' },
+				{ text: '6x4', value: '6x4' },
+				{ text: '6x6', value: '6x6' },
+				{ text: '8x4', value: '8x4' }
+			],
+			motorPowerOptions: [	
+				{ text: 'Cualquiera', value: '' },
+				{ text: '240', value: '240' },
+				{ text: '280', value: '280' },
+				{ text: '330', value: '330' },
+				{ text: '410', value: '410' },
+				{ text: '430', value: '430' },
+				{ text: '540', value: '540' }
 			],
 			transmissionOptions: [
 				{ text: 'Cualquiera', value: '' },
-				{ text: 'ZH', value: 'ZH' },
+				{ text: 'ZF', value: 'ZF' },
 				{ text: 'HW', value: 'HW' },
 				{ text: 'AL', value: 'AL' }
 			],
@@ -102,8 +105,7 @@ export default {
 					) &&
 					this.allTrucks[i].type.includes(this.type) &&
 					this.allTrucks[i].motorConfig.includes(this.motorConfig) &&
-					this.allTrucks[i].motorPower >= this.motorPowerMin &&
-					this.allTrucks[i].motorPower <= this.motorPowerMax &&
+					this.allTrucks[i].motorPower.toString().includes(this.motorPower) &&
 					this.allTrucks[i].transmission.includes(this.transmission)
 				) {
 					trucks.push(this.allTrucks[i]);
