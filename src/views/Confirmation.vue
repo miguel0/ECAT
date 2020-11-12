@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal id="modal-confirmation" title="CONFIRMAR" hide-footer>  
+        <b-modal id="modal-confirmation" size="lg" title="CONFIRMAR" :hide-footer="true">  
             <head>
                 ¿Está seguro?
             </head>
@@ -17,6 +17,12 @@
 
 <script>
 export default {
+    name: "Confirmation",
+    props: ['modal'],
+    components: {
+        ConfirmationModal
+    },
+
     methods: {
         cancelConfirmation() {
             

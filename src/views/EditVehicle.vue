@@ -43,10 +43,23 @@
             
             <div class="separate">
                 <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-                <b-button type="submit" variant="primary">Aceptar</b-button>
+                <b-button @click="confirm()" variant="primary">Aceptar</b-button>
             </div>
 		</b-form>
 	</div>
+
+    <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h2>
+			Los datos podrían no recuperarse tras realizar esta acción.
+		</h2>
+
+		<b-button class="mt-3" variant="btn btn-primary" block @click="cancelConfirmation()">Cancelar</b-button>
+		<b-button class="mt-2" variant="btn btn-danger" block @click="onSubmit()">Aceptar</b-button>
+	</b-modal>
 </div>
 </template>
 
@@ -117,8 +130,7 @@ export default {
 		})
 	},
 	methods: {
-		onSubmit: function(evt) {
-			evt.preventDefault();
+		onSubmit: function() {
 
 			if(this.vehicleId === this.name) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
@@ -137,6 +149,14 @@ export default {
 					console.log(err);
 				});
 			}
+        },
+        
+        confirm: function(){
+			this.$refs.confirmationModal.show();
+		},
+
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }
