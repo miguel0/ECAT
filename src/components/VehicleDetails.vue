@@ -7,7 +7,7 @@
                     <b-col>{{vehicle.name}} | {{vehicle.spName}} | {{vehicle.otherName}}</b-col>
                 </b-row>
                 <br>
-                <b-button size="sm" @click="editVehicle(vehicle.id)" variant="primary" class="m-1">
+                <b-button v-if="isAdmin" size="sm" @click="editVehicle(vehicle.id)" variant="primary" class="m-1">
                     <img src="../assets/img/bxs-edit.svg" />
                 </b-button>
                 <br><br>
@@ -60,15 +60,27 @@
 </template>
 
 <script>
+import * as fb from '../firebase';
+import api from '../services/api/api';
+
 export default {
     name: "VehicleDetails",
     props: ['vehicle'],
     created() {
-        this.selectDefaultGroup();
+		this.selectDefaultGroup();
+		
+		api.usersApi.getUser(fb.auth.currentUser.uid).then(data => {
+				if (data.role) {
+					this.isAdmin = data.role === 'A' ? true : false;
+				}
+			}).catch(err => {
+				console.log(err);
+		});
     },
     data() {
         return {
-            selectedGroup: null
+			selectedGroup: null,
+			isAdmin: false
         }
     },
     methods: {

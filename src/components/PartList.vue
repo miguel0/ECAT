@@ -13,7 +13,7 @@
             @row-clicked="openModal"
         >
 
-        <template #cell(buttons)="row">
+        <template v-if="isAdmin" #cell(buttons)="row">
             <b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
                 <img src="../assets/img/bxs-edit.svg" />
             </b-button>
@@ -42,6 +42,7 @@
 <script>
 import Part from '../components/Part';
 import api from '../services/api/api';
+import * as fb from '../firebase';
 
 export default {
     name: "PartList",
@@ -51,6 +52,7 @@ export default {
     },
     data() {
         return {
+			isAdmin: false,
 			sortBy: 'localNo',
 			sortDesc: false,
             fields: [
@@ -86,10 +88,6 @@ export default {
                 {
                     key: 'remark',
                     label: 'Remark'
-                },
-                {
-                    key: 'buttons',
-                    label: 'Acciones'
                 }
             ],
             currentPage: 1,
@@ -121,6 +119,22 @@ export default {
 				console.log(err);
 			});
         }
-    }
+	},
+	created() {
+		api.usersApi.getUser(fb.auth.currentUser.uid).then(data => {
+				if (data.role) {
+					this.isAdmin = data.role === 'A' ? true : false;
+					
+					if (this.isAdmin) {
+						this.fields.push({
+							key: 'buttons',
+							label: 'Acciones'
+						});
+					}
+				}
+			}).catch(err => {
+				console.log(err);
+		});
+	}
 }
 </script>
