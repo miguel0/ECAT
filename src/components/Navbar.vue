@@ -15,31 +15,17 @@
 </template>
 
 <script>
+import * as fb from '../firebase';
+import api from '../services/api/api';
+
 export default {
-    name: 'Navbar',
+	name: 'Navbar',
     data() {
         return {
             sections: [
                 {
                     route: '/home',
                     name: 'Búsqueda'
-                },
-                {
-                    name: 'Administración',
-                    children: [
-                        {
-                            route: '/adddatafile',
-                            name: 'Agregar datos con un archivo'
-						},
-						{
-                            route: '/adddatamanual',
-                            name: 'Agregar una parte manualmente'
-                        },
-                        {
-                            route: '/users',
-                            name: 'Manejo de usuarios'
-                        }
-                    ]
                 },
                 {
                     name: 'Manuel Córdoba', // TODO: change, hardcoded name,
@@ -65,6 +51,35 @@ export default {
 				location.href = str;
 			}			
 		}
+	},
+	created() {
+		api.usersApi.getUser(fb.auth.currentUser.uid).then(data => {
+				if (data.role) {
+					const isAdmin = data.role === 'A' ? true : false;
+					
+					if (isAdmin) {
+						this.sections.splice(1, 0, {
+							name: 'Administración',
+							children: [
+								{
+									route: '/adddatafile',
+									name: 'Agregar datos con un archivo'
+								},
+								{
+									route: '/adddatamanual',
+									name: 'Agregar una parte manualmente'
+								},
+								{
+									route: '/users',
+									name: 'Manejo de usuarios'
+								}
+							]
+						});
+					}
+				}
+			}).catch(err => {
+				console.log(err);
+		});
 	}
 }
 </script>

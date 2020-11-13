@@ -1,6 +1,6 @@
 <template>
     <div id="page">
-        <Navbar/>
+        <Navbar />
 		
         <b-card-group id="search-buttons" deck class="p-3">
             
@@ -42,13 +42,18 @@
 </template>
 
 <script>
-    import Navbar from '../components/Navbar';
+	import Navbar from '../components/Navbar';
 
     export default {
         name: 'Home',
         components: {
             Navbar
-        },
+		},
+		data() {
+			return {
+				isAdmin: false
+			}
+		},
         methods:{
             goToVehicle(){
                 location.href = "/trucksearch";
@@ -56,7 +61,7 @@
 			goToPart(){
                 location.href = "/partsearch";
             }
-        }
+		}
     }
 </script>
 

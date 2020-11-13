@@ -28,10 +28,7 @@ const store = new Vuex.Store({
 				logout(commit);
 			} else {
 				// fetch user profile
-				let canContactServer = false;
 				await api.usersApi.getUser(user.uid).then(data => {
-					canContactServer = true;
-
 					if (!data.id) {
 						logout(commit);
 					} else {
@@ -44,12 +41,9 @@ const store = new Vuex.Store({
 						}
 					}
 				}).catch(err => {
+					logout(commit);
 					console.log(err);
 				});
-
-				if (!canContactServer) {
-					logout(commit);
-				}
 			}
 		},
 		async logout({ commit }) {
