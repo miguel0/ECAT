@@ -1,47 +1,61 @@
 <template>
     <div>
-        <b-img src="../assets/img/test/truck.png" fluid rounded center></b-img>
-        <br>
-        <p style="font-size: large;"><b>{{vehicle.id}}</b></p>
-        <div>
-            <b-row class="text-secondary">
-                <b-col>{{vehicle.name}} | {{vehicle.spName}} | {{vehicle.otherName}}</b-col>
-            </b-row>
-            <div>
-            <b-button size="sm" @click="editVehicle(vehicle.id)" variant="primary" class="m-1">
-                <img src="../assets/img/bxs-edit.svg" />
-            </b-button>
-            </div>
-            <br><br>
-            <h4>Detalles</h4>
+        <b-row>
+            <b-col>
+                <h2><b>{{vehicle.id}}</b></h2>
+                <b-row class="text-secondary">
+                    <b-col>{{vehicle.name}} | {{vehicle.spName}} | {{vehicle.otherName}}</b-col>
+                </b-row>
+                <br>
+                <b-button size="sm" @click="editVehicle(vehicle.id)" variant="primary" class="m-1">
+                    <img src="../assets/img/bxs-edit.svg" />
+                </b-button>
+                <br><br>
+                <b-row>
+                    <b-col>
+                        <p><b>Tipo: </b> {{vehicle.type}}</p>
+                        <p><b>Transmisión: </b> {{vehicle.transmission}}</p>
+                    </b-col>
+                    <b-col>
+                        <p><b>Potencia: </b> {{vehicle.motorPower}} HP</p>
+                        <p><b>Configuración: </b> {{vehicle.motorConfig}}</p>
+                    </b-col>
+                </b-row>
+            </b-col>
+            <b-col>
+                <b-img src="../assets/img/test/truck.png" fluid rounded center></b-img>
+            </b-col>
+        </b-row>
+        <br><br>
+        <template v-if="selectedGroup">
+            <h5>Selecciona un grupo para visualizar</h5>
             <br>
             <b-row>
                 <b-col>
-                    <p><b>Tipo: </b> {{vehicle.type}}</p>
-                    <p><b>Transmisión: </b> {{vehicle.transmission}}</p>
-                </b-col>
-                <b-col>
-                    <p><b>Potencia: </b> {{vehicle.motorPower}} HP</p>
-                    <p><b>Configuración: </b> {{vehicle.motorConfig}}</p>
+                    <b-form-select v-model="selectedGroup" @change="selectGroup">
+                        <b-form-select-option
+                            v-for="group of vehicle.groups"
+                            :key="`group-${group.id}`"
+                            :value="group"
+                        >
+                        {{group.localNo}} {{group.name}} | {{group.spName}} | {{group.chName}}
+                        </b-form-select-option>
+                    </b-form-select>
                 </b-col>
             </b-row>
-            <br><br>
-            <h4>Grupos ({{vehicle.groups.length}})</h4>
             <br>
-            <b-list-group class="overflow-auto">
-                <b-list-group-item v-for="group of vehicle.groups" :key="`group-${group.id}`" @click='selectGroup(group)' ref="ref-groups" class="clickable d-flex align-items-center">
-                    <b-row>
-                        <b-col class="text-center">
-                            {{group.localNo}}
-                        </b-col>
-                        <b-col>
-                            <span class="mr-auto">{{group.name}}</span>
-                        </b-col>
-                    </b-row>
-                </b-list-group-item>
-            </b-list-group>
-        </div>
-
+        </template>
+        <template v-else>
+            <br><br>
+            <ion-row class="text-center">
+                <ion-col>
+                    <p class="text-secondary">
+                        No hay grupos asociados a este vehículo.
+                    </p>
+                </ion-col>
+            </ion-row>
+        </template>
+        
     </div>
 </template>
 
@@ -49,13 +63,29 @@
 export default {
     name: "VehicleDetails",
     props: ['vehicle'],
+    created() {
+        this.selectDefaultGroup();
+    },
+    data() {
+        return {
+            selectedGroup: null
+        }
+    },
     methods: {
-        selectGroup: function(selectedGroup) {
-            this.$emit('onGroupSelected', selectedGroup);
+        selectDefaultGroup() {
+            if(this.vehicleHasGroups()) {
+                this.selectedGroup = this.vehicle.groups[0];
+                this.selectGroup(this.selectedGroup);
+            }
         },
-
+        selectGroup: function(selection) {
+            this.$emit('onGroupSelected', selection);
+        },
         editVehicle(id) {
             location.href = '/editvehicle/' + id;
+        },
+        vehicleHasGroups() {
+            return this.vehicle.groups && this.vehicle.groups.length > 0;
         }
     }
 }
