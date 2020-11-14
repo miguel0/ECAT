@@ -1,59 +1,70 @@
 <template>
-    <b-container style="padding-top: 3%;">
-        <div v-if="part" class="ver">
-            <div class="hor">
-                <div v-if="getName()">
-                    <small class="form-text text-muted">
-                        Parte
-                    </small>
-                    <p class="title">{{getName()}}</p>
-                </div>
-                <div v-if="getSpName()">
-                    <small class="form-text text-muted">
-                        Nombre en español
-                    </small>
-                    <p class="name">{{getSpName()}}</p>
-                </div>
-                <div v-if="getChName()">
-                    <small class="form-text text-muted">
-                        Nombre en chino
-                    </small>
-                    <p class="name">{{getChName()}}</p>
-                </div>
-                <div v-if="getOtherName()">
-                    <small class="form-text text-muted">
-                        Nombre alterno
-                    </small>
-                    <p class="name">{{getOtherName()}}</p>
-                </div>
-                <div v-if="getReplaceNo()">
-                    <small class="form-text text-muted">
-                        Número de reemplazo
-                    </small>
-                    <p class="name">{{getReplaceNo()}}</p>
-                </div>
-                <div id="img">
-                    <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
-                </div>
-            </div>
-            <div class="hor-right">
-                <!--<div class="right">
-                    <small class="form-text text-muted">
-                        Número de parte
-                    </small>
-                    <p class="partno" id="myInput">{{part.id}}</p>
-                </div>-->
-				<p class="pl-5" style="width:100%;">Se encuentra en:</p>
-                <div class="my_list">
-                    <div class="list_no_title overflow-auto">
-                        <b-list-group>
-                            <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
-                                <div class="list-hor"><p>{{ i }}</p><p>x20</p></div>
-                            </b-list-group-item>
-                        </b-list-group>
+    <b-container>
+        <div v-if="part">
+            <b-row>
+                <b-col>
+                    <div v-if="getName()">
+                        <p class="title">{{getName()}}</p>
                     </div>
-                </div>
-            </div>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col cols="7" md="6">
+                    <div v-if="getId() || getReplaceNo()">
+                        <b-row>
+                            <b-col v-if="getId()">
+                                <small class="form-text text-muted">
+                                    Número de parte
+                                </small>
+                                <p class="numbers"><b>{{getId()}}</b></p>
+                            </b-col>
+                            <b-col v-if="getReplaceNo()">
+                                <small class="form-text text-muted">
+                                    Número de reemplazo
+                                </small>
+                                <p class="numbers"><b>{{getReplaceNo()}}</b></p>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col cols="6" v-if="getSpName()">
+                                <small class="form-text text-muted">
+                                    Nombre en español
+                                </small>
+                                <p class="numbers">{{getSpName()}}</p>
+                            </b-col>
+                            <b-col cols="6" v-if="getChName()">
+                                <small class="form-text text-muted">
+                                    Nombre en chino
+                                </small>
+                                <p class="numbers">{{getChName()}}</p>
+                            </b-col>
+                            <b-col cols="6" v-if="getOtherName()">
+                                <small class="form-text text-muted">
+                                    Nombre alterno
+                                </small>
+                                <p class="numbers">{{getOtherName()}}</p>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div id="img" class="text-center">
+                        <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
+                    </div>
+                </b-col>
+                <b-col cols="5" md="6">
+                    <!--<p class="pl-5">Se encuentra en:</p>-->
+                    <small class="text-muted">Se encuentra en:</small>
+                    <br><br>
+                    <div>
+                        <div class="list_no_title overflow-auto">
+                            <b-list-group>
+                                <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
+                                    <div class="list-hor numbers"><p>{{ i }}</p><p>x20</p></div>
+                                </b-list-group-item>
+                            </b-list-group>
+                        </div>
+                    </div>
+                </b-col>
+            </b-row>
         </div>
     </b-container>
     
@@ -68,7 +79,6 @@ export default {
     created() {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
-            this.part.replaceNo = '810-62530-4357D'
         });
     },
     data() {
@@ -134,13 +144,13 @@ export default {
     margin-bottom: 4%;
 }
 .title{
-    font-size: 40px;
+    font-size: xx-large;
     font-weight: bold;
     text-align: start;
     margin-right: 0%;
     word-wrap: break-word;
     max-width: 100%;
-    margin-top: 3%;
+    /*margin-top: 3%;*/
     margin-bottom: 3%;
 }
 .partno{
@@ -180,5 +190,11 @@ export default {
 }
 .right{
     text-align: end;
+}
+.overflow-auto {
+	max-height: 400px;
+}
+.numbers {
+    font-size: medium;
 }
 </style>

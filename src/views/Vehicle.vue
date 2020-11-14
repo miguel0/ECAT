@@ -10,13 +10,16 @@
                         @onGroupSelected='switchGroup'
                     />
                 </b-col>
+            </b-row>
+            <b-row>
                 <b-col>
+                    <br>
                     <ComponentList 
                         v-if='selectedGroup && currentLocalNo' 
                         :group='selectedGroup' 
                         :localNoBase='currentLocalNo' 
                     />
-                </b-col> 
+                </b-col>
             </b-row>
             
         </b-container>
@@ -50,12 +53,17 @@ export default {
         .then(data => {
             this.vehicle = data;
         })
-        .then(() => {
+        /*.then(() => {
+            let defaultGroup = null;
             if(this.vehicle.groups.length > 0){
-                let first = this.vehicle.groups[0];
-                return this.switchGroup(first);
+                defaultGroup = this.vehicle.groups[0];
             }
+
+            return this.switchGroup(defaultGroup);
         })
+        .then(result => {
+            console.log("the result: ", result);
+        })*/
         .catch((err) => {
             console.log("axios errur:", err);
         })
@@ -65,10 +73,14 @@ export default {
             // Retrieve group and its components from db.
             return api.groupsApi.getGroup(groupId);
         },
-        switchGroup: function (group) { 
+        switchGroup: function (group) {
             // Receive group with local number. 
             // Retrieve full group and its components.
-            console.log("SELECTED:", group.name);
+
+            if(!group) {
+                return Promise.resolve(false);
+            }
+            
             return this.getGroup(group.id).then(fullGroup => {
                 this.selectedGroup = fullGroup;
                 this.currentLocalNo = group.localNo;
