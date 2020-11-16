@@ -48,17 +48,19 @@
 		</b-form>
 	</div>
 
-    <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación">
+    <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
 		<h1>
 			¿Está seguro?
 		</h1>
 		
-		<h2>
+		<h3>
 			Los datos podrían no recuperarse tras realizar esta acción.
-		</h2>
+		</h3>
 
-		<b-button class="mt-3" variant="btn btn-primary" block @click="cancelConfirmation()">Cancelar</b-button>
-		<b-button class="mt-2" variant="btn btn-danger" block @click="onSubmit()">Aceptar</b-button>
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="warning btn-lg" @click="onSubmit()">Confirmar y editar</b-button>
+		</div>
 	</b-modal>
 </div>
 </template>
