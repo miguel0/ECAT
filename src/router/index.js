@@ -101,7 +101,8 @@ const routes = [
 		path: '/editcomponent/:cid',
 		component: EditComponent,
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			requiresAdmin: true
 		}
 	},
 	{
@@ -110,13 +111,6 @@ const routes = [
 		meta: {
 			requiresAuth: true,
 			requiresAdmin: true
-		}
-	},
-	{
-		path: '/adddatamanual',
-		component: AddDataManual,
-		meta: {
-			requiresAuth: true
 		}
 	},
 	{
@@ -130,7 +124,8 @@ const routes = [
 		path: '/editgroup/:gid',
 		component: EditGroup,
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			requiresAdmin: true
 		}
 	}
 ];
