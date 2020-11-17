@@ -34,7 +34,11 @@
 				@click='goToVehicle(t.id)'
 				>
 				<b-card-text>
-					{{t.name}}
+					<p>{{t.name}}</p>
+					<span class="card-badge"><b-badge>{{t.type}}</b-badge></span>&nbsp;
+					<span class="card-badge"><b-badge>{{t.motorConfig}}</b-badge></span>&nbsp;
+					<span class="card-badge"><b-badge>{{t.motorPower}} HP</b-badge></span>&nbsp;
+					<span class="card-badge"><b-badge>{{t.transmission}}</b-badge></span>
 				</b-card-text>
 			</b-card>
 		</div>
@@ -266,5 +270,8 @@ export default {
 .search-card {
 	max-width: 30%;
 	min-width: 180px;
+}
+.card-badge {
+	font-size: x-large;
 }
 </style>
