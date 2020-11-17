@@ -41,7 +41,7 @@
                         {{group.localNo}} {{group.name}} | {{group.spName}} | {{group.chName}}
                         </b-form-select-option>
                     </b-form-select>
-					<b-button size="sm" @click="editGroup(selectedGroup.id)" variant="primary" class="ml-2">
+					<b-button v-if="isAdmin" size="sm" @click="editGroup(selectedGroup.id)" variant="primary" class="ml-2">
 						<img src="../assets/img/bxs-edit.svg" />
 					</b-button>
                 </b-col>

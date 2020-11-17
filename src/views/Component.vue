@@ -11,7 +11,7 @@
                     <b-row class="text-secondary">
                         <b-col>{{component.spName}} | {{component.chName}} | {{component.otherName}}</b-col>
                     </b-row>
-                    <b-button size="sm" @click="editComponent(component.id)" variant="primary" class="m-1">
+                    <b-button v-if="isAdmin" size="sm" @click="editComponent(component.id)" variant="primary" class="m-1">
                         <img src="../assets/img/bxs-edit.svg" />
                     </b-button>
                 </b-col>
@@ -31,12 +31,14 @@
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
 import PartList from '../components/PartList';
+import * as fb from '../firebase';
 
 export default {
     name: "ATComponent",
     data() {
         return {
-            component: null
+			component: null,
+			isAdmin: false
         }
     },
     components: {
@@ -51,7 +53,15 @@ export default {
         })
         .catch(err => {
             console.log(err);
-        })
+		})
+		
+		api.usersApi.getUser(fb.auth.currentUser.uid).then(data => {
+				if (data.role) {
+					this.isAdmin = data.role === 'A' ? true : false;
+				}
+			}).catch(err => {
+				console.log(err);
+		});
     },
     methods: {
         setDefaults: function(component) {
