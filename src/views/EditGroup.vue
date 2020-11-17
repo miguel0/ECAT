@@ -2,7 +2,7 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
-		<h3>Editando componente</h3>
+		<h3>Editando grupo</h3>
 		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
@@ -21,8 +21,10 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-			<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-			<b-button type="submit" variant="primary">Aceptar</b-button>
+			<div class="separate">
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
+			</div>
 		</b-form>
 	</div>
 </div>
@@ -33,10 +35,10 @@ import Navbar from '../components/Navbar';
 import api from '../services/api/api';
 
 export default {
-	name: 'EditComponent',
+	name: 'EditGroup',
 	data() {
 		return {
-			componentId: null,
+			groupId: null,
 			name: null,
 			spName: null,
 			chName: null,
@@ -47,13 +49,13 @@ export default {
 		Navbar
 	},
 	created: function() {
-		api.componentsApi.getComponent(this.$route.params.cid)
-		.then(component => {
-			this.componentId = component.id ? component.id : '';
-			this.name = component.name ? component.name : '';
-			this.spName = component.spName ? component.spName : '';
-			this.chName = component.chName ? component.chName : '';
-			this.otherName = component.otherName ? component.otherName : '';
+		api.groupsApi.getGroup(this.$route.params.gid)
+		.then(group => {
+			this.groupId = group.id ? group.id : '';
+			this.name = group.name ? group.name : '';
+			this.spName = group.spName ? group.spName : '';
+			this.chName = group.chName ? group.chName : '';
+			this.otherName = group.otherName ? group.otherName : '';
 		})
 		.catch(err => {
 			console.log(err);
@@ -63,7 +65,7 @@ export default {
 		onSubmit: function(evt) {
 			evt.preventDefault();
 
-			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
+			api.groupsApi.editGroup(this.groupId, this.name, this.chName, this.spName, this.otherName)
 			.then(res => {
 				if(res === true) {
 					window.history.back();
@@ -76,7 +78,6 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
-			
 		}
 	}
 }
@@ -86,5 +87,11 @@ export default {
 .form-content {
 	max-width: 600px;
 	margin: auto;
+}
+.separate{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

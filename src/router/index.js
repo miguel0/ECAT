@@ -16,6 +16,7 @@ import EditComponent from '../views/EditComponent';
 import AddDataManual from '../views/AddDataManual';
 import PartSearch from '../views/PartSearch.vue';
 import EditVehicle from '../views/EditVehicle';
+import EditGroup from '../views/EditGroup';
 
 Vue.use(VueRouter);
 
@@ -108,6 +109,13 @@ const routes = [
 	{
 		path: '/partsearch',
 		component: PartSearch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/editgroup/:gid',
+		component: EditGroup,
 		meta: {
 			requiresAuth: true
 		}
