@@ -31,7 +31,7 @@
 
 			<div class="separate">
 				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-				<b-button @click="confirm()" variant="primary">Aceptar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
 			</div>
 		</b-form>
 	</div>
@@ -47,7 +47,7 @@
 
 		<div class="separate">
 			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-			<b-button class="mt-4" variant="warning btn-lg" @click="onSubmit()">Confirmar y editar</b-button>
+			<b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
 		</div>
 	</b-modal>
 
@@ -88,8 +88,12 @@ export default {
 		})
 	},
 	methods: {
-		onSubmit: function() {
+		onSubmit: function(evt) {
+			evt.preventDefault();
+			this.$refs.confirmationModal.show();
+		},
 
+		confirm: function(){
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
@@ -107,10 +111,6 @@ export default {
 					console.log(err);
 				});
 			}
-		},
-
-		confirm: function(){
-			this.$refs.confirmationModal.show();
 		},
 
 		cancelConfirmation: function(){
