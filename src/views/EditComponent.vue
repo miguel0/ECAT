@@ -3,12 +3,8 @@
 	<Navbar />
 	<div class="form-content p-5">
 		<b-form @submit="onSubmit">
-			<b-form-group label="Número de componente:">
-				<b-form-input v-model="componentId" readonly></b-form-input>
-			</b-form-group>
-
 			<b-form-group label="Nombre en inglés:">
-				<b-form-input v-model="name"></b-form-input>
+				<b-form-input v-model="name" required></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
