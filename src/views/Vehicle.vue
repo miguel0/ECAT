@@ -11,10 +11,10 @@
                     />
                 </b-col>
             </b-row>
+            <br>
             <b-row>
-                <b-col>
-                    <br>
-                    <ComponentList 
+                <b-col class="list">
+                    <ComponentList
                         v-if='selectedGroup && currentLocalNo' 
                         :group='selectedGroup' 
                         :localNoBase='currentLocalNo' 
@@ -53,17 +53,6 @@ export default {
         .then(data => {
             this.vehicle = data;
         })
-        /*.then(() => {
-            let defaultGroup = null;
-            if(this.vehicle.groups.length > 0){
-                defaultGroup = this.vehicle.groups[0];
-            }
-
-            return this.switchGroup(defaultGroup);
-        })
-        .then(result => {
-            console.log("the result: ", result);
-        })*/
         .catch((err) => {
             console.log("axios errur:", err);
         })
@@ -91,3 +80,9 @@ export default {
 
 }
 </script>
+<style scoped>
+.list {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+</style>

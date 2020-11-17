@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <div v-if="part">
+        <div v-if="part" class="view">
             <b-row>
                 <b-col>
                     <div v-if="getName()">
@@ -55,7 +55,7 @@
                     <small class="text-muted">Se encuentra en:</small>
                     <br><br>
                     <div>
-                        <div class="list_no_title overflow-auto">
+                        <div class="overflow-auto">
                             <b-list-group>
                                 <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
                                     <div class="list-hor numbers"><p>{{ i }}</p><p>x20</p></div>
@@ -85,7 +85,12 @@ export default {
 		return {
             part: null,
 			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH' ]
+            children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 
+                    'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 
+                    'Camión C9H', 'Camión CAH', 'Camión CBH',
+                    'Camión C9H', 'Camión CAH', 'Camión CBH',
+                    'Camión C9H', 'Camión CAH', 'Camión CBH',
+                    ]
 		}
     },
     methods: {
@@ -192,9 +197,13 @@ export default {
     text-align: end;
 }
 .overflow-auto {
-	max-height: 400px;
+	max-height: 70vh;
 }
 .numbers {
     font-size: medium;
+}
+.view {
+    min-height: 80vh;
+    max-height: 80vh;
 }
 </style>

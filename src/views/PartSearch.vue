@@ -22,22 +22,24 @@
 		</div>
 	</b-container>
 
-	<b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
-		<Part v-if="selectedPart" :id_part="selectedPart"/>
-	</b-modal>
+	<PartModal 
+		ref="modalP"
+		:id_part="selectedPart"
+	/>
+
 </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
-import Part from '../components/Part';
+import PartModal from '../components/PartModal';
 import api from '../services/api/api';
 
 export default {
 	name: 'PartSearch',
 	components: {
 		Navbar,
-		Part
+		PartModal
 	},
 	data() {
 		return {
@@ -76,7 +78,7 @@ export default {
 		},
 		goToPart(partId) {
 			this.selectedPart = partId;
-			this.$refs.partModal.show();
+			this.$refs.modalP.showModal();
 		}
 	},
 	created() {

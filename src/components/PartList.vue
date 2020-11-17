@@ -33,21 +33,23 @@
         >
         </b-pagination>
 
-        <b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
-            <Part v-if="selectedPart" :id_part="selectedPart"/>
-        </b-modal>
+        <PartModal 
+            ref="modalP"
+            :id_part="selectedPart"
+        />
+
     </div>
 </template>
 
 <script>
-import Part from '../components/Part';
 import api from '../services/api/api';
+import PartModal from './PartModal';
 
 export default {
     name: "PartList",
     props: ['parts'],
     components: {
-        Part
+        PartModal
     },
     data() {
         return {
@@ -99,7 +101,7 @@ export default {
     methods: {
         openModal(row) {
             this.selectedPart = row.id;
-            this.$refs.partModal.show();
+            this.$refs.modalP.showModal();
         },
 
         editPart(id) {
