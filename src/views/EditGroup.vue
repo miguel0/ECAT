@@ -2,7 +2,7 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
-		<h3>Editando parte</h3>
+		<h3>Editando grupo</h3>
 		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">

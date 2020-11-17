@@ -2,6 +2,8 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
+		<h3>Editando componente</h3>
+		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input v-model="name" required></b-form-input>

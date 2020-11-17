@@ -31,7 +31,7 @@
             <h5>Selecciona un grupo para visualizar</h5>
             <br>
             <b-row>
-                <b-col>
+                <b-col style="display:flex;">
                     <b-form-select v-model="selectedGroup" @change="selectGroup">
                         <b-form-select-option
                             v-for="group of vehicle.groups"
@@ -41,6 +41,9 @@
                         {{group.localNo}} {{group.name}} | {{group.spName}} | {{group.chName}}
                         </b-form-select-option>
                     </b-form-select>
+					<b-button size="sm" @click="editGroup(selectedGroup.id)" variant="primary" class="ml-2">
+						<img src="../assets/img/bxs-edit.svg" />
+					</b-button>
                 </b-col>
             </b-row>
             <br>
@@ -86,6 +89,9 @@ export default {
         },
         vehicleHasGroups() {
             return this.vehicle.groups && this.vehicle.groups.length > 0;
+		},
+		editGroup(id) {
+			location.href = '/editgroup/' + id;
         }
     }
 }
