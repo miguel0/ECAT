@@ -3,7 +3,7 @@
 	<Navbar />
 	<div class="form-content p-5">
 		<h3>Editando componente</h3>
-        <br>
+		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input v-model="name" required></b-form-input>
@@ -33,10 +33,10 @@
 				style="min-width:500px;"
 			></b-form-file>
 
-            <div class="separate">
-                <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-                <b-button type="submit" variant="primary">Aceptar</b-button>
-            </div>
+			<div class="separate">
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
+			</div>
 		</b-form>
 	</div>
 
@@ -71,7 +71,8 @@ export default {
 			spName: null,
 			chName: null,
 			otherName: null,
-			image: null
+			image: null,
+			imageURL: null
 		}
 	},
 	components: {
@@ -85,6 +86,7 @@ export default {
 			this.spName = component.spName ? component.spName : '';
 			this.chName = component.chName ? component.chName : '';
 			this.otherName = component.otherName ? component.otherName : '';
+			this.imageURL = component.imageURL ? component.imageURL : '';
 		})
 		.catch(err => {
 			alert(err.message);
@@ -96,7 +98,9 @@ export default {
 			this.$refs.confirmationModal.show();
 		},
 		confirm: function(){
-			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
+			// TODO: upload image to object store and get new url
+			
+			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName, this.imageURL)
 			.then(res => {
 				if(res === true) {
 					window.history.back();
@@ -125,9 +129,9 @@ export default {
 	margin: auto;
 }
 .separate{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

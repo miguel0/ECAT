@@ -1,9 +1,9 @@
 <template>
 <div>
-    <Navbar />
-    <div class="form-content p-5">
-        <h3>Editando vehículo</h3>
-        <br>
+	<Navbar />
+	<div class="form-content p-5">
+		<h3>Editando vehículo</h3>
+		<br>
 		<b-form @submit="onSubmit">
             <b-form-group label="ID del vehículo:">
                 <b-form-input v-model="vehicleId" readonly></b-form-input>
@@ -52,15 +52,15 @@
 				required
 				style="min-width:500px;"
 			></b-form-file>
-            
-            <div class="separate">
-                <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-                <b-button type="submit" variant="primary">Aceptar</b-button>
-            </div>
+			
+			<div class="separate">
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
+			</div>
 		</b-form>
 	</div>
 
-    <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
+	<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
 		<h1>
 			¿Está seguro?
 		</h1>
@@ -85,42 +85,43 @@ export default {
 	name: 'EditVehicle',
 	data() {
 		return {
-            vehicleId: null,
-            name: null,
-            spName: null,
-            otherName: null,
-            model: null,
-            type: null,
-            motorConfig: null,
-            motorPower: null,
-            transmission: null,
-            modelOptions: [
-                { value: 'C7H', text: 'C7H' },
-                { value: 'T5G', text: 'T5G' }
-            ],
-            typeOptions: [
-                { value: 'MT GAS', text: 'CNG' },
-                { value: 'MC DIESEL', text: 'Diesel' }
-            ],
-            motorConfigOptions: [
-                { value: '6x2', text: '6x2' },
-                { value: '6x4', text: '6x4' },
-                { value: '6x6', text: '6x6' },
-                { value: '8x4', text: '8x4' }
-            ],
-            motorPowerOptions: [
-                { value: 240, text: '240 HP' },
-                { value: 280, text: '280 HP' },
-                { value: 330, text: '330 HP' },
-                { value: 410, text: '410 HP' },
-                { value: 430, text: '430 HP' },
-                { value: 540, text: '540 HP' }
-            ],
-            transmissionOptions: [
-                { value: 'ZF', text: 'ZF' },
-                { value: 'HW', text: 'HW' },
-                { value: 'AL', text: 'Allison' }
-            ],
+			vehicleId: null,
+			name: null,
+			spName: null,
+			otherName: null,
+			model: null,
+			type: null,
+			motorConfig: null,
+			motorPower: null,
+			transmission: null,
+			imageURL: null,
+			modelOptions: [
+				{ value: 'C7H', text: 'C7H' },
+				{ value: 'T5G', text: 'T5G' }
+			],
+			typeOptions: [
+				{ value: 'MT GAS', text: 'CNG' },
+				{ value: 'MC DIESEL', text: 'Diesel' }
+			],
+			motorConfigOptions: [
+				{ value: '6x2', text: '6x2' },
+				{ value: '6x4', text: '6x4' },
+				{ value: '6x6', text: '6x6' },
+				{ value: '8x4', text: '8x4' }
+			],
+			motorPowerOptions: [
+				{ value: 240, text: '240 HP' },
+				{ value: 280, text: '280 HP' },
+				{ value: 330, text: '330 HP' },
+				{ value: 410, text: '410 HP' },
+				{ value: 430, text: '430 HP' },
+				{ value: 540, text: '540 HP' }
+			],
+			transmissionOptions: [
+				{ value: 'ZF', text: 'ZF' },
+				{ value: 'HW', text: 'HW' },
+				{ value: 'AL', text: 'Allison' }
+			],
 			image: null
 		}
 	},
@@ -138,7 +139,8 @@ export default {
             this.type = vehicle.type ? vehicle.type : '';
             this.motorConfig = vehicle.motorConfig ? vehicle.motorConfig : '';
             this.motorPower = vehicle.motorPower ? vehicle.motorPower : '';
-            this.transmission = vehicle.transmission ? vehicle.transmission : '';
+			this.transmission = vehicle.transmission ? vehicle.transmission : '';
+			this.imageURL = vehicle.imageURL ? vehicle.imageURL : '';
 		})
 		.catch(err => {
 			alert(err.message);
@@ -146,15 +148,17 @@ export default {
 	},
 	methods: {
 		onSubmit: function(evt) {
-            evt.preventDefault();
-            this.$refs.confirmationModal.show();
-        },
-        
-        confirm: function(){
-            if(this.vehicleId === this.name) {
+			evt.preventDefault();
+			this.$refs.confirmationModal.show();
+		},
+		
+		confirm: function(){
+			if(this.vehicleId === this.name) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-				api.vehiclesApi.editVehicle(this.vehicleId, this.name, this.spName, this.otherName, this.model, this.type, this.motorConfig, this.motorPower, this.transmission)
+				// TODO: upload image to object store and get new url
+
+				api.vehiclesApi.editVehicle(this.vehicleId, this.name, this.spName, this.otherName, this.model, this.type, this.motorConfig, this.motorPower, this.transmission, this.imageURL)
 				.then(res => {
 					if(res === true) {
 						window.history.back();
@@ -185,9 +189,9 @@ export default {
 }
 
 .separate{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>
