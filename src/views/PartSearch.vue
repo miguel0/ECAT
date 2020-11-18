@@ -14,7 +14,7 @@
 					v-for='p in filtered'
 					:key='p.id'
 					class='search-card m-3'
-					v-bind:img-src='p.imageURL'
+					v-bind:img-src='getImageUrl(p)'
 					img-top
 					@click='goToPart(p.id)'
 					>
@@ -50,7 +50,6 @@ export default {
 	},
 	data() {
 		return {
-			placeholderImg: 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG',
 			allParts: [],
 			filtered: [],
 			partsFound: 0,
@@ -90,18 +89,19 @@ export default {
 		goToPart(partId) {
 			this.selectedPart = partId;
 			this.$refs.modalP.showModal();
+		},
+		getImageUrl(part) {
+			return part.imageUrl ? part.imageUrl :
+				'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG';
 		}
 	},
 	created() {
 		api.partsApi.getAllParts()
 		.then(parts => {
 
-			for(let i = 0; i < parts.length; i++) {
-				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
-				this.allParts.push(parts[i]);
-				this.filtered.push(parts[i]);
-				this.partsFound = i;
-			}
+			this.allParts = parts;
+			this.filtered = parts;
+			this.partsFound = parts.length;
 			this.hasLoaded = true;
 		})
 		.catch(err => {
