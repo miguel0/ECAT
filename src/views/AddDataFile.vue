@@ -146,6 +146,7 @@ export default {
 					
 					this.sendToBack(v);
 				}).catch((error)=> {
+					console.log('error reading file', error);
 					alert('Ocurrió un error al leer el archivo.');
 					this.file = null;
 				})
