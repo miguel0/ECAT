@@ -3,7 +3,7 @@
 	<Navbar />
 	<div class="form-content p-5">
 		<h3>Editando componente</h3>
-		<br>
+        <br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input v-model="name" required></b-form-input>
@@ -21,10 +21,28 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-			<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-			<b-button type="submit" variant="primary">Aceptar</b-button>
+            <div class="separate">
+                <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+                <b-button type="submit" variant="primary">Aceptar</b-button>
+            </div>
 		</b-form>
 	</div>
+
+	<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Los datos podrían no recuperarse tras realizar esta acción.
+		</h3>
+
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
+		</div>
+	</b-modal>
+
 </div>
 </template>
 
@@ -62,7 +80,9 @@ export default {
 	methods: {
 		onSubmit: function(evt) {
 			evt.preventDefault();
-
+			this.$refs.confirmationModal.show();
+		},
+		confirm: function(){
 			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
 			.then(res => {
 				if(res === true) {
@@ -76,7 +96,10 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
-			
+		},
+
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }
@@ -86,5 +109,11 @@ export default {
 .form-content {
 	max-width: 600px;
 	margin: auto;
+}
+.separate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
