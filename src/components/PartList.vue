@@ -1,43 +1,43 @@
 <template>
-    <div>
-        <b-table 
-            id="partTable" 
-            hover
+	<div>
+		<b-table 
+			id="partTable" 
+			hover
 			small
-            :items='parts' 
-            :fields='fields'
-            per-page="5"
-            :current-page="currentPage"
+			:items='parts' 
+			:fields='fields'
+			per-page="5"
+			:current-page="currentPage"
 			:sort-by.sync="sortBy"
 			:sort-desc.sync="sortDesc"
-            @row-clicked="openModal"
-        >
+			@row-clicked="openModal"
+		>
 
-        <template #cell(buttons)="row">
-            <b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
-                <img src="../assets/img/bxs-edit.svg" />
-            </b-button>
+		<template v-if="isAdmin" #cell(buttons)="row">
+			<b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
+				<img src="../assets/img/bxs-edit.svg" />
+			</b-button>
 
-            <b-button size="sm" @click="confirm(row)" variant="danger" class="m-1">
-                <img src="../assets/img/bxs-trash.svg" />
-            </b-button>
-        </template>
+			<b-button size="sm" @click="confirm(row)" variant="danger" class="m-1">
+				<img src="../assets/img/bxs-trash.svg" />
+			</b-button>
+		</template>
 
-        </b-table>
+		</b-table>
 
-        <b-pagination
-            v-model="currentPage"
-            per-page="5"
-            aria-controls="partTable"
-            :total-rows="parts.length"
-        >
-        </b-pagination>
+		<b-pagination
+			v-model="currentPage"
+			per-page="5"
+			aria-controls="partTable"
+			:total-rows="parts.length"
+		>
+		</b-pagination>
 
-        <b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
-            <Part v-if="selectedPart" :id_part="selectedPart"/>
-        </b-modal>
+		<b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
+			<Part v-if="selectedPart" :id_part="selectedPart"/>
+		</b-modal>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
+		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
 		<h1>
 			¿Está seguro?
 		</h1>
@@ -51,77 +51,75 @@
 			<b-button class="mt-4" variant="danger btn-lg" @click="deletePart(selectedPart)">Confirmar y eliminar</b-button>
 		</div>
 	</b-modal>
-    </div>
+	</div>
 </template>
 
 <script>
 import Part from '../components/Part';
 import api from '../services/api/api';
+import * as fb from '../firebase';
 
 export default {
-    name: "PartList",
-    props: ['parts'],
-    components: {
-        Part
-    },
-    data() {
-        return {
+	name: "PartList",
+	props: ['parts'],
+	components: {
+		Part
+	},
+	data() {
+		return {
+			isAdmin: false,
 			sortBy: 'localNo',
 			sortDesc: false,
-            fields: [
-                {
-                    key: 'localNo',
+			fields: [
+				{
+					key: 'localNo',
 					label: 'No.',
 					sortable: true
-                },
-                {
-                    key: 'id',
-                    label: 'PartNo.'
-                },
-                {
-                    key: 'name',
-                    label: 'Part Name'
-                },
-                {
-                    key: 'chName',
-                    label: '名称'
-                },
-                {
-                    key: 'spName',
-                    label: 'Nombre de Parte'
-                },
-                {
-                    key: 'otherName',
-                    label: 'Nombre de Parte (Alterno)'
-                },
-                {
-                    key: 'localQty',
-                    label: 'Qty'
-                },
-                {
-                    key: 'remark',
-                    label: 'Remark'
-                },
-                {
-                    key: 'buttons',
-                    label: 'Acciones'
-                }
-            ],
-            currentPage: 1,
-            selectedPart: null
-        }
-    },
-    methods: {
-        openModal(row) {
-            this.selectedPart = row.id;
-            this.$refs.partModal.show();
-        },
+				},
+				{
+					key: 'id',
+					label: 'PartNo.'
+				},
+				{
+					key: 'name',
+					label: 'Part Name'
+				},
+				{
+					key: 'chName',
+					label: '名称'
+				},
+				{
+					key: 'spName',
+					label: 'Nombre de Parte'
+				},
+				{
+					key: 'otherName',
+					label: 'Nombre de Parte (Alterno)'
+				},
+				{
+					key: 'localQty',
+					label: 'Qty'
+				},
+				{
+					key: 'remark',
+					label: 'Remark'
+				}
+			],
+			currentPage: 1,
+			selectedPart: null
+		}
+	},
+	methods: {
+		openModal(row) {
+			this.selectedPart = row.id;
+			this.$refs.partModal.show();
+		},
 
-        editPart(id) {
-            location.href = '/editpart/' + id;
-        },
+		editPart(id) {
+			location.href = '/editpart/' + id;
+		},
 
-        deletePart(id) {
+		deletePart(id) {
 			api.componentPartsApi.deleteComponentPart(id)
 			.then(res => {
 				if(res === true) {
@@ -135,16 +133,33 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
-        },
-        confirm: function(row){
-            this.selectedPart = row.item.cpid;
+		},
+		confirm: function(row){
+			this.selectedPart = row.item.cpid;
 			this.$refs.confirmationModal.show();
 		},
-
 		cancelConfirmation: function(){
 			this.$refs.confirmationModal.hide();
 		},
-    }
+	},
+	created() {
+		api.usersApi.getUser(fb.auth.currentUser.uid)
+		.then(data => {
+			if (data.role) {
+				this.isAdmin = data.role === 'A' ? true : false;
+				
+				if (this.isAdmin) {
+					this.fields.push({
+						key: 'buttons',
+						label: 'Acciones'
+					});
+				}
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}
 }
 </script>
 
