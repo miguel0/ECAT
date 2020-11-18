@@ -149,21 +149,23 @@ router.beforeEach((to, from, next) => {
 		return;
 	}
 
-	api.usersApi.getUser(auth.currentUser.uid).then(data => {
-			let isAdmin = false;
+	api.usersApi.getUser(auth.currentUser.uid)
+	.then(data => {
+		let isAdmin = false;
 
-			if (data.role) {
-				isAdmin = data.role === 'A' ? true : false;
-			}
+		if (data.role) {
+			isAdmin = data.role === 'A' ? true : false;
+		}
 
-			if (requiresAdmin && !isAdmin) {
-				next(false);
-			} else {
-				next();
-			}
-		}).catch(err => {
-			console.log(err);
-			next(false)
+		if (requiresAdmin && !isAdmin) {
+			next(false);
+		} else {
+			next();
+		}
+	})
+	.catch(err => {
+		console.log(err);
+		next(false)
 	});
 });
 
