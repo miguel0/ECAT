@@ -4,7 +4,7 @@
 		<b-container v-if='component' style="padding-top: 3%;">
 			<b-row>
 				<b-col>
-					<b-img src="../assets/img/test/component.png" fluid round></b-img>
+					<b-img :src='getImageUrl()' fluid round></b-img>
 				</b-col>
 				<b-col>
 					<h4><b>{{component.name}}</b></h4>
@@ -76,9 +76,12 @@ export default {
 			});
 			return component.parts;
 		},
-
 		editComponent(id) {
 			location.href = '/editcomponent/' + id;
+		},
+		getImageUrl() {
+			return this.component.imageUrl ? this.component.imageUrl :
+				'https://i.pinimg.com/originals/c0/d0/5a/c0d05a83f59b341c9b26a1f56e224059.png';
 		}
 	}
 }

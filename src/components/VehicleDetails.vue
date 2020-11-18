@@ -23,7 +23,7 @@
 				</b-row>
 			</b-col>
 			<b-col>
-				<b-img src="../assets/img/test/truck.png" fluid rounded center></b-img>
+				<b-img :src="getImageUrl()" fluid rounded center></b-img>
 			</b-col>
 		</b-row>
 		<br><br>
@@ -106,6 +106,10 @@ export default {
 		},
 		editGroup(id) {
 			location.href = '/editgroup/' + id;
+		},
+		getImageUrl() {
+			return this.vehicle.imageUrl ? this.vehicle.imageUrl :
+				'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg';
 		}
 	}
 }
