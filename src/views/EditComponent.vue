@@ -2,19 +2,11 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
-		<h3>Editando parte</h3>
-		<br>
+		<h3>Editando componente</h3>
+        <br>
 		<b-form @submit="onSubmit">
-			<b-form-group label="Número de parte:">
-				<b-form-input v-model="partId" readonly></b-form-input>
-			</b-form-group>
-
-			<b-form-group label="Número de reemplazo:">
-				<b-form-input v-model="replaceNo"></b-form-input>
-			</b-form-group>
-
 			<b-form-group label="Nombre en inglés:">
-				<b-form-input v-model="name"></b-form-input>
+				<b-form-input v-model="name" required></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
@@ -29,10 +21,10 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-			<div class="separate">
-				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-				<b-button type="submit" variant="primary">Aceptar</b-button>
-			</div>
+            <div class="separate">
+                <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+                <b-button type="submit" variant="primary">Aceptar</b-button>
+            </div>
 		</b-form>
 	</div>
 
@@ -59,11 +51,10 @@ import Navbar from '../components/Navbar';
 import api from '../services/api/api';
 
 export default {
-	name: 'EditPart',
+	name: 'EditComponent',
 	data() {
 		return {
-			partId: null,
-			replaceNo: null,
+			componentId: null,
 			name: null,
 			spName: null,
 			chName: null,
@@ -74,14 +65,13 @@ export default {
 		Navbar
 	},
 	created: function() {
-		api.partsApi.getPart(this.$route.params.pid)
-		.then(part => {
-			this.partId = part.id ? part.id : '';
-			this.replaceNo = part.replaceNo ? part.replaceNo : '';
-			this.name = part.name ? part.name : '';
-			this.spName = part.spName ? part.spName : '';
-			this.chName = part.chName ? part.chName : '';
-			this.otherName = part.otherName ? part.otherName : '';
+		api.componentsApi.getComponent(this.$route.params.cid)
+		.then(component => {
+			this.componentId = component.id ? component.id : '';
+			this.name = component.name ? component.name : '';
+			this.spName = component.spName ? component.spName : '';
+			this.chName = component.chName ? component.chName : '';
+			this.otherName = component.otherName ? component.otherName : '';
 		})
 		.catch(err => {
 			console.log(err);
@@ -92,30 +82,25 @@ export default {
 			evt.preventDefault();
 			this.$refs.confirmationModal.show();
 		},
-
 		confirm: function(){
-			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
-			} else {
-				api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
-				.then(res => {
-					if(res === true) {
-						window.history.back();
-					} else if(res.includes('value too large for column')) {
-						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-					} else {
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
+			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
+			.then(res => {
+				if(res === true) {
+					window.history.back();
+				} else if(res.includes('value too large for column')) {
+					alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		},
 
 		cancelConfirmation: function(){
 			this.$refs.confirmationModal.hide();
-		},
+		}
 	}
 }
 </script>
@@ -126,9 +111,9 @@ export default {
 	margin: auto;
 }
 .separate{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>

@@ -2,19 +2,11 @@
 <div>
 	<Navbar />
 	<div class="form-content p-5">
-		<h3>Editando parte</h3>
+		<h3>Editando grupo</h3>
 		<br>
 		<b-form @submit="onSubmit">
-			<b-form-group label="Número de parte:">
-				<b-form-input v-model="partId" readonly></b-form-input>
-			</b-form-group>
-
-			<b-form-group label="Número de reemplazo:">
-				<b-form-input v-model="replaceNo"></b-form-input>
-			</b-form-group>
-
 			<b-form-group label="Nombre en inglés:">
-				<b-form-input v-model="name"></b-form-input>
+				<b-form-input v-model="name" required></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
@@ -35,7 +27,6 @@
 			</div>
 		</b-form>
 	</div>
-
 	<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
 		<h1>
 			¿Está seguro?
@@ -50,7 +41,6 @@
 			<b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
 		</div>
 	</b-modal>
-
 </div>
 </template>
 
@@ -59,11 +49,10 @@ import Navbar from '../components/Navbar';
 import api from '../services/api/api';
 
 export default {
-	name: 'EditPart',
+	name: 'EditGroup',
 	data() {
 		return {
-			partId: null,
-			replaceNo: null,
+			groupId: null,
 			name: null,
 			spName: null,
 			chName: null,
@@ -74,14 +63,13 @@ export default {
 		Navbar
 	},
 	created: function() {
-		api.partsApi.getPart(this.$route.params.pid)
-		.then(part => {
-			this.partId = part.id ? part.id : '';
-			this.replaceNo = part.replaceNo ? part.replaceNo : '';
-			this.name = part.name ? part.name : '';
-			this.spName = part.spName ? part.spName : '';
-			this.chName = part.chName ? part.chName : '';
-			this.otherName = part.otherName ? part.otherName : '';
+		api.groupsApi.getGroup(this.$route.params.gid)
+		.then(group => {
+			this.groupId = group.id ? group.id : '';
+			this.name = group.name ? group.name : '';
+			this.spName = group.spName ? group.spName : '';
+			this.chName = group.chName ? group.chName : '';
+			this.otherName = group.otherName ? group.otherName : '';
 		})
 		.catch(err => {
 			console.log(err);
@@ -90,32 +78,26 @@ export default {
 	methods: {
 		onSubmit: function(evt) {
 			evt.preventDefault();
-			this.$refs.confirmationModal.show();
+            this.$refs.confirmationModal.show();
 		},
-
 		confirm: function(){
-			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
-			} else {
-				api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
-				.then(res => {
-					if(res === true) {
-						window.history.back();
-					} else if(res.includes('value too large for column')) {
-						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-					} else {
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
+			api.groupsApi.editGroup(this.groupId, this.name, this.chName, this.spName, this.otherName)
+			.then(res => {
+				if(res === true) {
+					window.history.back();
+				} else if(res.includes('value too large for column')) {
+					alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		},
-
 		cancelConfirmation: function(){
 			this.$refs.confirmationModal.hide();
-		},
+		}
 	}
 }
 </script>
