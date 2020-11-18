@@ -13,15 +13,8 @@
 				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
 			</b-form-group>
 
-			<b-form-group id='motor-form' class='mr-4' label='Poder del motor'>
-				<div id='motor-power'>
-					<b-form-group class='mr-1' label='Min'>
-						<b-form-input v-model='motorPowerMin' type='number' :state='motorPowerState'></b-form-input>
-					</b-form-group>
-					<b-form-group label='Max'>
-						<b-form-input v-model='motorPowerMax' type='number' :state='motorPowerState'></b-form-input>
-					</b-form-group>
-				</div>
+			<b-form-group class='mr-4' label='Potencia del motor'>
+				<b-form-select v-model='motorPower' :options='motorPowerOptions'></b-form-select>
 			</b-form-group>
 
 			<b-form-group label='Transmisión'>
@@ -60,13 +53,13 @@ export default {
 	},
 	data() {
 		return {
+			placeholderImg: 'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg',
 			allTrucks: [],
 			trucksFound: 0,
 			searchText: '',
 			type: '',
 			motorConfig: '',
-			motorPowerMin: '0',
-			motorPowerMax: '1000',
+			motorPower: '',
 			transmission: '',
 			typeOptions: [
 				{ text: 'MT GAS', value: 'MT GAS' },
@@ -75,12 +68,23 @@ export default {
 			],
 			motorConfigOptions: [	
 				{ text: 'Cualquiera', value: '' },
-				{ text: '4x2', value: '4x2' },
-				{ text: '6x4', value: '6x4' }
+				{ text: '6x2', value: '6x2' },
+				{ text: '6x4', value: '6x4' },
+				{ text: '6x6', value: '6x6' },
+				{ text: '8x4', value: '8x4' }
+			],
+			motorPowerOptions: [	
+				{ text: 'Cualquiera', value: '' },
+				{ text: '240', value: '240' },
+				{ text: '280', value: '280' },
+				{ text: '330', value: '330' },
+				{ text: '410', value: '410' },
+				{ text: '430', value: '430' },
+				{ text: '540', value: '540' }
 			],
 			transmissionOptions: [
 				{ text: 'Cualquiera', value: '' },
-				{ text: 'ZH', value: 'ZH' },
+				{ text: 'ZF', value: 'ZF' },
 				{ text: 'HW', value: 'HW' },
 				{ text: 'AL', value: 'AL' }
 			],
@@ -101,8 +105,7 @@ export default {
 					) &&
 					this.allTrucks[i].type.includes(this.type) &&
 					this.allTrucks[i].motorConfig.includes(this.motorConfig) &&
-					this.allTrucks[i].motorPower >= this.motorPowerMin &&
-					this.allTrucks[i].motorPower <= this.motorPowerMax &&
+					this.allTrucks[i].motorPower.toString().includes(this.motorPower) &&
 					this.allTrucks[i].transmission.includes(this.transmission)
 				) {
 					trucks.push(this.allTrucks[i]);
@@ -130,101 +133,105 @@ export default {
 		}
 	},
 	created() {
-		api.vehiclesApi.getVehicle('CYMS18010001')
-		.then(vehicle => {
-			vehicle.imageURL = 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI';
-			vehicle.motorConfig = '6x4';
-			this.allTrucks.push(vehicle);
+		api.vehiclesApi.getAllVehicles()
+		.then(vehicles => {
+			for(let i = 0; i < vehicles.length; i++) {
+				vehicles[i].imageURL = !vehicles[i].imageURL ? this.placeholderImg : vehicles[i].imageURL;
+
+				// TODO: remove this once we make sure that type, motorconfig, motorpower, and transmission exist
+				vehicles[i].motorConfig = !vehicles[i].motorConfig ? '' : vehicles[i].motorConfig;
+				this.allTrucks.push(vehicles[i]);
+			}
+
+			// Placeholder data
+			this.allTrucks.push(
+				{
+					id: 'buenas1',
+					name: 'truck 01',
+					spName: 'buenas--1',
+					otherName: '',
+					model: 'tE/st-1',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 20,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas2',
+					name: 'truck 02',
+					spName: 'buenas--2',
+					otherName: '',
+					model: 'tE/st-2',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 200,
+					transmission: 'AL',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas3',
+					name: 'truck 03',
+					spName: 'buenas--3',
+					otherName: '',
+					model: 'tE/st-3',
+					type: 'MC DIESEL',
+					motorConfig: '4x2',
+					motorPower: 15,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas4',
+					name: 'truck 04',
+					spName: 'buenas--4',
+					otherName: '',
+					model: 'tE/st-4',
+					type: 'MC DIESEL',
+					motorConfig: '6x4',
+					motorPower: 201,
+					transmission: 'HW',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas5',
+					name: 'truck 05',
+					spName: 'buenas--5',
+					otherName: '',
+					model: 'tE/st-5',
+					type: 'MT GAS',
+					motorConfig: '4x2',
+					motorPower: 50,
+					transmission: 'ZH',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas6',
+					name: 'truck 06',
+					spName: 'buenas--6',
+					otherName: '',
+					model: 'tE/st-6',
+					type: 'MT GAS',
+					motorConfig: '6x4',
+					motorPower: 1,
+					transmission: 'AL',
+					imageURL: this.placeholderImg
+				},
+				{
+					id: 'buenas7',
+					name: 'truck 07',
+					spName: 'buenas--7',
+					otherName: '',
+					model: 'tE/st-7',
+					type: 'MC DIESEL',
+					motorConfig: '4x2',
+					motorPower: 90,
+					transmission: 'HW',
+					imageURL: this.placeholderImg
+				}
+			);
 		})
 	},
-	mounted() {
-		this.allTrucks.push(
-			{
-				id: 'buenas1',
-				name: 'truck 01',
-				spName: 'buenas--1',
-				otherName: '',
-				model: 'tE/st-1',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 20,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas2',
-				name: 'truck 02',
-				spName: 'buenas--2',
-				otherName: '',
-				model: 'tE/st-2',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 200,
-				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas3',
-				name: 'truck 03',
-				spName: 'buenas--3',
-				otherName: '',
-				model: 'tE/st-3',
-				type: 'MC DIESEL',
-				motorConfig: '4x2',
-				motorPower: 15,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas4',
-				name: 'truck 04',
-				spName: 'buenas--4',
-				otherName: '',
-				model: 'tE/st-4',
-				type: 'MC DIESEL',
-				motorConfig: '6x4',
-				motorPower: 201,
-				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas5',
-				name: 'truck 05',
-				spName: 'buenas--5',
-				otherName: '',
-				model: 'tE/st-5',
-				type: 'MT GAS',
-				motorConfig: '4x2',
-				motorPower: 50,
-				transmission: 'ZH',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas6',
-				name: 'truck 06',
-				spName: 'buenas--6',
-				otherName: '',
-				model: 'tE/st-6',
-				type: 'MT GAS',
-				motorConfig: '6x4',
-				motorPower: 1,
-				transmission: 'AL',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			},
-			{
-				id: 'buenas7',
-				name: 'truck 07',
-				spName: 'buenas--7',
-				otherName: '',
-				model: 'tE/st-7',
-				type: 'MC DIESEL',
-				motorConfig: '4x2',
-				motorPower: 90,
-				transmission: 'HW',
-				imageURL: 'https://lh3.googleusercontent.com/proxy/hr_WseNeJmg14dsuam2GwPHTZ90_0CM4GZJZ_q6rFbZsnVBKO5QK35BWFKSfSEVZqhRCqI4MoR7SyerJjtUxJNnWZTYmjSBjasbwBt1Ych9lcekYjjoIfm7ykTdIKC6IW54ovE-XOXzaZo2-B0QhpRKnjMCxdsDfyYAI'
-			}
-		);
-	}
 }
 </script>
 

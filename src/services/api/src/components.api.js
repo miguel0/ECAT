@@ -7,9 +7,7 @@ export default {
     },
     
     getComponent: (id) => {
-        return axios.get(`/components/${id}`)
-            .then(res => { return res.data })
-            .catch(err => { throw err.response.data })
-    },
+        return axios.get(`/components/${id}`);
+    }
 
 } 
