@@ -146,30 +146,26 @@ export default {
 					
 					this.sendToBack(v);
 				}).catch((error)=> {
-					this.sendToBack("readFile fail" + error);
+					alert('Ocurrió un error al leer el archivo.');
+					this.file = null;
 				})
 			};
 			fileReader.readAsArrayBuffer(f);
 		},
 		async sendToBack(vehicle) {
-			if (typeof vehicle === 'string' || vehicle instanceof String) {
-				alert('Ocurrió un error al leer el archivo.')
-			} else {
-				api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
-				.then(res => {
-					this.file = null;
-					console.log(res);
+			api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
+			.then(res => {
+				this.file = null;
 
-					if(res === true) {
-						console.log('yay');
-					} else {
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
+				if(res === true) {
+					window.history.back();
+				} else {
+					alert("Ocurrió un error.");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		},
 		confirm: function() {
 			this.readXlsx();
