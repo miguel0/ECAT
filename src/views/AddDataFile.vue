@@ -24,6 +24,22 @@
 				</b-form>
 			</div>
 		</div>
+
+		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Asegúrese de que los datos sean correctos.
+		</h3>
+
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
+		</div>
+	</b-modal>
+
 	</div>
 </template>
 
@@ -46,7 +62,7 @@ export default {
 		onSubmitFile(evt) {
 			evt.preventDefault();
 
-			this.readXlsx();
+			this.$refs.confirmationModal.show();
 		},
 		async readXlsx() {
 			if (!this.file) {
@@ -154,6 +170,12 @@ export default {
 					console.log(err);
 				});
 			}
+		},
+		confirm: function() {
+			this.readXlsx();
+		},
+		cancelConfirmation: function() {
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }
@@ -169,6 +191,12 @@ export default {
 #btn_div {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+}
+.separate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
