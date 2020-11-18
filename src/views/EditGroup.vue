@@ -21,18 +21,6 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-			<p class="mt-3">Imagen a subir:</p>
-			<b-form-file
-				class="mb-4"
-				v-model="image"
-				:state="Boolean(image)"
-				placeholder="Selecciona un archivo o arrástralo aquí..."
-				accept=".jpeg, .jpg, .png"
-				browse-text="Examinar"
-				required
-				style="min-width:500px;"
-			></b-form-file>
-
 			<div class="separate">
 				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
 				<b-button type="submit" variant="primary">Aceptar</b-button>
@@ -68,8 +56,7 @@ export default {
 			name: null,
 			spName: null,
 			chName: null,
-			otherName: null,
-			image: null
+			otherName: null
 		}
 	},
 	components: {
