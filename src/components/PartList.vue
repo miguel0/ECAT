@@ -18,7 +18,7 @@
                 <img src="../assets/img/bxs-edit.svg" />
             </b-button>
 
-            <b-button size="sm" @click="deletePart(row.item.cpid)" variant="danger" class="m-1">
+            <b-button size="sm" @click="confirm(row)" variant="danger" class="m-1">
                 <img src="../assets/img/bxs-trash.svg" />
             </b-button>
         </template>
@@ -36,6 +36,21 @@
         <b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
             <Part v-if="selectedPart" :id_part="selectedPart"/>
         </b-modal>
+
+        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Los datos podrían no recuperarse tras realizar esta acción.
+		</h3>
+
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="danger btn-lg" @click="deletePart(selectedPart)">Confirmar y eliminar</b-button>
+		</div>
+	</b-modal>
     </div>
 </template>
 
@@ -114,13 +129,30 @@ export default {
 				} else if(res.includes('child record found')) {
 					alert('No puede borrar una pieza con subpiezas. Trate borrando esas primero.');
 				} else {
-					alert("Ocurrió un error.");
+					alert("Ocurrió un error." + res + this.selectedPart);
 				}
 			})
 			.catch(err => {
 				console.log(err);
 			});
-        }
+        },
+        confirm: function(row){
+            this.selectedPart = row.item.cpid;
+			this.$refs.confirmationModal.show();
+		},
+
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
+		},
     }
 }
 </script>
+
+<style scoped>
+.separate{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+</style>
