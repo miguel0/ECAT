@@ -80,6 +80,7 @@ export default {
 			spName: null,
 			chName: null,
 			otherName: null,
+			imageURL: null,
 			image: null
 		}
 	},
@@ -95,6 +96,7 @@ export default {
 			this.spName = part.spName ? part.spName : '';
 			this.chName = part.chName ? part.chName : '';
 			this.otherName = part.otherName ? part.otherName : '';
+			this.imageURL = part.imageURL ? part.imageURL : '';
 		})
 		.catch(err => {
 			console.log(err);
@@ -110,7 +112,9 @@ export default {
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-				api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
+				// TODO: upload image to object store and get new url
+				
+				api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
 				.then(res => {
 					if(res === true) {
 						window.history.back();

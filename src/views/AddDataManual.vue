@@ -30,6 +30,18 @@
 						<b-form-input v-model="otherName"></b-form-input>
 					</b-form-group>
 
+					<p class="mt-3">Imagen a subir:</p>
+					<b-form-file
+						class="mb-4"
+						v-model="image"
+						:state="Boolean(image)"
+						placeholder="Selecciona un archivo o arrástralo aquí..."
+						accept=".jpeg, .jpg, .png"
+						browse-text="Examinar"
+						required
+						style="min-width:500px;"
+					></b-form-file>
+
 					<div id="btn_div">
 						<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
 						<b-button type="submit" variant="primary">Aceptar</b-button>
@@ -72,7 +84,9 @@ export default {
 			name: null,
 			spName: null,
 			chName: null,
-			otherName: null
+			otherName: null,
+			imageURL: null,
+			image: null
 		}
 	},
 	methods: {
@@ -84,7 +98,9 @@ export default {
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-				api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
+				// TODO: upload image to object store and get new url
+
+				api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
 				.then(res => {
 					if(res === true) {
 						window.history.back();
@@ -127,9 +143,9 @@ export default {
 	width: 100%;
 }
 .separate{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>
