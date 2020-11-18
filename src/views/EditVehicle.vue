@@ -10,11 +10,11 @@
 			</b-form-group>
 
 			<b-form-group label="Nombre en inglés:">
-				<b-form-input required=true v-model="name"></b-form-input>
+				<b-form-input required v-model="name"></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
-				<b-form-input required=true v-model="spName"></b-form-input>
+				<b-form-input required v-model="spName"></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Otros nombres:">
@@ -41,9 +41,9 @@
 				<b-form-select v-model="transmission" :options="transmissionOptions"></b-form-select>
 			</b-form-group>
 
-			<p class="mt-3">Imagen a subir:</p>
+			<p class="mt-4">Imagen a subir:</p>
 			<b-form-file
-				class="mb-4"
+				class="mb-2"
 				v-model="image"
 				:state="Boolean(image)"
 				placeholder="Selecciona un archivo o arrástralo aquí..."
@@ -52,6 +52,7 @@
 				required
 				style="min-width:500px;"
 			></b-form-file>
+			<b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
 			
 			<div class="separate">
 				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
@@ -95,6 +96,7 @@ export default {
 			motorPower: null,
 			transmission: null,
 			imageURL: null,
+			image: null,
 			modelOptions: [
 				{ value: 'C7H', text: 'C7H' },
 				{ value: 'T5G', text: 'T5G' }
@@ -121,8 +123,7 @@ export default {
 				{ value: 'ZF', text: 'ZF' },
 				{ value: 'HW', text: 'HW' },
 				{ value: 'AL', text: 'Allison' }
-			],
-			image: null
+			]
 		}
 	},
 	components: {
