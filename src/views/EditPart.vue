@@ -14,7 +14,7 @@
 			</b-form-group>
 
 			<b-form-group label="Nombre en inglés:">
-				<b-form-input v-model="name"></b-form-input>
+				<b-form-input v-model="name" required></b-form-input>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
@@ -28,6 +28,18 @@
 			<b-form-group label="Otros nombres:">
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
+
+			<p class="mt-3">Imagen a subir:</p>
+			<b-form-file
+				class="mb-4"
+				v-model="image"
+				:state="Boolean(image)"
+				placeholder="Selecciona un archivo o arrástralo aquí..."
+				accept=".jpeg, .jpg, .png"
+				browse-text="Examinar"
+				required
+				style="min-width:500px;"
+			></b-form-file>
 
 			<div class="separate">
 				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
@@ -67,7 +79,8 @@ export default {
 			name: null,
 			spName: null,
 			chName: null,
-			otherName: null
+			otherName: null,
+			image: null
 		}
 	},
 	components: {
