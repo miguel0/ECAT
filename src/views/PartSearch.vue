@@ -3,23 +3,25 @@
 	<Navbar />
 	<b-container id='content' class='p-5'>
 		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
-
-		<h4>Se encontraron ({{partsFound}}) partes</h4>
-
-		<div id='search-results'>
-			<b-card
-				v-for='p in filter()'
-				:key='p.id'
-				class='search-card m-3'
-				v-bind:img-src='p.imageURL'
-				img-top
-				@click='goToPart(p.id)'
-				>
-				<b-card-text>
-					{{p.name}}
-				</b-card-text>
-			</b-card>
+		
+		<div v-if="hasLoaded">
+			<h4>Se encontraron ({{partsFound}}) partes</h4>
+			<div id='search-results'>
+				<b-card
+					v-for='p in filter()'
+					:key='p.id'
+					class='search-card m-3'
+					v-bind:img-src='p.imageURL'
+					img-top
+					@click='goToPart(p.id)'
+					>
+					<b-card-text>
+						{{p.name}}
+					</b-card-text>
+				</b-card>
+			</div>
 		</div>
+		<LoadingSpinner v-else/>
 	</b-container>
 
 	<PartModal 
@@ -34,12 +36,14 @@
 import Navbar from '../components/Navbar';
 import PartModal from '../components/PartModal';
 import api from '../services/api/api';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default {
 	name: 'PartSearch',
 	components: {
 		Navbar,
-		PartModal
+		PartModal,
+		LoadingSpinner
 	},
 	data() {
 		return {
@@ -47,7 +51,8 @@ export default {
 			allParts: [],
 			partsFound: 0,
 			searchText: '',
-			selectedPart: null
+			selectedPart: null,
+			hasLoaded: false
 		}
 	},
 	methods: {
@@ -88,6 +93,7 @@ export default {
 				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
 				this.allParts.push(parts[i]);
 			}
+			this.hasLoaded = true;
 		});
 	}
 }

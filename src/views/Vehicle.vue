@@ -17,7 +17,8 @@
                     <ComponentList
                         v-if='selectedGroup && currentLocalNo' 
                         :group='selectedGroup' 
-                        :localNoBase='currentLocalNo' 
+                        :localNoBase='currentLocalNo'
+                        :hasLoaded='componentsHaveLoaded'
                     />
                 </b-col>
             </b-row>
@@ -40,7 +41,8 @@ export default {
         return {
             vehicle: null,
             selectedGroup: null,
-            currentLocalNo: null
+            currentLocalNo: null,
+            componentsHaveLoaded: false
         }
     },
     components: {
@@ -70,9 +72,11 @@ export default {
                 return Promise.resolve(false);
             }
             
+            this.componentsHaveLoaded = false;
             return this.getGroup(group.id).then(fullGroup => {
                 this.selectedGroup = fullGroup;
                 this.currentLocalNo = group.localNo;
+                this.componentsHaveLoaded = true;
                 return true;
             });
         }

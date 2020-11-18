@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="hasLoaded">
         <template v-if="hasComponents()">
             <h5>Componentes en <b><i>{{group.name}}</i></b></h5>
             <br>
@@ -45,12 +45,19 @@
             </b-row>
         </template>
     </div>
+    <LoadingSpinner v-else/>
+
 </template>
 
 <script>
+import LoadingSpinner from './LoadingSpinner';
+
 export default {
     name: "ComponentList",
-    props: ['group', 'localNoBase'],
+    components: {
+        LoadingSpinner
+    },
+    props: ['group', 'localNoBase', 'hasLoaded'],
     methods: {
         goToComponent(componentId) {
             window.location.href = `/components/${componentId}`;

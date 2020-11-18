@@ -66,16 +66,21 @@
                 </b-col>
             </b-row>
         </div>
+        <LoadingSpinner v-else/>
     </b-container>
     
-</template>>
+</template>
 
 <script>
 import api from '../services/api/api';
+import LoadingSpinner from './LoadingSpinner';
 
 export default {
     name: 'Part',
     props: ['id_part'],
+    components: {
+        LoadingSpinner
+    },
     created() {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
@@ -90,7 +95,8 @@ export default {
                     'Camión C9H', 'Camión CAH', 'Camión CBH',
                     'Camión C9H', 'Camión CAH', 'Camión CBH',
                     'Camión C9H', 'Camión CAH', 'Camión CBH',
-                    ]
+                    ],
+            hasLoaded: false
 		}
     },
     methods: {
