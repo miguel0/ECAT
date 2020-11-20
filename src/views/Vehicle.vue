@@ -57,7 +57,7 @@ export default {
             this.vehicle = data;
         })
         .catch((err) => {
-            console.log("axios errur:", err);
+            console.log("axios error:", err);
         })
     },
     methods: {

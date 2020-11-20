@@ -9,6 +9,8 @@ import RequestPWChange from '../views/RequestPWChange.vue';
 import AddDataFile from '../views/AddDataFile';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
+import AddUser from "../views/AddUser";
+import EditUser from "../views/EditUser";
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
@@ -63,6 +65,22 @@ const routes = [
 	{
 		path: '/users',
 		component: UserPanel,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/edituser/:id',
+		component: EditUser,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/adduser/',
+		component: AddUser,
 		meta: {
 			requiresAuth: true,
 			requiresAdmin: true
