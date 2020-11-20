@@ -65,7 +65,7 @@ export default {
             console.log("the result: ", result);
         })*/
         .catch((err) => {
-            console.log("axios errur:", err);
+            console.log("axios error:", err);
         })
     },
     methods: {
