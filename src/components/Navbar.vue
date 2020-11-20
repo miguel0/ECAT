@@ -28,7 +28,7 @@ export default {
 					name: 'Búsqueda'
 				},
 				{
-					name: 'Manuel Córdoba', // TODO: change, hardcoded name,
+					name: 'Usuario',
 					children: [
 						{
 							route: '/changepwli',
@@ -56,6 +56,8 @@ export default {
 		api.usersApi.getUser(fb.auth.currentUser.uid)
 		.then(data => {
 			if (data.role) {
+				this.sections[1].name = data.name;
+
 				const isAdmin = data.role === 'A' ? true : false;
 				
 				if (isAdmin) {
