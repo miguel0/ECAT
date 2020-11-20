@@ -16,10 +16,10 @@
                     <b-form-input required v-model="email" type="email"></b-form-input>
                 </b-form-group>
                 <b-form-group label="Contraseña">
-                    <b-form-input v-model="password"></b-form-input>
+                    <b-form-input v-model="password" type="password"></b-form-input>
                 </b-form-group>
                 <b-form-group label="Confirmar contraseña">
-                    <b-form-input v-model="confPassword"></b-form-input>
+                    <b-form-input v-model="confPassword" type="password"></b-form-input>
                 </b-form-group>
                 <b-form-group label="Rol">
                     <b-form-select v-model="role" :options="roles"></b-form-select>
