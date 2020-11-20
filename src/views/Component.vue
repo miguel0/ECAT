@@ -2,6 +2,7 @@
 	<div>
 		<Navbar/>
 		<b-container v-if='component' style="padding-top: 3%;">
+			<b-button id="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
 			<b-row>
 				<b-col>
 					<b-img src="../assets/img/test/component.png" fluid round></b-img>
@@ -87,5 +88,8 @@ export default {
 <style scoped>
 .back {
 	background-color: blueviolet;
+}
+#backBtn{
+	margin-top: -4%;
 }
 </style>

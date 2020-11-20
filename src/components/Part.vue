@@ -57,8 +57,8 @@
                     <div>
                         <div class="list_no_title overflow-auto">
                             <b-list-group>
-                                <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
-                                    <div class="list-hor numbers"><p>{{ i }}</p><p>x20</p></div>
+                                <b-list-group-item v-for="vehicle in part.foundIn" :key="vehicle.id" @click='goToVehicle(vehicle.id)'>
+                                    <div class="list-hor numbers"><p>{{ vehicle.name }}</p></div>
                                 </b-list-group-item>
                             </b-list-group>
                         </div>
@@ -85,7 +85,7 @@ export default {
 		return {
             part: null,
 			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH' ]
+			children: null
 		}
     },
     methods: {
@@ -106,6 +106,12 @@ export default {
         },
         getReplaceNo() {
             return this.part.replaceNo;
+        },
+        getFoundIn(){
+            return this.part.foundIn;
+        },
+        goToVehicle(vehicleId) {
+            window.location.href = `/vehicles/${vehicleId}`;
         }
     }
 }
