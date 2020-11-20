@@ -2,6 +2,7 @@
     <div>
         <Navbar/>
         <b-container style="padding-top: 3%">
+            <b-button id ="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
             <b-row>
                 <b-col>
                     <VehicleDetails 
@@ -88,5 +89,8 @@ export default {
 .list {
     padding-left: 7%;
     padding-right: 7%;
+}
+#backBtn{
+	margin-top: -4%;
 }
 </style>
