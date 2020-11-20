@@ -66,16 +66,21 @@
                 </b-col>
             </b-row>
         </div>
+        <LoadingSpinner v-else/>
     </b-container>
     
 </template>>
 
 <script>
 import api from '../services/api/api';
+import LoadingSpinner from './LoadingSpinner';
 
 export default {
     name: 'Part',
     props: ['id_part'],
+    components: {
+        LoadingSpinner
+    },
     created() {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
