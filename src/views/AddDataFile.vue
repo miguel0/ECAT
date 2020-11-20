@@ -105,10 +105,27 @@ export default {
 						group["components"] = [];
 
 						// get component data
-						let ws = wb.getWorksheet(groupn);
-						let j = 1;
+						let ws = wb.getWorksheet(group["localNo"] + " " + groupn);
+						let j = 0;
 						let grouphead = "";
-						while((grouphead = ws.getCell('A' + (++j).toString()).value) != null) {
+						const compLimit = 100;
+						for (;;) {
+							let noMoreComps = true;
+							for (let searchComp = j; searchComp < j + compLimit; searchComp++) {
+								if (
+									ws.getCell('A' + searchComp.toString()).value != null
+									&& ws.getCell('A' + (searchComp + 1).toString()).value != null
+								) {
+									j = searchComp;
+									noMoreComps = false;
+									break;
+								}
+							}
+							
+							if (noMoreComps) {
+								break;
+							}
+
 							let component = {};
 
 							const localNo = grouphead.substring(0, grouphead.indexOf(" ")).toString();
@@ -135,15 +152,44 @@ export default {
 								part["otherName"] = ws.getCell('H' + j.toString()).value;
 								part["replaceNo"] = ws.getCell('I' + j.toString()).value;
 
+								if (part["id"] === part["replaceNo"]) {
+									console.log('Error en el grupo: '+ groupn + ' - en la fila: ' + j.toString());
+									return;
+								}
+
 								component["parts"].push(part);
+
+								if (ws.getCell('A' + (j+1).toString()).value === ws.getCell('B' + (j+1).toString()).value) {
+									let newComp = true;
+									for (let searchComp = ++j; searchComp < j + compLimit; searchComp++) {
+										if (
+											ws.getCell('A' + searchComp.toString()).value != null
+											&& ws.getCell('A' + (searchComp + 1).toString()).value != null
+										) {
+											if (ws.getCell('A' + searchComp.toString()).value === grouphead) {
+												j = searchComp + 2;
+												newComp = false;
+											} else {
+												j = searchComp - 1;
+											}
+											break;
+										}
+									}
+
+									if (newComp) {
+										break;
+									}
+								}
 							}
 
 							group["components"].push(component);
+							j++;
 						}
 
 						v["groups"].push(group);
 					}
 					
+					console.log('sent to back');
 					this.sendToBack(v);
 				}).catch((error)=> {
 					console.log('error reading file', error);
