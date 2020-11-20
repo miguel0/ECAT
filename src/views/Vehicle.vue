@@ -2,6 +2,7 @@
     <div>
         <Navbar/>
         <b-container style="padding-top: 3%">
+            <b-button id ="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
             <b-row>
                 <b-col>
                     <VehicleDetails 
@@ -11,13 +12,14 @@
                     />
                 </b-col>
             </b-row>
+            <br>
             <b-row>
-                <b-col>
-                    <br>
-                    <ComponentList 
+                <b-col class="list">
+                    <ComponentList
                         v-if='selectedGroup && currentLocalNo' 
                         :group='selectedGroup' 
-                        :localNoBase='currentLocalNo' 
+                        :localNoBase='currentLocalNo'
+                        :hasLoaded='componentsHaveLoaded'
                     />
                 </b-col>
             </b-row>
@@ -40,7 +42,8 @@ export default {
         return {
             vehicle: null,
             selectedGroup: null,
-            currentLocalNo: null
+            currentLocalNo: null,
+            componentsHaveLoaded: false
         }
     },
     components: {
@@ -53,19 +56,8 @@ export default {
         .then(data => {
             this.vehicle = data;
         })
-        /*.then(() => {
-            let defaultGroup = null;
-            if(this.vehicle.groups.length > 0){
-                defaultGroup = this.vehicle.groups[0];
-            }
-
-            return this.switchGroup(defaultGroup);
-        })
-        .then(result => {
-            console.log("the result: ", result);
-        })*/
         .catch((err) => {
-            console.log("axios errur:", err);
+            console.log("axios error:", err);
         })
     },
     methods: {
@@ -81,9 +73,11 @@ export default {
                 return Promise.resolve(false);
             }
             
+            this.componentsHaveLoaded = false;
             return this.getGroup(group.id).then(fullGroup => {
                 this.selectedGroup = fullGroup;
                 this.currentLocalNo = group.localNo;
+                this.componentsHaveLoaded = true;
                 return true;
             });
         }
@@ -91,3 +85,12 @@ export default {
 
 }
 </script>
+<style scoped>
+.list {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+#backBtn{
+	margin-top: -4%;
+}
+</style>

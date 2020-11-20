@@ -1,10 +1,5 @@
 <template>
-    <div>
-        <!--<h3><b>{{localNoBase}} {{group.name}}</b></h3>
-        <b-row class="text-secondary">
-            <b-col>{{group.spName}} | {{group.chName}} | {{group.otherName}}</b-col>
-        </b-row>
-        <br><br>-->
+    <div v-if="hasLoaded">
         <template v-if="hasComponents()">
             <h5>Componentes en <b><i>{{group.name}}</i></b></h5>
             <br>
@@ -50,12 +45,19 @@
             </b-row>
         </template>
     </div>
+    <LoadingSpinner v-else/>
+
 </template>
 
 <script>
+import LoadingSpinner from './LoadingSpinner';
+
 export default {
     name: "ComponentList",
-    props: ['group', 'localNoBase'],
+    components: {
+        LoadingSpinner
+    },
+    props: ['group', 'localNoBase', 'hasLoaded'],
     methods: {
         goToComponent(componentId) {
             window.location.href = `/components/${componentId}`;

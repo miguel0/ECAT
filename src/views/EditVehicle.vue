@@ -10,11 +10,11 @@
             </b-form-group>
 
             <b-form-group label="Nombre en inglés:">
-                <b-form-input required=true v-model="name"></b-form-input>
+                <b-form-input required v-model="name"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Nombre en español:">
-                <b-form-input required=true v-model="spName"></b-form-input>
+                <b-form-input required v-model="spName"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Otros nombres:">

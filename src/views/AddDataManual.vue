@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
+		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de inserción">
 		<h1>
 			¿Está seguro?
 		</h1>
