@@ -4,14 +4,14 @@
 	<b-container id='content' class='p-5'>
 		<b-form @submit="filter">
 			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
-			<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
+			<b-button class="mb-2" type="submit" variant="primary">Buscar</b-button>	
 		</b-form>
 		
 		<div v-if="hasLoaded">
 			<h4>Se encontraron ({{partsFound}}) partes</h4>
 			<div id='search-results'>
 				<b-card
-					v-for='p in filter()'
+					v-for='p in filtered'
 					:key='p.id'
 					class='search-card m-3'
 					v-bind:img-src='p.imageURL'
@@ -60,7 +60,9 @@ export default {
 		}
 	},
 	methods: {
-		filter() {
+		filter(evt) {
+			evt.preventDefault();
+
 			let parts = [];
 			for(let i = 0; i < this.allParts.length; i++) {
 				const search = this.getSimpleString(this.searchText);
@@ -96,6 +98,8 @@ export default {
 			for(let i = 0; i < parts.length; i++) {
 				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
 				this.allParts.push(parts[i]);
+				this.filtered.push(parts[i]);
+				this.partsFound = i;
 			}
 			this.hasLoaded = true;
 		});
