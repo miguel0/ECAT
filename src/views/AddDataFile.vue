@@ -189,8 +189,7 @@ export default {
 
 						v["groups"].push(group);
 					}
-					
-					console.log('sent to back');
+					console.log(v);
 					this.sendToBack(v);
 				}).catch((error)=> {
 					console.log('error reading file', error);
@@ -213,7 +212,7 @@ export default {
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				alert("Ocurrió un error: " + err)
 			});
 		},
 		confirm: function() {

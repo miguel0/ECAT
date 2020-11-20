@@ -2,7 +2,10 @@
 <div>
 	<Navbar />
 	<b-container id='content' class='p-5'>
-		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+		<b-form @submit="filter">
+			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+			<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
+		</b-form>
 
 		<h4>Se encontraron ({{partsFound}}) partes</h4>
 
@@ -43,6 +46,7 @@ export default {
 		return {
 			placeholderImg: 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG',
 			allParts: [],
+			filtered: [],
 			partsFound: 0,
 			searchText: '',
 			selectedPart: null
@@ -65,7 +69,7 @@ export default {
 				}
 			}
 			this.partsFound = parts.length;
-			return parts;
+			this.filtered = parts;
 		},
 		getSimpleString(str) {
 			return !str ? '' : str.replaceAll('/', '')
