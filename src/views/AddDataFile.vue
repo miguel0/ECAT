@@ -117,6 +117,7 @@ export default {
 									&& ws.getCell('A' + (searchComp + 1).toString()).value != null
 								) {
 									j = searchComp;
+									grouphead = ws.getCell('A' + searchComp.toString()).value;
 									noMoreComps = false;
 									break;
 								}
@@ -202,6 +203,7 @@ export default {
 		async sendToBack(vehicle) {
 			api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
 			.then(res => {
+				console.log(res);
 				this.file = null;
 
 				if(res === true) {
