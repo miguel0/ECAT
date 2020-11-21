@@ -10,7 +10,7 @@
 
 				<b-form-group>
 					<b-form-input id="bottom" class="input" v-model="form.password" type="password" placeholder="Contraseña" required></b-form-input>
-				</b-form-group>		
+				</b-form-group>
 
 				<b-button id="submit" type="submit" variant="primary">Iniciar sesión</b-button>		
 			</b-form>
@@ -35,10 +35,26 @@ export default {
 	methods: {
 		onSubmit(evt) {
 			evt.preventDefault();
-			this.$store.dispatch('login', {
-				email: this.form.email,
-				password: this.form.password
-			});
+            this.$store.dispatch('login', {
+                email: this.form.email,
+                password: this.form.password
+            })
+            .catch((err) => {
+                switch (err.code) {
+                    case "auth/wrong-password":
+                        alert("La contraseña es inválida o el usuario no tiene contraseña.")
+                        break;
+                    case "auth/user-not-found":
+                        alert("No se encontró al usuario.")
+                        break;
+                    case "auth/too-many-requests":
+                        alert("El usuario ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
+                        break;
+                    default:
+                        console.log(err)
+                        alert("Hubo un error al iniciar sesión.")
+                }
+            });
 		}
 	}
 }
