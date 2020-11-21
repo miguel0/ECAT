@@ -1,78 +1,45 @@
 <template>
 	<div>
 		<Navbar />
-		<b-container id="table" class="bv-example-row" fluid>
-			<b-row>
-				<b-col class="add_option" id="file">
-					<div class="my_form cont">
-						<h2>Subir con archivo</h2>
-						<div id="file_add" class="cont">
-							<p>Archivo de Excel a subir:</p>
-							<b-form @submit="onSubmitFile">
-								<b-form-file
-									v-model="file"
-									:state="Boolean(file)"
-									placeholder="Selecciona un archivo o arrástralo aquí..."
-									drop-placeholder="Drop file here..."
-									accept=".xlsx"
-									browse-text="Examinar"
-									required
-								></b-form-file>
-								<div class="mt-3">Archivo seleccionado: {{ file ? file.name : '' }}</div>
-
-								<b-form-group id="type" label="Tipo:">
-									<b-form-select
-										v-model="type1"
-										:options="types"
-										required
-									></b-form-select>
-								</b-form-group>
-
-								<b-button class="my_submit" type="submit" variant="primary">Subir</b-button>
-							</b-form>
-						</div>
+		<div id="content" class="mt-5">
+			<h2>Subir usando un archivo</h2>
+			<div>
+				<p class="mt-3">Archivo de Excel a subir:</p>
+				<b-form @submit="onSubmitFile">
+					<b-form-file
+						v-model="file"
+						:state="Boolean(file)"
+						placeholder="Selecciona un archivo o arrástralo aquí..."
+						drop-placeholder="Drop file here..."
+						accept=".xlsx"
+						browse-text="Examinar"
+						required
+						style="min-width:500px;"
+					></b-form-file>
+					<div class="mt-3 mb-4">Archivo seleccionado: {{ file ? file.name : '' }}</div>
+					<div id="btn_div">
+						<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+						<b-button type="submit" variant="primary">Aceptar</b-button>
 					</div>
-				</b-col>
-				<b-col class="add_option" id="manual">
-					<div class="my_form cont cont">
-						<h2>Subir manualmente</h2>
-						<div id="manual_add">
-							<b-form @submit="onSubmitManual">
-								<b-form-group class="manual_input" label="Nombre del elemento:">
-									<b-form-input
-										v-model="name"
-										required
-										placeholder="Nombre"
-									></b-form-input>
-								</b-form-group>
+				</b-form>
+			</div>
+		</div>
 
-								<b-form-group class="manual_input" label="ID del elemento:">
-									<b-form-input
-										v-model="id"
-										required
-										placeholder="ID"
-									></b-form-input>
-								</b-form-group>
+		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Asegúrese de que los datos sean correctos.
+		</h3>
 
-								<b-form-group id="type" label="Tipo:">
-									<b-form-select
-										v-model="type2"
-										:options="types"
-										required
-									></b-form-select>
-								</b-form-group>
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
+		</div>
+	</b-modal>
 
-								<b-button class="my_submit" type="submit" variant="primary">Subir</b-button>
-							</b-form>
-						</div>
-					</div>
-				</b-col>
-			</b-row>
-		</b-container>
-
-		<b-modal id="modal" ok-only>
-			<p class="my-4">AGREGADO</p>
-		</b-modal>
 	</div>
 </template>
 
@@ -81,15 +48,10 @@ import Navbar from '../components/Navbar';
 const Excel = require('exceljs');
 
 export default {
-	name: "AddData",
+	name: "AddDataFile",
 	data() {
 		return {
-			file: null,
-			type1: null,
-			name: "",
-			id: "",
-			type2: null,
-			types: [{ text: 'Selecciona uno', value: null }, 'Unidad', 'Grupo', 'Componente', 'Parte'],
+			file: null
 		}
 	},
 	components: {
@@ -98,20 +60,7 @@ export default {
 	methods: {
 		onSubmitFile(evt) {
 			evt.preventDefault();
-
-			this.readXlsx();
-
-			this.file = null;
-			this.type1 = null;
-			this.$bvModal.show("modal");
-		},
-		onSubmitManual(evt) {
-			evt.preventDefault();
-			console.log("name: " + this.name + " id: " + this.id + " type " + this.type1);
-			this.name = "";
-			this.id = "";
-			this.type2 = null;
-			this.$bvModal.show("modal");
+			this.$refs.confirmationModal.show();
 		},
 		async readXlsx() {
 			if (!this.file) {
@@ -197,51 +146,37 @@ export default {
 				})
 			};
 			fileReader.readAsArrayBuffer(f);
+		},
+		confirm: function(){
+			this.readXlsx();
+
+			this.file = null;
+			this.type1 = null;
+			console.log("added file");
+		},
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }
 </script>
 
 <style scoped>
-#table {
-	padding-top: 5%;
-	padding-left: 15%;
-	padding-right: 15%;
+#content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
-#manual {
-	border-left: solid thin lightgray;
+#btn_div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
-.my_form {
-	padding-top: 5%;
-	padding-left: 5%;
-	padding-bottom: 10%;
-}
-#file_add {
-	padding-top: 10%;
-}
-#type {
-	margin-top: 7%;
-	width: 35%;
-}
-.my_submit {
-	min-width: 130px;
-	margin-top: 5%;
-	position: absolute;
-	bottom: 5%;
-}
-#manual_add {
-	padding-top: 10%;
-}
-.manual_input {
-	margin-top: 1.8%;
-}
-.cont {
-	height: 100%;
-}
-.manual_input {
-	max-width: 400px;
-}
-#type {
-	margin-bottom: 50px;
+.separate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
