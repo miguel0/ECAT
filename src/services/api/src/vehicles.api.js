@@ -22,5 +22,11 @@ export default {
             motorPower: motorPower,
             transmission: transmission
 		})
-	}
+	},
+
+    editVehicleImage: (id, imageUrl) => {
+        return axios.put(`/vehicles/pushimg${id}`, {
+            imageUrl: imageUrl
+        })
+    }
 }

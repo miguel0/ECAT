@@ -20,6 +20,12 @@ export default {
 		})
 	},
 
+	editPartImage: (id, imageUrl)  => {
+		return axios.put(`/parts/pushimg${id}`, {
+			imageUrl: imageUrl,
+		})
+	},
+
 	addPart: (id, replaceNo, name, chName, spName, otherName) => {
 		return axios.post(`/parts/${id}`, {
 			replaceNo: replaceNo,

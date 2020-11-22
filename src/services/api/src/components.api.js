@@ -17,5 +17,11 @@ export default {
 			spName: spName,
 			otherName: otherName,
 		})
+	},
+
+	editComponentImage: (id, imageUrl) => {
+		return axios.put(`/components/pushimg${id}`, {
+			imageUrl: imageUrl
+		})
 	}
 } 
