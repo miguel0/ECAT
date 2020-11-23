@@ -73,6 +73,8 @@ export default {
 			var fileReader = new FileReader();
 			fileReader.onload = (e) => {
 				const buffer = e.target.result;
+				let errorMsg = 'Ocurrió un error leyendo el archivo.';
+				
 				workbook.xlsx.load(buffer).then(async (wb)=> {
 					console.log("readFile success");
 					const index = wb.getWorksheet('Indice');
@@ -127,6 +129,7 @@ export default {
 								break;
 							}
 
+							errorMsg = 'Ocurrió un error leyendo el grupo: ' + grupn + ' en la fila ' + j.toString();
 							let component = {};
 
 							const localNo = grouphead.substring(0, grouphead.indexOf(" ")).toString();
@@ -141,6 +144,7 @@ export default {
 							j += 2;
 							let localno = "";
 							while((localno = ws.getCell('A' + (++j).toString()).value) != null) {
+								errorMsg = 'Ocurrió un error leyendo el grupo: ' + grupn + ' en la fila: ' + j.toString();
 								let part = {};
 
 								part["localNo"] = localno.toString();
@@ -154,7 +158,7 @@ export default {
 								part["replaceNo"] = ws.getCell('I' + j.toString()).value;
 
 								if (part["id"] === part["replaceNo"]) {
-									console.log('Error en el grupo: '+ groupn + ' - en la fila: ' + j.toString());
+									alert('Ocurrió un error leyendo el grupo: '+ groupn + ' en la fila: ' + j.toString());
 									return;
 								}
 
@@ -191,9 +195,8 @@ export default {
 					}
 					console.log(v);
 					this.sendToBack(v);
-				}).catch((error)=> {
-					console.log('error reading file', error);
-					alert('Ocurrió un error al leer el archivo.');
+				}).catch(()=> {
+					alert(errorMsg);
 					this.file = null;
 				})
 			};

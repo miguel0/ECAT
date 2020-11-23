@@ -2,9 +2,9 @@
 <div>
 	<Navbar />
 	<b-container id='content' class='p-5'>
-		<b-form @submit="filter">
+		<b-form id="search" @submit="filter">
 			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
-			<b-button class="mb-2" type="submit" variant="primary">Buscar</b-button>	
+			<b-button class="mb-2" type="submit" variant="primary" style="min-width: 200px;">Buscar</b-button>	
 		</b-form>
 		
 		<div v-if="hasLoaded">
@@ -113,6 +113,12 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+#search {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 #search-results {
 	display: flex;
