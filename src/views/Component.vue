@@ -20,7 +20,7 @@
 			<br>
 			<b-row>
 				<b-col>
-					<PartList :parts='component.parts'/>
+					<PartList :parts='component.parts' :component_id="this.$route.params.cid"/>
 				</b-col>
 			</b-row>
 			

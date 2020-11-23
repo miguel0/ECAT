@@ -14,7 +14,7 @@
 		>
 
 		<template v-if="isAdmin" #cell(buttons)="row">
-			<b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
+			<b-button size="sm" @click="editPart(row)" variant="primary" class="m-1">
 				<img src="../assets/img/bxs-edit.svg" />
 			</b-button>
 
@@ -115,8 +115,8 @@ export default {
 			this.$refs.modalP.showModal();
 		},
 
-		editPart(id) {
-			location.href = '/editpart/' + id;
+		editPart(row) {
+			location.href = '/editpartfromcomponent/' + row.item.cpid + "/" + row.item.id;
 		},
 
 		deletePart(id) {
