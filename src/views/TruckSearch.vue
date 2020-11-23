@@ -22,22 +22,30 @@
 			</b-form-group>
 		</div>
 
-		<h4>Se encontraron ({{trucksFound}}) vehículos</h4>
-
-		<div id='search-results'>
-			<b-card
-				v-for='t in filter()'
-				:key='t.id'
-				class='search-card m-3'
-				v-bind:img-src='t.imageURL'
-				img-top
-				@click='goToVehicle(t.id)'
-				>
-				<b-card-text>
-					{{t.name}}
-				</b-card-text>
-			</b-card>
+		<div v-if="hasLoaded">
+			<h4>Se encontraron ({{trucksFound}}) vehículos</h4>
+			<div id='search-results'>
+				<b-card
+					v-for='t in filter()'
+					:key='t.id'
+					class='search-card m-3'
+					v-bind:img-src='t.imageURL'
+					img-top
+					@click='goToVehicle(t.id)'
+					>
+					<b-card-text>
+						<p>{{t.name}}</p>
+						<span class="card-badge"><b-badge>{{t.type}}</b-badge></span>&nbsp;
+						<span class="card-badge"><b-badge>{{t.motorConfig}}</b-badge></span>&nbsp;
+						<span class="card-badge"><b-badge>{{t.motorPower}} HP</b-badge></span>&nbsp;
+						<span class="card-badge"><b-badge>{{t.transmission}}</b-badge></span>
+					</b-card-text>
+				</b-card>
+			</div>
 		</div>
+		<LoadingSpinner v-else/>
+
+		
 	</b-container>
 </div>
 </template>
@@ -45,11 +53,13 @@
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default {
 	name: 'TruckSearch',
 	components: {
-		Navbar
+		Navbar,
+		LoadingSpinner
 	},
 	data() {
 		return {
@@ -88,6 +98,7 @@ export default {
 				{ text: 'HW', value: 'HW' },
 				{ text: 'AL', value: 'AL' }
 			],
+			hasLoaded: false
 		}
 	},
 	methods: {
@@ -230,6 +241,7 @@ export default {
 					imageURL: this.placeholderImg
 				}
 			);
+			this.hasLoaded = true;
 		})
 	},
 }
@@ -266,5 +278,8 @@ export default {
 .search-card {
 	max-width: 30%;
 	min-width: 180px;
+}
+.card-badge {
+	font-size: x-large;
 }
 </style>

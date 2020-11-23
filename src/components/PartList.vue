@@ -14,7 +14,7 @@
 		>
 
 		<template v-if="isAdmin" #cell(buttons)="row">
-			<b-button size="sm" @click="editPart(row.item.id)" variant="primary" class="m-1">
+			<b-button size="sm" @click="editPart(row)" variant="primary" class="m-1">
 				<img src="../assets/img/bxs-edit.svg" />
 			</b-button>
 
@@ -33,41 +33,41 @@
 		>
 		</b-pagination>
 
-		<b-modal ref="partModal" size="lg" :hide-footer="true" :title="'Part no. ' + selectedPart">
-			<Part v-if="selectedPart" :id_part="selectedPart"/>
-		</b-modal>
+        <PartModal 
+            ref="modalP"
+            :id_part="selectedPart"
+        />
 
 		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
-		<h1>
-			¿Está seguro?
-		</h1>
-		
-		<h3>
-			Los datos podrían no recuperarse tras realizar esta acción.
-		</h3>
+			<h1>
+				¿Está seguro?
+			</h1>
+			
+			<h3>
+				Los datos podrían no recuperarse tras realizar esta acción.
+			</h3>
 
-		<div class="separate">
-			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-			<b-button class="mt-4" variant="danger btn-lg" @click="deletePart(selectedPart)">Confirmar y eliminar</b-button>
-		</div>
-	</b-modal>
-	</div>
+			<div class="separate">
+				<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+				<b-button class="mt-4" variant="danger btn-lg" @click="deletePart(selectedPart)">Confirmar y eliminar</b-button>
+			</div>
+		</b-modal>
+    </div>
 </template>
 
 <script>
-import Part from '../components/Part';
 import api from '../services/api/api';
+import PartModal from './PartModal';
 import * as fb from '../firebase';
 
 export default {
-	name: "PartList",
-	props: ['parts'],
-	components: {
-		Part
-	},
-	data() {
-		return {
-			isAdmin: false,
+    name: "PartList",
+    props: ['parts'],
+    components: {
+        PartModal
+    },
+    data() {
+        return {
 			sortBy: 'localNo',
 			sortDesc: false,
 			fields: [
@@ -112,11 +112,11 @@ export default {
 	methods: {
 		openModal(row) {
 			this.selectedPart = row.id;
-			this.$refs.partModal.show();
+			this.$refs.modalP.showModal();
 		},
 
-		editPart(id) {
-			location.href = '/editpart/' + id;
+		editPart(row) {
+			location.href = '/editpartfromcomponent/' + row.item.cpid + "/" + row.item.id;
 		},
 
 		deletePart(id) {

@@ -57,8 +57,8 @@
                     <div>
                         <div class="list_no_title overflow-auto">
                             <b-list-group>
-                                <b-list-group-item v-for="(i,index) in children" :key="`v-${index}`">
-                                    <div class="list-hor numbers"><p>{{ i }}</p><p>x20</p></div>
+                                <b-list-group-item v-for="vehicle in part.foundIn" :key="vehicle.id" @click='goToVehicle(vehicle.id)'>
+                                    <div class="list-hor numbers"><p>{{ vehicle.name }}</p></div>
                                 </b-list-group-item>
                             </b-list-group>
                         </div>
@@ -66,16 +66,21 @@
                 </b-col>
             </b-row>
         </div>
+        <LoadingSpinner v-else/>
     </b-container>
     
 </template>>
 
 <script>
 import api from '../services/api/api';
+import LoadingSpinner from './LoadingSpinner';
 
 export default {
     name: 'Part',
     props: ['id_part'],
+    components: {
+        LoadingSpinner
+    },
     created() {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
@@ -85,7 +90,7 @@ export default {
 		return {
             part: null,
 			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			children: ['Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH', 'Camión C7H', 'Camión C8H', 'Camión C9H', 'Camión CAH', 'Camión CBH' ]
+			children: null
 		}
     },
     methods: {
@@ -106,6 +111,12 @@ export default {
         },
         getReplaceNo() {
             return this.part.replaceNo;
+        },
+        getFoundIn(){
+            return this.part.foundIn;
+        },
+        goToVehicle(vehicleId) {
+            window.location.href = `/vehicles/${vehicleId}`;
         }
     }
 }

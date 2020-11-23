@@ -7,17 +7,17 @@
 
 			<b-form @submit="onSubmit">
 				<b-form-group>
-					<b-form-input class="input" v-model="form.curpw" type="password"
+					<b-form-input class="input" v-model="curpw" type="password"
 					placeholder="Contraseña actual" required autofocus></b-form-input>
 				</b-form-group>
 
 				<b-form-group>
-					<b-form-input id="top" class="input" v-model="form.newpw" type="password"
+					<b-form-input id="top" class="input" v-model="newpw" type="password"
 					placeholder="Nueva contraseña" required></b-form-input>
 				</b-form-group>
 
 				<b-form-group>
-					<b-form-input id="bottom" class="input" v-model="form.confnewpw" type="password"
+					<b-form-input id="bottom" class="input" v-model="confnewpw" type="password"
 					placeholder="Confirmar nueva contraseña" required></b-form-input>
 				</b-form-group>		
 
@@ -32,6 +32,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
+import * as fb from 'firebase';
 
 export default {
 	name: "SignIn",
@@ -40,21 +41,57 @@ export default {
 	},
 	data() {
 		return {
-			form: {
-				curpw: '',
-				newpw: '',
-				confnewpw: ''
-			}
+            curpw: '',
+            newpw: '',
+            confnewpw: ''
 		}
 	},
 	methods: {
-		goBack() {
+        authenticateCurrentPassword: async function() {
+            let user = fb.auth().currentUser;
+            let credential = fb.auth.EmailAuthProvider.credential(
+                fb.auth().currentUser.email,
+                this.curpw
+            );
+            user.reauthenticateWithCredential(credential)
+            .then(function() {
+                console.log("simon");
+                return true;
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+        },
+		goBack: function() {
 			window.history.back();
 		},
-		onSubmit(evt) {
-			evt.preventDefault();
-			console.log("Cur PW " + this.form.curpw + " New PW: " + this.form.newpw + " " + this.form.confnewpw);
-			location.href = "/catalog";
+		onSubmit: function(evt) {
+            if (this.newpw.localeCompare(this.confnewpw) !== 0) {
+                alert("Las contraseñas no coinciden.")
+            } else {
+                evt.preventDefault();
+                let user = fb.auth().currentUser;
+                let credential = fb.auth.EmailAuthProvider.credential(
+                    fb.auth().currentUser.email,
+                    this.curpw
+                );
+                user.reauthenticateWithCredential(credential)
+                .then(() => {
+                        fb.auth().currentUser.updatePassword(this.newpw)
+                        .then(() => {
+                            alert("Contraseña actualizada con éxito.");
+                            window.history.back();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            alert("Error al actualizar la contraseña.");
+                        })
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Error al autenticar la contraseña.");
+                });
+            }
 		}
 	}
 }

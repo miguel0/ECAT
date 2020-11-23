@@ -9,10 +9,13 @@ import RequestPWChange from '../views/RequestPWChange.vue';
 import AddDataFile from '../views/AddDataFile';
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
+import AddUser from "../views/AddUser";
+import EditUser from "../views/EditUser";
 import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
+import EditPartFromComponent from "../views/EditPartFromComponent";
 import EditComponent from '../views/EditComponent';
 import AddDataManual from '../views/AddDataManual';
 import PartSearch from '../views/PartSearch.vue';
@@ -69,6 +72,22 @@ const routes = [
 		}
 	},
 	{
+		path: '/edituser/:id',
+		component: EditUser,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/adduser/',
+		component: AddUser,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
 		path: '/vehicles/:id',
 		component: Vehicle,
 		meta: {
@@ -92,6 +111,14 @@ const routes = [
 	{
 		path: '/editpart/:pid',
 		component: EditPart,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/editpartfromcomponent/:cpid/:pid',
+		component: EditPartFromComponent,
 		meta: {
 			requiresAuth: true,
 			requiresAdmin: true

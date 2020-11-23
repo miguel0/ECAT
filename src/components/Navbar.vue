@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<b-navbar type='dark' variant='primary'>
-			<b-navbar-brand href="/home">ecat</b-navbar-brand>
+            <div class="logo" v-on:click=toHome()>
+                <b-img src="../assets/logo_at-motors.png" height="40"></b-img>
+            </div>
 			<b-navbar-nav class='ml-auto'>
 				<template v-for='(section, index) in sections'>
 					<b-nav-item v-if='!section.children' :key="`section-${index}`" :href=section.route>{{section.name}}</b-nav-item>
@@ -28,7 +30,7 @@ export default {
 					name: 'Búsqueda'
 				},
 				{
-					name: 'Manuel Córdoba', // TODO: change, hardcoded name,
+					name: 'Usuario',
 					children: [
 						{
 							route: '/changepwli',
@@ -44,6 +46,9 @@ export default {
 		}
 	},
 	methods: {
+        toHome() {
+            location.href = "/home";
+        },
 		dropdownClick(str) {
 			if (str == 'logout') {
 				this.$store.dispatch('logout');
@@ -56,6 +61,8 @@ export default {
 		api.usersApi.getUser(fb.auth.currentUser.uid)
 		.then(data => {
 			if (data.role) {
+				this.sections[1].name = data.name;
+
 				const isAdmin = data.role === 'A' ? true : false;
 				
 				if (isAdmin) {
@@ -86,6 +93,9 @@ export default {
 }
 </script>
 <style scoped>
+.logo {
+    cursor: pointer;
+}
 .raw {
 	border: 0;
 	margin: 0;
