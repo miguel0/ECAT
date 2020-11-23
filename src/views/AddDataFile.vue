@@ -76,7 +76,6 @@ export default {
 				let errorMsg = 'Ocurrió un error leyendo el archivo.';
 				
 				workbook.xlsx.load(buffer).then(async (wb)=> {
-					console.log("readFile success");
 					const index = wb.getWorksheet('Indice');
 					
 					// get vehicle data
@@ -100,6 +99,7 @@ export default {
 						let group = {};
 
 						group["localNo"] = index.getCell('A' + i.toString()).value;
+						group["localNo"] = group["localNo"].toString().trim()
 						group["name"] = groupn;
 						group["spName"] = index.getCell('C' + i.toString()).value;
 						group["chName"] = index.getCell('D' + i.toString()).value;
@@ -120,6 +120,7 @@ export default {
 								) {
 									j = searchComp;
 									grouphead = ws.getCell('A' + searchComp.toString()).value;
+									grouphead = grouphead.toString().trim();
 									noMoreComps = false;
 									break;
 								}
@@ -132,7 +133,7 @@ export default {
 							errorMsg = 'Ocurrió un error leyendo el grupo: ' + groupn + ' en la fila ' + j.toString();
 							let component = {};
 
-							const localNo = grouphead.substring(0, grouphead.indexOf(" ")).toString();
+							const localNo = grouphead.substring(0, grouphead.indexOf(" "));
 							component["localNo"] = localNo.substring(localNo.lastIndexOf('.') + 1, localNo.length);
 							component["chName"] = grouphead.substring(grouphead.indexOf(" ") + 1, grouphead.lastIndexOf("/"));
 							component["name"] = grouphead.substring(grouphead.lastIndexOf("/") + 1, grouphead.length);
@@ -147,7 +148,8 @@ export default {
 								errorMsg = 'Ocurrió un error leyendo el grupo: ' + groupn + ' en la fila: ' + j.toString();
 								let part = {};
 
-								part["localNo"] = localno.toString();
+								localno = localno.toString().trim();
+								part["localNo"] = localno;
 								part["id"] = ws.getCell('B' + j.toString()).value;
 								part["chName"] = ws.getCell('C' + j.toString()).value;
 								part["name"] = ws.getCell('D' + j.toString()).value;
@@ -193,10 +195,11 @@ export default {
 
 						v["groups"].push(group);
 					}
-					console.log(v);
+
 					this.sendToBack(v);
-				}).catch(()=> {
+				}).catch((error)=> {
 					alert(errorMsg);
+					console.log(error);
 					this.file = null;
 				})
 			};
@@ -205,7 +208,6 @@ export default {
 		async sendToBack(vehicle) {
 			api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
 			.then(res => {
-				console.log(res);
 				this.file = null;
 
 				if(res === true) {
