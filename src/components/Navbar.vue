@@ -77,6 +77,10 @@ export default {
 								route: '/adddatamanual',
 								name: 'Agregar una parte manualmente'
 							},
+                            {
+                                route: '/addimages',
+                                name: 'Agregar imágenes'
+                            },
 							{
 								route: '/users',
 								name: 'Manejo de usuarios'
