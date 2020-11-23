@@ -129,7 +129,7 @@ export default {
 								break;
 							}
 
-							errorMsg = 'Ocurrió un error leyendo el grupo: ' + grupn + ' en la fila ' + j.toString();
+							errorMsg = 'Ocurrió un error leyendo el grupo: ' + groupn + ' en la fila ' + j.toString();
 							let component = {};
 
 							const localNo = grouphead.substring(0, grouphead.indexOf(" ")).toString();
@@ -144,7 +144,7 @@ export default {
 							j += 2;
 							let localno = "";
 							while((localno = ws.getCell('A' + (++j).toString()).value) != null) {
-								errorMsg = 'Ocurrió un error leyendo el grupo: ' + grupn + ' en la fila: ' + j.toString();
+								errorMsg = 'Ocurrió un error leyendo el grupo: ' + groupn + ' en la fila: ' + j.toString();
 								let part = {};
 
 								part["localNo"] = localno.toString();
