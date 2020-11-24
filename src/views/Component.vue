@@ -5,9 +5,9 @@
 			<b-button id="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
 			<b-row>
 				<b-col>
-					<b-img src="../assets/img/test/component.png" fluid round></b-img>
+					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" src="../assets/img/test/component.png" fluid round></b-img>
 				</b-col>
-				<b-col>
+				<b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 					<h4><b>{{component.name}}</b></h4>
 					<b-row class="text-secondary">
 						<b-col>{{component.spName}} | {{component.chName}} | {{component.otherName}}</b-col>
@@ -18,7 +18,7 @@
 				</b-col>
 			</b-row>
 			<br>
-			<b-row>
+			<b-row v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 				<b-col>
 					<PartList :parts='component.parts' :component_id="this.$route.params.cid"/>
 				</b-col>
@@ -39,7 +39,8 @@ export default {
 	data() {
 		return {
 			component: null,
-			isAdmin: false
+			isAdmin: false,
+			blur: 0
 		}
 	},
 	components: {
@@ -91,5 +92,20 @@ export default {
 }
 #backBtn{
 	margin-top: -4%;
+}
+#img {
+    display: flex;
+    flex-direction: row;
+    transition: transform .2s;
+    transform-origin: top left;
+    z-index: 5;
+    position: relative;
+}
+#img:hover {
+	transform: scale(2);
+    transform-origin: top left;
+    z-index: 3;
+    border: 4px solid black;
+    border-radius: 5px;
 }
 </style>
