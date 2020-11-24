@@ -1,62 +1,70 @@
 <template>
 	<div>
-		<Navbar />
-		<div id="content" class="mt-5">
-			<h2>Subir usando un archivo</h2>
-			<div>
-				<p class="mt-3">Archivo de Excel a subir:</p>
-				<b-form @submit="onSubmitFile">
-					<b-form-file
-						v-model="file"
-						:state="Boolean(file)"
-						placeholder="Selecciona un archivo o arrástralo aquí..."
-						drop-placeholder="Drop file here..."
-						accept=".xlsx"
-						browse-text="Examinar"
-						required
-						style="min-width:500px;"
-					></b-form-file>
-					<div class="mt-3 mb-4">Archivo seleccionado: {{ file ? file.name : '' }}</div>
-					<div id="btn_div">
-						<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-						<b-button type="submit" variant="primary">Aceptar</b-button>
-					</div>
-				</b-form>
+		<Navbar/>
+		<div v-if="uploading">
+			<LoadingSpinner class="m-5"/>
+			<h3 style="text-align: center;">Este proceso puede tardar más de 10 minutos.<br>Por favor espere.</h3>
+		</div>
+		<div v-else>
+			<div id="content" class="mt-5">
+				<h2>Subir usando un archivo</h2>
+				<div>
+					<p class="mt-3">Archivo de Excel a subir:</p>
+					<b-form @submit="onSubmitFile">
+						<b-form-file
+							v-model="file"
+							:state="Boolean(file)"
+							placeholder="Selecciona un archivo o arrástralo aquí..."
+							drop-placeholder="Drop file here..."
+							accept=".xlsx"
+							browse-text="Examinar"
+							required
+							style="min-width:500px;"
+						></b-form-file>
+						<div class="mt-3 mb-4">Archivo seleccionado: {{ file ? file.name : '' }}</div>
+						<div id="btn_div">
+							<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+							<b-button type="submit" variant="primary">Aceptar</b-button>
+						</div>
+					</b-form>
+				</div>
 			</div>
+
+			<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
+				<h1>
+					¿Está seguro?
+				</h1>
+				
+				<h3>
+					Asegúrese de que los datos sean correctos.
+				</h3>
+
+				<div class="separate">
+					<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+					<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
+				</div>
+			</b-modal>
 		</div>
-
-		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
-		<h1>
-			¿Está seguro?
-		</h1>
-		
-		<h3>
-			Asegúrese de que los datos sean correctos.
-		</h3>
-
-		<div class="separate">
-			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-			<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
-		</div>
-	</b-modal>
-
 	</div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import LoadingSpinner from '../components/LoadingSpinner';
 const Excel = require('exceljs');
 
 export default {
 	name: "AddDataFile",
 	data() {
 		return {
-			file: null
+			file: null,
+			uploading: false
 		}
 	},
 	components: {
-			Navbar
+			Navbar,
+			LoadingSpinner
 	},
 	methods: {
 		onSubmitFile(evt) {
@@ -66,8 +74,10 @@ export default {
 		},
 		async readXlsx() {
 			if (!this.file) {
+				this.uploading = false;
 				return;
 			}
+			this.cancelConfirmation();
 			const f = this.file;
 			const workbook = new Excel.Workbook();
 			var fileReader = new FileReader();
@@ -161,6 +171,7 @@ export default {
 
 								if (part["id"] === part["replaceNo"]) {
 									alert('Ocurrió un error leyendo el grupo: '+ groupn + ' en la fila: ' + j.toString());
+									this.uploading = false;
 									return;
 								}
 
@@ -201,6 +212,7 @@ export default {
 					alert(errorMsg);
 					console.log(error);
 					this.file = null;
+					this.uploading = false;
 				})
 			};
 			fileReader.readAsArrayBuffer(f);
@@ -208,12 +220,14 @@ export default {
 		async sendToBack(vehicle) {
 			api.vehiclesApi.addVehicle(vehicle['id'], vehicle)
 			.then(res => {
+				this.uploading = false;
 				this.file = null;
 
 				if(res === true) {
+					alert('¡El vehículo se añadió correctamente!');
 					window.history.back();
 				} else {
-					alert("Ocurrió un error.");
+					alert('Ocurrió el siguiente error:\n' + res);
 				}
 			})
 			.catch(err => {
@@ -221,6 +235,7 @@ export default {
 			});
 		},
 		confirm: function() {
+			this.uploading = true;
 			this.readXlsx();
 		},
 		cancelConfirmation: function() {
