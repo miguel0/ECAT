@@ -13,9 +13,11 @@
     "core-js": "^3.6.5",
     "exceljs": "^4.1.1",
     "firebase": "^7.24.0",
+    "helmet": "^4.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.4.3",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "webpack-merge": "^5.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
