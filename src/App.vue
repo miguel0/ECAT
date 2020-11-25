@@ -6,7 +6,8 @@
     
       <div>
         <footer class="page-footer font-small blue fixed-bottom" variant='primary'>
-          <div class="footer-copyright text-center py-3">ECAT v1.0 || Nov, 2020
+          <div class="footer-copyright text-center py-3">
+            ECAT v1.0 || Nov, 2020
           </div>
         </footer>
       </div>
