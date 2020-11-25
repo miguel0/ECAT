@@ -98,7 +98,6 @@ export default {
 			//throw {message: "A forced error!"};
 		})
 		.catch(err => {
-			console.log("error at partsearch");
 			alert(err.message);
 		});
 	}
