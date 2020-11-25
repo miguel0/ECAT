@@ -89,11 +89,17 @@ export default {
 	created() {
 		api.partsApi.getAllParts()
 		.then(parts => {
+
 			for(let i = 0; i < parts.length; i++) {
 				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
 				this.allParts.push(parts[i]);
 			}
 			this.hasLoaded = true;
+			//throw {message: "A forced error!"};
+		})
+		.catch(err => {
+			console.log("error at partsearch");
+			alert(err.message);
 		});
 	}
 }
