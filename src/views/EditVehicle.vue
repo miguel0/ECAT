@@ -10,11 +10,11 @@
             </b-form-group>
 
             <b-form-group label="Nombre en inglés:">
-                <b-form-input required=true v-model="name"></b-form-input>
+                <b-form-input required v-model="name"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Nombre en español:">
-                <b-form-input required=true v-model="spName"></b-form-input>
+                <b-form-input required v-model="spName"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Otros nombres:">
@@ -47,6 +47,21 @@
             </div>
 		</b-form>
 	</div>
+
+    <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Los datos podrían no recuperarse tras realizar esta acción.
+		</h3>
+
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
+		</div>
+	</b-modal>
 </div>
 </template>
 
@@ -118,9 +133,12 @@ export default {
 	},
 	methods: {
 		onSubmit: function(evt) {
-			evt.preventDefault();
-
-			if(this.vehicleId === this.name) {
+            evt.preventDefault();
+            this.$refs.confirmationModal.show();
+        },
+        
+        confirm: function(){
+            if(this.vehicleId === this.name) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
 				api.vehiclesApi.editVehicle(this.vehicleId, this.name, this.spName, this.otherName, this.model, this.type, this.motorConfig, this.motorPower, this.transmission)
@@ -137,6 +155,10 @@ export default {
 					console.log(err);
 				});
 			}
+		},
+
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }

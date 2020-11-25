@@ -3,6 +3,7 @@
 	<Navbar />
 	<div id="content" class="mt-5">
 			<h2 class="centered">Subir una parte manualmente</h2>
+			<br>
 			<div>
 				<b-form @submit="onSubmit">
 					<b-form-group label="Número de parte:">
@@ -36,6 +37,22 @@
 				</b-form>
 			</div>
 		</div>
+
+		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de inserción">
+		<h1>
+			¿Está seguro?
+		</h1>
+		
+		<h3>
+			Asegúrese de que los datos sean correctos.
+		</h3>
+
+		<div class="separate">
+			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
+			<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
+		</div>
+	</b-modal>
+
 </div>
 </template>
 
@@ -61,6 +78,9 @@ export default {
 	methods: {
 		onSubmit: function(evt) {
 			evt.preventDefault();
+			this.$refs.confirmationModal.show();
+		},
+		confirm: function(){
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
@@ -81,6 +101,10 @@ export default {
 					console.log(err);
 				});
 			}
+		},
+
+		cancelConfirmation: function(){
+			this.$refs.confirmationModal.hide();
 		}
 	}
 }
@@ -94,12 +118,18 @@ export default {
 #btn_div {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 }
 .centered {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+}
+.separate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
