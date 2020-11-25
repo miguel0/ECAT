@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <div v-if="part">
-            <b-row>
+            <b-row v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
                 <b-col>
                     <div v-if="getName()">
                         <p class="title">{{getName()}}</p>
@@ -10,7 +10,7 @@
             </b-row>
             <b-row>
                 <b-col cols="7" md="6">
-                    <div v-if="getId() || getReplaceNo()">
+                    <div v-if="getId() || getReplaceNo()" v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
                         <b-row>
                             <b-col v-if="getId()">
                                 <small class="form-text text-muted">
@@ -47,10 +47,10 @@
                         </b-row>
                     </div>
                     <div id="img" class="text-center">
-                        <a v-bind:href="image" target="_blank"><b-img :src="image" fluid></b-img></a>
+                        <a v-bind:href="image" target="_blank"><b-img @mouseover="blur=2" @mouseout="blur=0" :src="image" fluid></b-img></a>
                     </div>
                 </b-col>
-                <b-col cols="5" md="6">
+                <b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }" cols="5" md="6">
                     <!--<p class="pl-5">Se encuentra en:</p>-->
                     <small class="text-muted">Se encuentra en:</small>
                     <br><br>
@@ -89,8 +89,11 @@ export default {
     data() {
 		return {
             part: null,
-			image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-			children: null
+            image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
+            //image: 'https://lh3.googleusercontent.com/proxy/LuHpkLxSiscPEGIy83Jm_Q1UR9kBNwXI0DMDylAfUnFIMoYyfkoS2MZglpFp4Ef7FlViJQN6ytNuaCCitif94ploOJ8-r7z56wSa4liyx3HzOh5n1ro',
+            //image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Screws.jpg/260px-Screws.jpg',
+            children: null,
+            blur: 0
 		}
     },
     methods: {
@@ -177,12 +180,23 @@ export default {
     margin-bottom: 3%;
 }
 #img {
-	height:100%;
 	width:70%;
     margin-top: 5%;
     margin-bottom: 5%;
     display: flex;
     flex-direction: row;
+    transition: transform .2s;
+    align-self: flex-start;
+    transform-origin: bottom left;
+    z-index: 3;
+    position: relative;
+}
+#img:hover{
+    transform: scale(2);
+    transform-origin: bottom left;
+    z-index: 3;
+    border: 4px solid black;
+    border-radius: 5px;
 }
 .my_list {
 	width: 100%;
