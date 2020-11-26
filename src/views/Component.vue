@@ -83,7 +83,7 @@ export default {
 		},
 		getImageUrl() {
 			return this.component.imageUrl ? this.component.imageUrl :
-				'https://i.pinimg.com/originals/c0/d0/5a/c0d05a83f59b341c9b26a1f56e224059.png';
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fcomponent_ph.png';
 		}
 	}
 }
@@ -103,9 +103,10 @@ export default {
     transform-origin: top left;
     z-index: 5;
     position: relative;
+    max-height: 300px;
 }
 #img:hover {
-	transform: scale(2);
+	transform: scale(2.5);
     transform-origin: top left;
     z-index: 3;
     border: 4px solid black;

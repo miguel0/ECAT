@@ -7,9 +7,9 @@
                 <br>
                 <b-row>
                     <b-col style="display:flex;">
-                        <b-form-select v-model="selectedElement" @change="selectedElement">
+                        <b-form-select v-model="selectedElement">
                             <b-form-select-option
-                                v-for="element of elements"
+                                v-for="element in elements"
                                 :key="element.text"
                                 :value="element.value"
                             >

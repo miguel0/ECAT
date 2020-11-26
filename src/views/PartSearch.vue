@@ -30,6 +30,7 @@
 	<PartModal 
 		ref="modalP"
 		:id_part="selectedPart"
+        :from_component="false"
 	/>
 
 </div>
@@ -59,9 +60,7 @@ export default {
 		}
 	},
 	methods: {
-		filter(evt) {
-			evt.preventDefault();
-
+		filter() {
 			let parts = [];
 			for(let i = 0; i < this.allParts.length; i++) {
 				const search = this.getSimpleString(this.searchText);
@@ -92,7 +91,7 @@ export default {
 		},
 		getImageUrl(part) {
 			return part.imageUrl ? part.imageUrl :
-				'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG';
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
 		}
 	},
 	created() {

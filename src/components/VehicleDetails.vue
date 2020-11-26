@@ -23,7 +23,7 @@
 				</b-row>
 			</b-col>
 			<b-col>
-				<b-img :src="getImageUrl()" fluid rounded center></b-img>
+				<b-img class="overflow-auto" :src="getImageUrl()" fluid rounded center></b-img>
 			</b-col>
 		</b-row>
 		<br><br>
@@ -109,7 +109,7 @@ export default {
 		},
 		getImageUrl() {
 			return this.vehicle.imageUrl ? this.vehicle.imageUrl :
-				'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg';
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	}
 }
@@ -117,7 +117,7 @@ export default {
 
 <style scoped>
 .overflow-auto {
-	max-height: 200px;
+	max-height: 300px;
 }
 .clickable {
 	cursor: pointer;

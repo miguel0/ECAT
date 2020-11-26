@@ -7,6 +7,11 @@
                         <p class="title">{{getName()}}</p>
                     </div>
                 </b-col>
+                <template v-if="isAdmin">
+                    <b-button size="sm" @click="editPart()" variant="primary" class="m-3">
+                        <img src="../assets/img/bxs-edit.svg" />
+                    </b-button>
+                </template>
             </b-row>
             <b-row>
                 <b-col cols="7" md="6">
@@ -74,10 +79,11 @@
 <script>
 import api from '../services/api/api';
 import LoadingSpinner from './LoadingSpinner';
+import * as fb from "@/firebase";
 
 export default {
     name: 'Part',
-    props: ['id_part'],
+    props: ['id_part', 'from_component', 'cpid'],
     components: {
         LoadingSpinner
     },
@@ -85,9 +91,19 @@ export default {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
         });
+        api.usersApi.getUser(fb.auth.currentUser.uid)
+            .then(data => {
+                if (data.role) {
+                    this.isAdmin = data.role === 'A';
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     },
     data() {
 		return {
+            isAdmin: false,
             part: null,
             children: null,
             blur: 0
@@ -120,8 +136,12 @@ export default {
 		},
 		getImageUrl() {
 			return this.part.imageUrl ? this.part.imageUrl :
-				'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi';
-		}
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
+		},
+        editPart() {
+            console.log(this.from_component, this.cpid)
+            location.href = this.from_component ? '/editpartfromcomponent/' + this.cpid + "/" + this.part.id : '/editpart/' + this.part.id;
+        },
     }
 }
 

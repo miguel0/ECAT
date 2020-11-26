@@ -136,7 +136,7 @@ export default {
 		},
 		getImageUrl(vehicle) {
 			return vehicle.imageUrl ? vehicle.imageUrl :
-				'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg';
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	},
 	computed: {
