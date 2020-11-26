@@ -100,7 +100,7 @@ export default {
 			this.imageURL = part.imageURL ? part.imageURL : '';
 		})
 		.catch(err => {
-			console.log(err);
+			alert(err.message);
 		})
 	},
 	methods: {
@@ -132,7 +132,8 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+					this.cancelConfirmation();
+                    alert(err.message);
                 });
 			}
 		},
