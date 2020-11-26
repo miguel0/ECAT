@@ -79,13 +79,18 @@
                     <h3>
                         Se lograron subir imágenes para las siguientes partes:
                     </h3>
-
-                    <div v-for="(partno) in uploaded" :key="partno">
-                        {{ partno }}
+                    <div v-if="uploaded.length > 0">
+                        <div v-for="(partno) in uploaded" :key="partno">
+                            {{ partno }}
+                        </div>
                     </div>
+                    <div v-else>
+                        <h4>Ninguna</h4>
+                    </div>
+
                 </div>
 
-                <div class="separate">
+                <div class="onebtn">
                     <b-button class="mt-4" variant="primary" @click="finish()">Aceptar</b-button>
                 </div>
             </div>
@@ -161,5 +166,12 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.onebtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 </style>

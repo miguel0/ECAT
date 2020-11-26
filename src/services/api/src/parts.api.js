@@ -21,13 +21,14 @@ export default {
 		})
 	},
 
-	addPart: (id, replaceNo, name, chName, spName, otherName) => {
+	addPart: (id, replaceNo, name, chName, spName, otherName, imageURL) => {
 		return axios.post(`/parts/${id}`, {
 			replaceNo: replaceNo,
 			name: name,
 			chName: chName,
 			spName: spName,
 			otherName: otherName,
+			imageURL: imageURL,
 		});
 	}
     
