@@ -70,7 +70,7 @@
             :hide-footer="true"
             title="Resultados de subida"
         >
-            <div v-if="uploaded || failedToUpload">
+            <div v-if="uploaded">
                 <h1>
                     Resultados:
                 </h1>
@@ -82,16 +82,6 @@
 
                     <div v-for="(partno) in uploaded" :key="partno">
                         {{ partno }}
-                    </div>
-                </div>
-
-                <div v-if="failedToUpload">
-                    <h3>
-                        No se lograron subir imágenes para las siguientes partes:
-                    </h3>
-
-                    <div v-for="(partno, error) in failedToUpload" :key="partno">
-                        {{ partno }}: {{ error }}
                     </div>
                 </div>
 
@@ -107,6 +97,7 @@
 <script>
 import Navbar from "../components/Navbar";
 import LoadingSpinner from '../components/LoadingSpinner';
+import imgHelper from '../imguploadhelpers';
 
 export default {
     name: "AddImages",
@@ -114,11 +105,9 @@ export default {
         return {
             files: null,
             uploaded: null,
-            failedToUpload: null,
             selectedElement: 'part',
             elements: [
                 { value: 'vehicle', text: 'Vehículo' },
-                { value: 'component', text: 'Componente' },
                 { value: 'part', text: 'Parte' }
             ]
         }
@@ -137,7 +126,15 @@ export default {
         },
         confirm: function() {
             this.$refs.confirmationModal.hide();
-            // do stuff
+
+            switch (this.selectedElement) {
+                case "part":
+                    this.uploaded = imgHelper.uploadPartsPictures(this.files);
+                    break;
+                case "vehicle":
+                    this.uploaded = imgHelper.uploadVehiclesPictures(this.files);
+                    break;
+            }
             this.$refs.resultsModal.show();
         },
         finish: function() {

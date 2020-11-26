@@ -10,19 +10,14 @@ export default {
         return axios.get(`/parts/${id}`);
 	},
 	
-	editPart: (id, replaceNo, name, chName, spName, otherName) => {
+	editPart: (id, replaceNo, name, chName, spName, otherName, imageURL) => {
 		return axios.put(`/parts/${id}`, {
 			replaceNo: replaceNo,
 			name: name,
 			chName: chName,
 			spName: spName,
 			otherName: otherName,
-		})
-	},
-
-	editPartImage: (id, imageUrl)  => {
-		return axios.put(`/parts/pushimg${id}`, {
-			imageUrl: imageUrl,
+			imageURL: imageURL,
 		})
 	},
 
