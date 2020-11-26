@@ -5,7 +5,7 @@
 			<b-button id="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
 			<b-row>
 				<b-col>
-					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" :src='getImageUrl() fluid round></b-img>
+					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" :src='getImageUrl()' fluid round></b-img>
 				</b-col>
 				<b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 					<h4><b>{{component.name}}</b></h4>
