@@ -29,6 +29,14 @@
                     <b-form-input v-model="otherName"></b-form-input>
                 </b-form-group>
 
+                <b-form-group label="Remark:">
+                    <b-form-input v-model="remark"></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Quantity:">
+                    <b-form-input v-model="localQty"></b-form-input>
+                </b-form-group>
+
                 <p class="mt-3">Imagen a subir:</p>
                 <b-form-file
                     class="mb-2"
@@ -40,14 +48,6 @@
                     style="min-width:500px;"
                 ></b-form-file>
                 <b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
-
-                <b-form-group label="Remark:">
-                    <b-form-input v-model="remark"></b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Quantity:">
-                    <b-form-input v-model="localQty"></b-form-input>
-                </b-form-group>
 
                 <div class="separate">
                     <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
