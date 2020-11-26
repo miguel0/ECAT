@@ -184,7 +184,9 @@ export default {
 											ws.getCell('A' + searchComp.toString()).value != null
 											&& ws.getCell('A' + (searchComp + 1).toString()).value != null
 										) {
-											if (ws.getCell('A' + searchComp.toString()).value === grouphead) {
+											let newgrouphead = ws.getCell('A' + searchComp.toString()).value;
+											newgrouphead = newgrouphead.toString().trim();
+											if (newgrouphead === grouphead) {
 												j = searchComp + 2;
 												newComp = false;
 											} else {
@@ -225,7 +227,6 @@ export default {
 
 				if(res === true) {
 					alert('¡El vehículo se añadió correctamente!');
-					window.history.back();
 				} else {
 					alert('Ocurrió el siguiente error:\n' + res);
 				}
