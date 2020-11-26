@@ -135,7 +135,7 @@ export default {
 			window.location.href = `/vehicles/${vehicleId}`;
 		},
 		getImageUrl(vehicle) {
-			return vehicle.imageUrl ? vehicle.imageUrl :
+			return vehicle.imageURL ? vehicle.imageURL :
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	},

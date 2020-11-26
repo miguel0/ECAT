@@ -108,7 +108,7 @@ export default {
 			location.href = '/editgroup/' + id;
 		},
 		getImageUrl() {
-			return this.vehicle.imageUrl ? this.vehicle.imageUrl :
+			return this.vehicle.imageURL ? this.vehicle.imageURL :
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	}

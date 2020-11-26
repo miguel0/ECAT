@@ -135,7 +135,7 @@ export default {
             window.location.href = `/vehicles/${vehicleId}`;
 		},
 		getImageUrl() {
-			return this.part.imageUrl ? this.part.imageUrl :
+			return this.part.imageURL ? this.part.imageURL :
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
 		},
         editPart() {

@@ -60,7 +60,8 @@ export default {
 		}
 	},
 	methods: {
-		filter() {
+		filter(evt) {
+            evt.preventDefault();
 			let parts = [];
 			for(let i = 0; i < this.allParts.length; i++) {
 				const search = this.getSimpleString(this.searchText);
@@ -90,7 +91,7 @@ export default {
 			this.$refs.modalP.showModal();
 		},
 		getImageUrl(part) {
-			return part.imageUrl ? part.imageUrl :
+			return part.imageURL ? part.imageURL :
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
 		}
 	},

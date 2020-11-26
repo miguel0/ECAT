@@ -27,7 +27,7 @@
                         :state="Boolean(files)"
                         placeholder="Selecciona las imágenes o arrástralas aquí..."
                         drop-placeholder="Arroja las imágenes aquí..."
-                        accept=".jpg, .jpeg, .gif"
+                        accept=".jpg, .jpeg, .png"
                         browse-text="Examinar"
                         multiple
                         required
@@ -36,8 +36,20 @@
                     <div class="mt-3 mb-4">
                         <div v-if="files">
                             <p>Se intentará agregar las siguientes imágenes a sus respectivas partes:</p>
-                            <div v-for="(file) in files" :key="file.name">
-                                {{ file.name }}
+                            <div v-if="files.length <= 5">
+                                <div v-for="(file) in files" :key="file.name">
+                                    {{ file.name }}
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div>
+                                    {{ files[0].name }} <br>
+                                    {{ files[1].name }} <br>
+                                    {{ files[2].name }} <br>
+                                    {{ files[3].name }} <br>
+                                    {{ files[4].name }} <br>
+                                    Y otra(s) {{ files.length - 5 }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,8 +92,20 @@
                         Se lograron subir imágenes para las siguientes partes:
                     </h3>
                     <div v-if="uploaded.length > 0">
-                        <div v-for="(partno) in uploaded" :key="partno">
-                            {{ partno }}
+                        <div v-if="uploaded.length <= 5">
+                            <div v-for="(partno) in uploaded" :key="partno">
+                                {{ partno }}
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div>
+                                {{ uploaded[0] }} <br>
+                                {{ uploaded[1] }} <br>
+                                {{ uploaded[2] }} <br>
+                                {{ uploaded[3] }} <br>
+                                {{ uploaded[4] }} <br>
+                                Y otra(s) {{ uploaded.length - 5 }}
+                            </div>
                         </div>
                     </div>
                     <div v-else>
@@ -129,21 +153,23 @@ export default {
         cancelConfirmation: function(){
             this.$refs.confirmationModal.hide();
         },
-        confirm: function() {
+        confirm: async function() {
             this.$refs.confirmationModal.hide();
+            this.$refs.resultsModal.show();
 
             switch (this.selectedElement) {
                 case "part":
-                    this.uploaded = imgHelper.uploadPartsPictures(this.files);
+                    this.uploaded = await imgHelper.uploadPartsPictures(this.files);
                     break;
                 case "vehicle":
-                    this.uploaded = imgHelper.uploadVehiclesPictures(this.files);
+                    this.uploaded = await imgHelper.uploadVehiclesPictures(this.files);
                     break;
             }
-            this.$refs.resultsModal.show();
         },
         finish: function() {
             this.$refs.resultsModal.hide();
+            this.files = null;
+            this.uploaded = null;
         }
     }
 }

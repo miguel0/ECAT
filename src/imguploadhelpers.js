@@ -2,14 +2,13 @@ import api from './services/api/api';
 import { pushToOBS } from "./services/api/src/ObjectStorage";
 
 
-const pullURL = process.env.VUE_APP_ORCL_OBS_PULL;
+//const pullURL = process.env.VUE_APP_ORCL_OBS_PULL;
+const pullURL = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/';
 
 export default {
     uploadPartsPictures: uploadPartsPictures,
     uploadVehiclesPictures: uploadVehiclesPictures,
-    uploadPartPicture: uploadPartPicture,
-    uploadComponentPicture: uploadComponentPicture,
-    uploadVehiclePicture: uploadVehiclePicture
+    uploadSinglePicture: uploadSinglePicture
 }
 
 function isDuplicateName(imageName, processed) {
@@ -22,133 +21,21 @@ function isDuplicateName(imageName, processed) {
     return false;
 }
 
-function uploadPartPicture(file) {
-    let suffix = 'parts/';
-    let partName = file.name.split(".")[0];
-
-    let resPart;
-    api.partsApi.getPart(partName)
-        .then(part => {
-            if (part.id) {
-                resPart = part;
-                suffix += file.name;
-                return pushToOBS(suffix, file);
-            }
-            throw new Error(part);
-        })
-        .then((response) => {
-            console.log(response);
-            if (response.status === 200) {
-                let imageURL = pullURL + suffix;
-                console.log(imageURL)
-                return api.partsApi.editPart(
-                    resPart.id,
-                    resPart.replaceNo,
-                    resPart.name,
-                    resPart.chName,
-                    resPart.spName,
-                    resPart.otherName,
-                    imageURL
-                )
-            }
-            throw new Error(response);
-        })
+async function uploadSinglePicture(folder, file) {
+    let suffix = folder + file.name;
+    let imageURL = '';
+    await pushToOBS(suffix, file)
         .then(response => {
-            console.log(response);
-            if (response === true) {
-                console.log("Imagen actualizada.");
+            if (response.status === 200) {
+                imageURL = pullURL + suffix;
+            } else {
+                throw new Error(response);
             }
         })
         .catch(err => {
             console.log(err);
-        });
-}
-
-function uploadComponentPicture(file) {
-    let suffix = 'components/';
-    let componentName = file.name.split(".")[0];
-
-    let resComponent;
-    api.componentsApi.getComponent(componentName)
-        .then(component => {
-            if (component.id) {
-                resComponent = component;
-                suffix += file.name;
-                return pushToOBS(suffix, file);
-            }
-            throw new Error(component);
         })
-        .then((response) => {
-            console.log(response);
-            if (response.status === 200) {
-                let imageURL = pullURL + suffix;
-                console.log(imageURL)
-                return api.componentsApi.editComponent(
-                    resComponent.id,
-                    resComponent.name,
-                    resComponent.chName,
-                    resComponent.spName,
-                    resComponent.otherName,
-                    resComponent.imageURL,
-                    imageURL
-                )
-            }
-            throw new Error(response);
-        })
-        .then(response => {
-            console.log(response);
-            if (response === true) {
-                console.log("Imagen actualizada.");
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
-function uploadVehiclePicture(file) {
-    let suffix = 'vehicles/';
-    let vehicleName = file.name.split(".")[0];
-
-    let resVehicle;
-    api.vehiclesApi.getVehicle(vehicleName)
-        .then(vehicle => {
-            if (vehicle.id) {
-                resVehicle = vehicle;
-                suffix += file.name;
-                return pushToOBS(suffix, file);
-            }
-            throw new Error(vehicle);
-        })
-        .then((response) => {
-            console.log(response);
-            if (response.status === 200) {
-                let imageURL = pullURL + suffix;
-                console.log(imageURL)
-                return api.vehiclesApi.editVehicle(
-                    resVehicle.id,
-                    resVehicle.name,
-                    resVehicle.spName,
-                    resVehicle.otherName,
-                    resVehicle.model,
-                    resVehicle.type,
-                    resVehicle.motorConfig,
-                    resVehicle.motorPower,
-                    resVehicle.transmission,
-                    imageURL
-                )
-            }
-            throw new Error(response);
-        })
-        .then(response => {
-            console.log(response);
-            if (response === true) {
-                console.log("Imagen actualizada.");
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    return imageURL;
 }
 
 async function uploadPartsPictures(files) {
@@ -163,7 +50,7 @@ async function uploadPartsPictures(files) {
         }
 
         let resPart;
-        api.partsApi.getPart(partName)
+        await api.partsApi.getPart(partName)
             .then(part => {
                 if (part.id) {
                     resPart = part;
@@ -173,10 +60,8 @@ async function uploadPartsPictures(files) {
                 throw new Error(part);
             })
             .then((response) => {
-                console.log(response);
                 if (response.status === 200) {
                     let imageURL = pullURL + suffix;
-                    console.log(imageURL)
                     return api.partsApi.editPart(
                         resPart.id,
                         resPart.replaceNo,
@@ -189,7 +74,6 @@ async function uploadPartsPictures(files) {
                 throw new Error(response);
              })
             .then(response => {
-                console.log(response);
                 if (response === true) {
                     uploaded.push(partName);
                     console.log("Imagen actualizada.");
@@ -225,10 +109,8 @@ function uploadVehiclesPictures(files) {
                 throw new Error(vehicle);
             })
             .then((response) => {
-                console.log(response);
                 if (response.status === 200) {
                     let imageURL = pullURL + suffix;
-                    console.log(imageURL)
                     return api.vehiclesApi.editVehicle(
                         resVehicle.id,
                         resVehicle.name,
@@ -245,7 +127,6 @@ function uploadVehiclesPictures(files) {
                 throw new Error(response);
             })
             .then(response => {
-                console.log(response);
                 if (response === true) {
                     uploaded.push(vehicleName);
                     console.log("Imagen actualizada.");

@@ -82,7 +82,7 @@ export default {
 			location.href = '/editcomponent/' + id;
 		},
 		getImageUrl() {
-			return this.component.imageUrl ? this.component.imageUrl :
+			return this.component.imageURL ? this.component.imageURL :
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fcomponent_ph.png';
 		}
 	}

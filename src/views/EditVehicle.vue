@@ -49,7 +49,6 @@
 				placeholder="Selecciona un archivo o arrástralo aquí..."
 				accept=".jpeg, .jpg, .png"
 				browse-text="Examinar"
-				required
 				style="min-width:500px;"
 			></b-form-file>
 			<b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
@@ -81,6 +80,7 @@
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import imgHelper from '../imguploadhelpers';
 
 export default {
 	name: 'EditVehicle',
@@ -153,23 +153,29 @@ export default {
 			this.$refs.confirmationModal.show();
 		},
 		
-		confirm: function(){
+		confirm: async function(){
 			if(this.vehicleId === this.name) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-				// TODO: upload image to object store and get new url
+                if (this.image != null) {
+                    let folder = 'vehicles/';
+                    this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+                    if (this.imageURL === '') {
+                        alert('Error al subir imagen.');
+                    }
+                }
 
-				api.vehiclesApi.editVehicle(this.vehicleId, this.name, this.spName, this.otherName, this.model, this.type, this.motorConfig, this.motorPower, this.transmission, this.imageURL)
-				.then(res => {
-					if(res === true) {
-						window.history.back();
-					} else if(res.includes('value too large for column')) {
-						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-					} else {
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
+                api.vehiclesApi.editVehicle(this.vehicleId, this.name, this.spName, this.otherName, this.model, this.type, this.motorConfig, this.motorPower, this.transmission, this.imageURL)
+                .then(res => {
+                    if(res === true) {
+                        window.history.back();
+                    } else if(res.includes('value too large for column')) {
+                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                    } else {
+                        alert("Ocurrió un error.");
+                    }
+                })
+                .catch(err => {
                     this.cancelConfirmation();
                     alert(err.message);
                 });

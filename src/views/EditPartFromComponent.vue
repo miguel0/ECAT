@@ -29,6 +29,18 @@
                     <b-form-input v-model="otherName"></b-form-input>
                 </b-form-group>
 
+                <p class="mt-3">Imagen a subir:</p>
+                <b-form-file
+                    class="mb-2"
+                    v-model="image"
+                    :state="Boolean(image)"
+                    placeholder="Selecciona un archivo o arrástralo aquí..."
+                    accept=".jpeg, .jpg, .png"
+                    browse-text="Examinar"
+                    style="min-width:500px;"
+                ></b-form-file>
+                <b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
+
                 <b-form-group label="Remark:">
                     <b-form-input v-model="remark"></b-form-input>
                 </b-form-group>
@@ -65,6 +77,7 @@
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import imgHelper from '../imguploadhelpers';
 
 export default {
     name: 'EditPartFromComponent',
@@ -76,8 +89,10 @@ export default {
             spName: null,
             chName: null,
             otherName: null,
+            imageURL: null,
             remark: null,
-            localQty: null
+            localQty: null,
+            image: null
         }
     },
     components: {
@@ -92,6 +107,7 @@ export default {
                 this.spName = part.spName ? part.spName : '';
                 this.chName = part.chName ? part.chName : '';
                 this.otherName = part.otherName ? part.otherName : '';
+                this.imageURL = part.imageURL ? part.imageURL : '';
             })
             .catch(err => {
                 alert(err.message);
@@ -112,16 +128,24 @@ export default {
             this.$refs.confirmationModal.show();
         },
 
-        confirm: function(){
+        confirm: async function(){
             if(this.partId === this.replaceNo) {
                 alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
             } else {
-                this.edit()
+                await this.edit()
             }
         },
 
-        edit: function () {
-            api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
+        edit: async function () {
+            if (this.image != null) {
+                let folder = 'Parts/';
+                this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+                if (this.imageURL === '') {
+                    alert('Error al subir imagen.');
+                }
+            }
+
+            api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
                 .then(res => {
                     if(res === true) {
                         return api.componentPartsApi.editComponentPart(this.$route.params.cpid, this.remark, this.localQty);

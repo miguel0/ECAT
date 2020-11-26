@@ -38,7 +38,6 @@
 						placeholder="Selecciona un archivo o arrástralo aquí..."
 						accept=".jpeg, .jpg, .png"
 						browse-text="Examinar"
-						required
 						style="min-width:500px;"
 					></b-form-file>
 					<b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
@@ -72,6 +71,7 @@
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import imgHelper from '../imguploadhelpers';
 
 export default {
 	name: 'AddDataManual',
@@ -95,28 +95,32 @@ export default {
 			evt.preventDefault();
 			this.$refs.confirmationModal.show();
 		},
-		confirm: function(){
+		confirm: async function(){
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-				// TODO: upload image to object store and get new url
-
-				api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
-				.then(res => {
-					if(res === true) {
-						window.history.back();
-					} else if(res.includes('value too large for column')) {
-						alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-					} else if(res.includes('unique constraint')) {
-						alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
-					} else {
-						console.log(res);
-						alert("Ocurrió un error.");
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
+                let folder = 'parts/';
+				this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+				if (this.imageURL !== '') {
+                    api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
+                        .then(res => {
+                            if (res === true) {
+                                window.history.back();
+                            } else if (res.includes('value too large for column')) {
+                                alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                            } else if (res.includes('unique constraint')) {
+                                alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
+                            } else {
+                                console.log(res);
+                                alert("Ocurrió un error.");
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } else {
+                    alert('Error al subir imagen.');
+                }
 			}
 		},
 
