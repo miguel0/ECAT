@@ -121,7 +121,7 @@ export default {
             this.name = vehicle.name ? vehicle.name : '';
             this.spName = vehicle.spName ? vehicle.spName : '';
             this.otherName = vehicle.otherName ? vehicle.otherName : '';
-            this.model = vehicle.model ? vehicle.motorPower : '';
+            this.model = vehicle.model ? vehicle.model : '';
             this.type = vehicle.type ? vehicle.type : '';
             this.motorConfig = vehicle.motorConfig ? vehicle.motorConfig : '';
             this.motorPower = vehicle.motorPower ? vehicle.motorPower : '';
