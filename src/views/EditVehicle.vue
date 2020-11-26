@@ -45,7 +45,7 @@
 			<b-form-file
 				class="mb-2"
 				v-model="image"
-				:state="Boolean(image)"
+				:state="true"
 				placeholder="Selecciona un archivo o arrástralo aquí..."
 				accept=".jpeg, .jpg, .png"
 				browse-text="Examinar"
