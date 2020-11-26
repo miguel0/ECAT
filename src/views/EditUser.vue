@@ -85,7 +85,7 @@ export default {
             this.role = user.role ? user.role : '';
         })
         .catch(err => {
-            console.log(err);
+            alert(err.message);
         })
     },
     methods: {
