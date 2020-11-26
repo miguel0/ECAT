@@ -56,18 +56,27 @@
                     </div>
                 </b-col>
                 <b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }" cols="5" md="6">
-                    <!--<p class="pl-5">Se encuentra en:</p>-->
-                    <small class="text-muted">Se encuentra en:</small>
-                    <br><br>
-                    <div>
-                        <div class="list_no_title overflow-auto">
-                            <b-list-group>
-                                <b-list-group-item v-for="vehicle in part.foundIn" :key="vehicle.id" @click='goToVehicle(vehicle.id)'>
-                                    <div class="list-hor numbers"><p>{{ vehicle.name }}</p></div>
-                                </b-list-group-item>
-                            </b-list-group>
+                    <template v-if="part.foundIn && part.foundIn.length > 0">
+                        <small class="text-muted">Se encuentra en:</small>
+                        <br><br>
+                        <div>
+                            <div class="list_no_title overflow-auto">
+                                <b-list-group>
+                                    <b-list-group-item v-for="vehicle in part.foundIn" :key="vehicle.id" @click='goToVehicle(vehicle.id)'>
+                                        <div class="list-hor numbers"><p>{{ vehicle.name }}</p></div>
+                                    </b-list-group-item>
+                                </b-list-group>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+                    <template v-else>
+                        <br><br><br>
+                        <div class="text-center mt-5">
+                            <span class="text-secondary">
+                                Esta parte no se encuentra asociada a ningún vehículo.
+                            </span>
+                        </div>
+                    </template>
                 </b-col>
             </b-row>
         </div>
