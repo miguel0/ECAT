@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b-navbar type='dark' variant='primary'>
+		<b-navbar type='dark' class="atblue">
             <div class="logo" v-on:click=toHome()>
                 <b-img src="../assets/logo_at-motors.png" height="40"></b-img>
             </div>
@@ -103,5 +103,9 @@ export default {
 }
 .navbar-nav > li{
 	padding-left: 20px;
+}
+.atblue{
+	color: #1f3564;
+	background-color: #1f3564;
 }
 </style>

@@ -5,7 +5,7 @@
       </div>
     
       <div>
-        <footer class="page-footer font-small blue fixed-bottom" variant='primary'>
+        <footer class="page-footer font-small fixed-bottom">
           <div class="footer-copyright text-center py-3">
             ECAT v1.0 || Nov, 2020
           </div>
@@ -24,7 +24,11 @@
 
 <style scoped>
   footer {
-    background-color: #007bff;
+    background-color: #1f3564;
     color: white;
+    margin-top: 10px;
+  }
+  #app{
+    margin-bottom: 70px;
   }
 </style>
