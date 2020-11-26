@@ -12,7 +12,7 @@
 					<b-form-input id="bottom" class="input" v-model="form.password" type="password" placeholder="Contraseña" required></b-form-input>
 				</b-form-group>
 
-				<b-button id="submit" type="submit" variant="primary">Iniciar sesión</b-button>		
+				<b-button id="submit" type="submit" v-bind:disabled="clicked" variant="primary">Iniciar sesión</b-button>
 			</b-form>
 			<div id="link">
 				<b-link href="/requestpwchange">¿Olvidaste tu contraseña?</b-link>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 export default {
 	name: "SignIn",
 	data() {
@@ -29,12 +30,14 @@ export default {
 			form: {
 				email: '',
 				password: ''
-			}
+			},
+            clicked: false
 		}
 	},
 	methods: {
 		onSubmit(evt) {
 			evt.preventDefault();
+			this.clicked = true;
             this.$store.dispatch('login', {
                 email: this.form.email,
                 password: this.form.password
@@ -44,9 +47,11 @@ export default {
                     case "auth/wrong-password":
                     case "auth/user-not-found":
                         alert("El usuario y/o la contraseña son inválidos.")
+                        this.clicked = false;
                         break;
                     case "auth/too-many-requests":
                         alert("El acceso ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
+                        this.clicked = false;
                         break;
                     default:
                         console.log(err)
