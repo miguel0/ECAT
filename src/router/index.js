@@ -163,37 +163,44 @@ const router = new VueRouter({
 	routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+	
 	const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
 	const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
 
-	if (requiresAuth && !auth.currentUser) {
-		next('/');
-		return;
-	}
-	if (!requiresAuth && !auth.currentUser) {
-		next();
-		return;
-	}
+	if(requiresAuth) {
 
-	api.usersApi.getUser(auth.currentUser.uid)
-	.then(data => {
-		let isAdmin = false;
+		if(auth.currentUser) {
 
-		if (data.role) {
-			isAdmin = data.role === 'A' ? true : false;
+			if(requiresAdmin) {
+				let isAdmin = false;
+				try {
+					let user = await api.usersApi.getUser(auth.currentUser.uid);
+				
+					if(user.role) {
+						isAdmin = user.role === 'A' ? true : false;
+					}
+
+				} catch(err) {
+					alert(err.message);
+					return next(false);
+				}
+
+				//console.log("admin required, admin? ", isAdmin);
+				return next(isAdmin);
+
+			}
+
+			//console.log("only auth required, user exists");
+			return next();
+
 		}
-
-		if (requiresAdmin && !isAdmin) {
-			next(false);
-		} else {
-			next();
-		}
-	})
-	.catch(err => {
-		console.log(err);
-		next(false)
-	});
+		//console.log("auth required, no user");
+		return next(false);
+	}
+	//console.log("no auth required");
+	return next();
+	
 });
 
 export default router;

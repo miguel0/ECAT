@@ -29,14 +29,11 @@ myAxios.interceptors.response.use(
         return response.data;
     },
     async error => {
-        const ogRequest = error.config;
-        if(error.response.status === 403 && !ogRequest._retry) {
-            /*ogRequest._retry = true;
-            const token = await firebase.auth.currentUser.getIdToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            console.log("retry");
-            return axios(ogRequest);*/
-
+        if(!error.response) {
+            throw {message: "Error de conexión con el servidor."};
+        }
+        
+        if(error.response.status === 403) {
             // TODO take to login screen
         }
         //TODO: Filter 
