@@ -42,13 +42,11 @@ export default {
             .catch((err) => {
                 switch (err.code) {
                     case "auth/wrong-password":
-                        alert("La contraseña es inválida o el usuario no tiene contraseña.")
-                        break;
                     case "auth/user-not-found":
-                        alert("No se encontró al usuario.")
+                        alert("El usuario y/o la contraseña son inválidos.")
                         break;
                     case "auth/too-many-requests":
-                        alert("El usuario ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
+                        alert("El acceso ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
                         break;
                     default:
                         console.log(err)
