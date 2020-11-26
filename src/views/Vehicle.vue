@@ -57,7 +57,7 @@ export default {
             this.vehicle = data;
         })
         .catch((err) => {
-            console.log("axios error:", err);
+            alert(err.message);
         })
     },
     methods: {
@@ -79,6 +79,8 @@ export default {
                 this.currentLocalNo = group.localNo;
                 this.componentsHaveLoaded = true;
                 return true;
+            }).catch(err => {
+                alert(err.message);
             });
         }
     }

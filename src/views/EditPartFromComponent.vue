@@ -94,7 +94,7 @@ export default {
                 this.otherName = part.otherName ? part.otherName : '';
             })
             .catch(err => {
-                console.log(err);
+                alert(err.message);
             })
 
         api.componentPartsApi.getComponentPart(this.$route.params.cpid)
@@ -103,7 +103,7 @@ export default {
                 this.localQty = componentPart.localQty ? componentPart.localQty : '';
             })
             .catch(err => {
-                console.log(err);
+                alert(err.message);
             })
     },
     methods: {
@@ -124,19 +124,17 @@ export default {
             api.partsApi.editPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName)
                 .then(res => {
                     if(res === true) {
-                        api.componentPartsApi.editComponentPart(this.$route.params.cpid, this.remark, this.localQty)
-                            .then(res => {
-                                if(res === true) {
-                                    window.history.back();
-                                } else if(res.includes('value too large for column')) {
-                                    alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-                                } else {
-                                    alert("Ocurrió un error.");
-                                }
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
+                        return api.componentPartsApi.editComponentPart(this.$route.params.cpid, this.remark, this.localQty);
+                        
+                    } else if(res.includes('value too large for column')) {
+                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                    } else {
+                        alert("Ocurrió un error.");
+                    }
+                })
+                .then(res => {
+                    if(res === true) {
+                        window.history.back();
                     } else if(res.includes('value too large for column')) {
                         alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
                     } else {
@@ -144,7 +142,8 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    this.cancelConfirmation();
+                    alert(err.message);
                 });
         },
 

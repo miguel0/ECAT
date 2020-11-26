@@ -74,7 +74,7 @@ export default {
 			this.otherName = component.otherName ? component.otherName : '';
 		})
 		.catch(err => {
-			console.log(err);
+			alert(err.message);
 		})
 	},
 	methods: {
@@ -94,7 +94,8 @@ export default {
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				this.cancelConfirmation();
+				alert(err.message);
 			});
 		},
 

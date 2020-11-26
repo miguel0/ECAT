@@ -50,13 +50,13 @@
 		</template>
 		<template v-else>
 			<br><br>
-			<ion-row class="text-center">
-				<ion-col>
+			<b-row class="text-center">
+				<b-col>
 					<p class="text-secondary">
 						No hay grupos asociados a este vehículo.
 					</p>
-				</ion-col>
-			</ion-row>
+				</b-col>
+			</b-row>
 		</template>
 		
 	</div>

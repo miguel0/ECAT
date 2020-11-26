@@ -103,7 +103,6 @@ export default {
 				this.partsFound = i;
 			}
 			this.hasLoaded = true;
-			//throw {message: "A forced error!"};
 		})
 		.catch(err => {
 			alert(err.message);

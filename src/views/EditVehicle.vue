@@ -128,7 +128,7 @@ export default {
             this.transmission = vehicle.transmission ? vehicle.transmission : '';
 		})
 		.catch(err => {
-			console.log(err);
+			alert(err.message);
 		})
 	},
 	methods: {
@@ -152,8 +152,9 @@ export default {
 					}
 				})
 				.catch(err => {
-					console.log(err);
-				});
+                    this.cancelConfirmation();
+                    alert(err.message);
+                });
 			}
 		},
 

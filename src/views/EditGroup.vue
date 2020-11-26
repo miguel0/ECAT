@@ -72,7 +72,7 @@ export default {
 			this.otherName = group.otherName ? group.otherName : '';
 		})
 		.catch(err => {
-			console.log(err);
+			alert(err.message);
 		})
 	},
 	methods: {
@@ -92,7 +92,8 @@ export default {
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				this.cancelConfirmation();
+				alert(err.message);
 			});
 		},
 		cancelConfirmation: function(){

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="parts && parts.length > 0">
 		<b-table 
 			id="partTable" 
 			hover
@@ -53,6 +53,16 @@
 			</div>
 		</b-modal>
     </div>
+	<div v-else>
+		<br><br>
+		<b-row class="text-center">
+			<b-col>
+				<span class="text-secondary">
+					No hay partes asociadas a este componente.
+				</span>
+			</b-col>
+		</b-row>
+	</div>
 </template>
 
 <script>
