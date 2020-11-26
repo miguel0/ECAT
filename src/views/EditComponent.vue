@@ -3,7 +3,7 @@
 	<Navbar />
 	<div class="form-content p-5">
 		<h3>Editando componente</h3>
-        <br>
+		<br>
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input v-model="name" required></b-form-input>
@@ -21,10 +21,22 @@
 				<b-form-input v-model="otherName"></b-form-input>
 			</b-form-group>
 
-            <div class="separate">
-                <b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
-                <b-button type="submit" variant="primary">Aceptar</b-button>
-            </div>
+			<p class="mt-3">Imagen a subir:</p>
+			<b-form-file
+				class="mb-2"
+				v-model="image"
+				:state="Boolean(image)"
+				placeholder="Selecciona un archivo o arrástralo aquí..."
+				accept=".jpeg, .jpg, .png"
+				browse-text="Examinar"
+				style="min-width:500px;"
+			></b-form-file>
+			<b-button class="mb-4" @click="image = null; imageURL = '';">Borrar imagen</b-button>
+
+			<div class="separate">
+				<b-button class="mr-5" href="javascript:history.back()" variant="danger">Cancelar</b-button>
+				<b-button type="submit" variant="primary">Aceptar</b-button>
+			</div>
 		</b-form>
 	</div>
 
@@ -49,6 +61,7 @@
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import imgHelper from '../imguploadhelpers';
 
 export default {
 	name: 'EditComponent',
@@ -58,7 +71,9 @@ export default {
 			name: null,
 			spName: null,
 			chName: null,
-			otherName: null
+			otherName: null,
+			image: null,
+			imageURL: null
 		}
 	},
 	components: {
@@ -72,6 +87,7 @@ export default {
 			this.spName = component.spName ? component.spName : '';
 			this.chName = component.chName ? component.chName : '';
 			this.otherName = component.otherName ? component.otherName : '';
+			this.imageURL = component.imageURL ? component.imageURL : '';
 		})
 		.catch(err => {
 			alert(err.message);
@@ -82,21 +98,29 @@ export default {
 			evt.preventDefault();
 			this.$refs.confirmationModal.show();
 		},
-		confirm: function(){
-			api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName)
-			.then(res => {
-				if(res === true) {
-					window.history.back();
-				} else if(res.includes('value too large for column')) {
-					alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-				} else {
-					alert("Ocurrió un error.");
-				}
-			})
-			.catch(err => {
-				this.cancelConfirmation();
+		confirm: async function(){
+            if (this.image != null) {
+                let folder = 'components/';
+                this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+                if (this.imageURL === '') {
+                    alert('Error al subir imagen.');
+                }
+            }
+
+            api.componentsApi.editComponent(this.componentId, this.name, this.chName, this.spName, this.otherName, this.imageURL)
+            .then(res => {
+                if(res === true) {
+                    window.history.back();
+                } else if(res.includes('value too large for column')) {
+                    alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                } else {
+                    alert("Ocurrió un error.");
+                }
+            })
+            .catch(err => {
+                this.cancelConfirmation();
 				alert(err.message);
-			});
+            });
 		},
 
 		cancelConfirmation: function(){
@@ -112,9 +136,9 @@ export default {
 	margin: auto;
 }
 .separate{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

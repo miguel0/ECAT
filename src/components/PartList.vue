@@ -36,6 +36,8 @@
         <PartModal 
             ref="modalP"
             :id_part="selectedPart"
+            :from_component="true"
+            :cpid="selectedCPID"
         />
 
 		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
@@ -78,6 +80,7 @@ export default {
     },
     data() {
         return {
+            isAdmin: false,
 			sortBy: 'localNo',
 			sortDesc: false,
 			fields: [
@@ -116,12 +119,14 @@ export default {
 				}
 			],
 			currentPage: 1,
-			selectedPart: null
+			selectedPart: null,
+            selectedCPID: null
 		}
 	},
 	methods: {
 		openModal(row) {
 			this.selectedPart = row.id;
+			this.selectedCPID = row.cpid;
 			this.$refs.modalP.showModal();
 		},
 
@@ -156,7 +161,7 @@ export default {
 		api.usersApi.getUser(fb.auth.currentUser.uid)
 		.then(data => {
 			if (data.role) {
-				this.isAdmin = data.role === 'A' ? true : false;
+				this.isAdmin = data.role === 'A';
 				
 				if (this.isAdmin) {
 					this.fields.push({

@@ -7,6 +7,11 @@
                         <p class="title">{{getName()}}</p>
                     </div>
                 </b-col>
+                <template v-if="isAdmin">
+                    <b-button size="sm" @click="editPart()" variant="primary" class="m-3">
+                        <img src="../assets/img/bxs-edit.svg" />
+                    </b-button>
+                </template>
             </b-row>
             <b-row>
                 <b-col cols="7" md="6">
@@ -47,7 +52,7 @@
                         </b-row>
                     </div>
                     <div id="img" class="text-center">
-                        <a v-bind:href="image" target="_blank"><b-img @mouseover="blur=2" @mouseout="blur=0" :src="image" fluid></b-img></a>
+                        <a v-bind:href="getImageUrl()" target="_blank"><b-img @mouseover="blur=2" @mouseout="blur=0" :src="getImageUrl()" fluid></b-img></a>
                     </div>
                 </b-col>
                 <b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }" cols="5" md="6">
@@ -74,10 +79,11 @@
 <script>
 import api from '../services/api/api';
 import LoadingSpinner from './LoadingSpinner';
+import * as fb from "@/firebase";
 
 export default {
     name: 'Part',
-    props: ['id_part'],
+    props: ['id_part', 'from_component', 'cpid'],
     components: {
         LoadingSpinner
     },
@@ -85,13 +91,20 @@ export default {
         api.partsApi.getPart(this.id_part).then(data => {
             this.part = data;
         });
+        api.usersApi.getUser(fb.auth.currentUser.uid)
+            .then(data => {
+                if (data.role) {
+                    this.isAdmin = data.role === 'A';
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     },
     data() {
 		return {
+            isAdmin: false,
             part: null,
-            image: 'https://mobileimages.lowes.com/product/converted/008236/008236686920.jpg?size=pdhi',
-            //image: 'https://lh3.googleusercontent.com/proxy/LuHpkLxSiscPEGIy83Jm_Q1UR9kBNwXI0DMDylAfUnFIMoYyfkoS2MZglpFp4Ef7FlViJQN6ytNuaCCitif94ploOJ8-r7z56wSa4liyx3HzOh5n1ro',
-            //image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Screws.jpg/260px-Screws.jpg',
             children: null,
             blur: 0
 		}
@@ -120,7 +133,15 @@ export default {
         },
         goToVehicle(vehicleId) {
             window.location.href = `/vehicles/${vehicleId}`;
-        }
+		},
+		getImageUrl() {
+			return this.part.imageURL ? this.part.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
+		},
+        editPart() {
+            console.log(this.from_component, this.cpid)
+            location.href = this.from_component ? '/editpartfromcomponent/' + this.cpid + "/" + this.part.id : '/editpart/' + this.part.id;
+        },
     }
 }
 
@@ -130,54 +151,54 @@ export default {
 .ver {
 	display: flex;
 	flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 	height: 100%;
-    padding-left: 4%;
-    padding-right: 4%;
+	padding-left: 4%;
+	padding-right: 4%;
 }
 .hor {
 	display: flex;
 	flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    padding-left: 0%;
-    margin-bottom: 4%;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 100%;
+	height: 100%;
+	padding-left: 0%;
+	margin-bottom: 4%;
 }
 .hor-right {
 	display: flex;
 	flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
+	align-items: flex-end;
+	justify-content: flex-start;
+	width: 100%;
+	height: 100%;
 	max-height: 500px;
-    padding-right: 0%;
-    margin-bottom: 4%;
+	padding-right: 0%;
+	margin-bottom: 4%;
 }
 .title{
-    font-size: xx-large;
-    font-weight: bold;
-    text-align: start;
-    margin-right: 0%;
-    word-wrap: break-word;
-    max-width: 100%;
-    /*margin-top: 3%;*/
-    margin-bottom: 3%;
+	font-size: xx-large;
+	font-weight: bold;
+	text-align: start;
+	margin-right: 0%;
+	word-wrap: break-word;
+	max-width: 100%;
+	/*margin-top: 3%;*/
+	margin-bottom: 3%;
 }
 .partno{
-    font-size: 20px;
-    color:black;
-    margin-top: 3%;
-    margin-bottom: 3%;
+	font-size: 20px;
+	color:black;
+	margin-top: 3%;
+	margin-bottom: 3%;
 }
 .name{
-    font-size: 20px;
-    margin-right: 0%;
-    margin-top: 3%;
-    margin-bottom: 3%;
+	font-size: 20px;
+	margin-right: 0%;
+	margin-top: 3%;
+	margin-bottom: 3%;
 }
 #img {
 	width:70%;
@@ -200,9 +221,9 @@ export default {
 }
 .my_list {
 	width: 100%;
-    padding-right: 0%;
-    padding-left: 15%;
-    padding-top: 5%;
+	padding-right: 0%;
+	padding-left: 15%;
+	padding-top: 5%;
 	overflow: hidden;
 	overflow-y: scroll;
 }
@@ -210,16 +231,16 @@ export default {
 	max-height: 50%;
 }
 .list-hor{
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 .right{
-    text-align: end;
+	text-align: end;
 }
 .overflow-auto {
 	max-height: 400px;
 }
 .numbers {
-    font-size: medium;
+	font-size: medium;
 }
 </style>

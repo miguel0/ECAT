@@ -66,10 +66,11 @@ export default {
 			window.history.back();
 		},
 		onSubmit: function(evt) {
+            evt.preventDefault();
+
             if (this.newpw.localeCompare(this.confnewpw) !== 0) {
                 alert("Las contraseñas no coinciden.")
             } else {
-                evt.preventDefault();
                 let user = fb.auth().currentUser;
                 let credential = fb.auth.EmailAuthProvider.credential(
                     fb.auth().currentUser.email,

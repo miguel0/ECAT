@@ -7,6 +7,7 @@ import SignIn from '../views/SignIn';
 import Home from '../views/Home';
 import RequestPWChange from '../views/RequestPWChange.vue';
 import AddDataFile from '../views/AddDataFile';
+import AddImages from "../views/AddImages";
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import AddUser from "../views/AddUser";
@@ -51,6 +52,14 @@ const routes = [
 	{
 		path: '/adddatamanual',
 		component: AddDataManual,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/addimages',
+		component: AddImages,
 		meta: {
 			requiresAuth: true,
 			requiresAdmin: true

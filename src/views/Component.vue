@@ -5,7 +5,7 @@
 			<b-button id="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
 			<b-row>
 				<b-col>
-					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" src="../assets/img/test/component.png" fluid round></b-img>
+					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" :src='getImageUrl()' fluid round></b-img>
 				</b-col>
 				<b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 					<h4><b>{{component.name}}</b></h4>
@@ -78,9 +78,12 @@ export default {
 			});
 			return component.parts;
 		},
-
 		editComponent(id) {
 			location.href = '/editcomponent/' + id;
+		},
+		getImageUrl() {
+			return this.component.imageURL ? this.component.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fcomponent_ph.png';
 		}
 	}
 }
@@ -100,9 +103,10 @@ export default {
     transform-origin: top left;
     z-index: 5;
     position: relative;
+    max-height: 300px;
 }
 #img:hover {
-	transform: scale(2);
+	transform: scale(2.5);
     transform-origin: top left;
     z-index: 3;
     border: 4px solid black;

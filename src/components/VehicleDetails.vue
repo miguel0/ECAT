@@ -23,7 +23,7 @@
 				</b-row>
 			</b-col>
 			<b-col>
-				<b-img src="../assets/img/test/truck.png" fluid rounded center></b-img>
+				<b-img class="overflow-auto" :src="getImageUrl()" fluid rounded center></b-img>
 			</b-col>
 		</b-row>
 		<br><br>
@@ -106,6 +106,10 @@ export default {
 		},
 		editGroup(id) {
 			location.href = '/editgroup/' + id;
+		},
+		getImageUrl() {
+			return this.vehicle.imageURL ? this.vehicle.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	}
 }
@@ -113,7 +117,7 @@ export default {
 
 <style scoped>
 .overflow-auto {
-	max-height: 200px;
+	max-height: 300px;
 }
 .clickable {
 	cursor: pointer;

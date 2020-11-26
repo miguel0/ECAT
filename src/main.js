@@ -4,6 +4,8 @@ import App from './App.vue';
 import router from './router/index';
 import store from './store';
 import { auth } from './firebase';
+import dotenv from 'dotenv';
+dotenv.config();
 
 Vue.config.productionTip = false
 
