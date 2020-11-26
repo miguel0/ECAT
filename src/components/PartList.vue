@@ -25,7 +25,7 @@
 
 		</b-table>
 
-		<b-pagination
+		<b-pagination id="pag"
 			v-model="currentPage"
 			per-page="5"
 			aria-controls="partTable"
@@ -169,5 +169,9 @@ export default {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+}
+#pag{
+	position: relative;
+	z-index: 1;
 }
 </style>

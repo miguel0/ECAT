@@ -7,6 +7,9 @@ export default {
     },
     getAllVehicles: () => {
         return axios.get('/vehicles');
+	},
+	addVehicle: (id, vehicle) => {
+		return axios.post(`/vehicles/${id}`, vehicle);
     },
 	editVehicle: (id, name, spName, otherName, model, type, motorConfig, motorPower, transmission) => {
         return axios.put(`/vehicles/${id}`, {

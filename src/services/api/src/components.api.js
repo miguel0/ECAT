@@ -7,9 +7,9 @@ export default {
     },
     
     getComponent: (id) => {
-        return axios.get(`/components/${id}`);  
-    },
-    
+        return axios.get(`/components/${id}`);
+	},
+
 	editComponent: (id, name, chName, spName, otherName) => {
 		return axios.put(`/components/${id}`, {
 			name: name,
