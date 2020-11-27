@@ -98,7 +98,9 @@ export default {
                 let folder = 'components/';
                 this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
                 if (this.imageURL === '') {
+					this.cancelConfirmation();
 					this.$bvModal.msgBoxOk('Error al subir imagen.', {centered: true});
+					return;
                 }
             }
 
