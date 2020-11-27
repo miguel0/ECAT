@@ -31,6 +31,6 @@ Icons made by https://www.flaticon.com/authors/freepik from https://www.flaticon
 Icons made by https://www.flaticon.com/authors/ultimatearm from https://www.flaticon.com/
 Icons made by https://www.flaticon.com/authors/phatplus from https://www.flaticon.com/
 
-## Buttons icons
+## Buttons' icons
 Icons made by https://www.freeicons.io/profile/2257 from https://freeicons.io/
 Icons made by https://github.com/atisawd from https://github.com/atisawd/boxicons
