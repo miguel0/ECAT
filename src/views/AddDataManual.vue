@@ -95,28 +95,30 @@ export default {
 			if(this.partId === this.replaceNo) {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
-                let folder = 'parts/';
-				this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
-				if (this.imageURL !== '') {
-                    api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
-                        .then(res => {
-                            if (res === true) {
-                                window.history.back();
-                            } else if (res.includes('value too large for column')) {
-                                alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-                            } else if (res.includes('unique constraint')) {
-                                alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
-                            } else {
-                                console.log(res);
-                                alert("Ocurrió un error.");
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
-                } else {
-                    alert('Error al subir imagen.');
+                if (this.image != null) {
+                    let folder = 'parts/';
+                    this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+                    if (this.imageURL === '') {
+                        alert('Error al subir imagen.');
+                    }
                 }
+
+                api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
+                    .then(res => {
+                        if (res === true) {
+                            window.history.back();
+                        } else if (res.includes('value too large for column')) {
+                            alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                        } else if (res.includes('unique constraint')) {
+                            alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
+                        } else {
+                            console.log(res);
+                            alert("Ocurrió un error.");
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
 			}
 		},
 
