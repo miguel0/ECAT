@@ -31,7 +31,7 @@ export default {
 	},
 	data() {
 		return {
-            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at-motors.png',
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at_motors.png',
 			form: {
 				email: '',
 				password: ''

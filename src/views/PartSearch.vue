@@ -14,11 +14,10 @@
 					v-for='p in filtered'
 					:key='p.id'
 					class='search-card m-3'
-					v-bind:img-src='getImageUrl(p)'
-					img-top
 					@click='goToPart(p.id)'
 					>
-					<b-card-text>
+                    <b-card-img :src="getImageUrl(p)" :top=true height="256px" width="100%"></b-card-img>
+					<b-card-text class="mt-3">
 						{{p.name}}
 					</b-card-text>
 				</b-card>
