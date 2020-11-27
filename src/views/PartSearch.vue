@@ -3,7 +3,7 @@
 	<Navbar />
 	<b-container id='content' class='p-5'>
 		<b-form id="search" @submit="filter">
-			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Escribe el nombre o número de la parte...'></b-form-input>
 			<b-button class="mb-2" type="submit" variant="primary" style="min-width: 200px;">Buscar</b-button>	
 		</b-form>
 		
