@@ -40,26 +40,20 @@
             </b-form>
         </div>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de inserción">
-            <h1>
-                ¿Está seguro?
-            </h1>
-
-            <h3>
-                Asegúrese de que los datos sean correctos.
-            </h3>
-
-            <div class="separate">
-                <b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-                <b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y subir</b-button>
-            </div>
-        </b-modal>
+        <ConfirmationModal
+            mode="add"
+            ref="modalC"
+            @onConfirm="confirm()"
+            @onCancel="cancelConfirmation()"
+        />
+        
     </div>
 </template>
 
 <script>
 import Navbar from "../components/Navbar";
 import api from '../services/api/api';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default {
     name: "AddUser",
@@ -80,7 +74,8 @@ export default {
         }
     },
     components: {
-        Navbar
+        Navbar,
+        ConfirmationModal
     },
     methods: {
         onSubmit: function(evt) {
@@ -88,7 +83,7 @@ export default {
             if (this.password.localeCompare(this.confPassword) != 0) {
                 alert("Las contraseñas no coinciden.")
             } else {
-                this.$refs.confirmationModal.show();
+                this.$refs.modalC.showModal();
             }
         },
 
@@ -109,7 +104,7 @@ export default {
         },
 
         cancelConfirmation: function(){
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
         }
     }
 }
