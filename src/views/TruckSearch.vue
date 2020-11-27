@@ -9,11 +9,11 @@
 				<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
 			</b-form-group>
 			
-			<b-form-group class='mr-4' label='Configuración del motor'>
+			<b-form-group class='mr-4' label='Tipo de ejes'>
 				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
 			</b-form-group>
 
-			<b-form-group class='mr-4' label='Potencia del motor'>
+			<b-form-group class='mr-4' label='Caballos de fuerza'>
 				<b-form-select v-model='motorPower' :options='motorPowerOptions'></b-form-select>
 			</b-form-group>
 
