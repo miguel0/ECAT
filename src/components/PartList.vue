@@ -40,20 +40,13 @@
             :cpid="selectedCPID"
         />
 
-		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
-			<h1>
-				¿Está seguro?
-			</h1>
-			
-			<h3>
-				Los datos podrían no recuperarse tras realizar esta acción.
-			</h3>
+		<ConfirmationModal
+            mode="delete"
+            ref="modalC"
+            @onConfirm="deletePart(selectedPart)"
+            @onCancel="cancelConfirmation()"
+        />
 
-			<div class="separate">
-				<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-				<b-button class="mt-4" variant="danger btn-lg" @click="deletePart(selectedPart)">Confirmar y eliminar</b-button>
-			</div>
-		</b-modal>
     </div>
 	<div v-else>
 		<br><br>
@@ -71,12 +64,14 @@
 import api from '../services/api/api';
 import PartModal from './PartModal';
 import * as fb from '../firebase';
+import ConfirmationModal from './ConfirmationModal';
 
 export default {
     name: "PartList",
     props: ['parts'],
     components: {
-        PartModal
+		PartModal,
+		ConfirmationModal
     },
     data() {
         return {
@@ -151,10 +146,10 @@ export default {
 		},
 		confirm: function(row){
 			this.selectedPart = row.item.cpid;
-			this.$refs.confirmationModal.show();
+			this.$refs.modalC.showModal();
 		},
 		cancelConfirmation: function(){
-			this.$refs.confirmationModal.hide();
+			this.$refs.modalC.hideModal();
 		},
 	},
 	created() {

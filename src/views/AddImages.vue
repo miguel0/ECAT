@@ -61,26 +61,19 @@
             </div>
         </div>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de subida">
-            <h1>
-                ¿Está seguro?
-            </h1>
-
-            <h3>
-                Asegúrese de que las imágenes sean las deseadas.
-            </h3>
-
-            <div class="separate">
-                <b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-                <b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
-            </div>
-        </b-modal>
+        <ConfirmationModal
+            mode="add"
+            ref="modalC"
+            @onConfirm="confirm()"
+            @onCancel="cancelConfirmation()"
+        />
 
         <b-modal
             ref="resultsModal"
             size="lg"
             :hide-footer="true"
             title="Resultados de subida"
+            centered
         >
             <div v-if="uploaded">
                 <h1>
@@ -127,6 +120,7 @@
 import Navbar from "../components/Navbar";
 import LoadingSpinner from '../components/LoadingSpinner';
 import imgHelper from '../imguploadhelpers';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default {
     name: "AddImages",
@@ -143,18 +137,19 @@ export default {
     },
     components: {
         Navbar,
-        LoadingSpinner
+        LoadingSpinner,
+        ConfirmationModal
     },
     methods: {
         onSubmitFiles(evt) {
             evt.preventDefault();
-            this.$refs.confirmationModal.show();
+            this.$refs.modalC.showModal();
         },
         cancelConfirmation: function(){
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
         },
         confirm: async function() {
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
             this.$refs.resultsModal.show();
 
             switch (this.selectedElement) {

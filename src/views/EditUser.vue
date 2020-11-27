@@ -34,26 +34,19 @@
             </b-form>
         </div>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
-            <h1>
-                ¿Está seguro?
-            </h1>
-
-            <h3>
-                Los datos podrían no recuperarse tras realizar esta acción.
-            </h3>
-
-            <div class="separate">
-                <b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-                <b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
-            </div>
-        </b-modal>
+        <ConfirmationModal
+            mode="edit"
+            ref="modalC"
+            @onConfirm="confirm()"
+            @onCancel="cancelConfirmation()"
+        />
     </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default {
     name: "EditUser",
@@ -72,7 +65,8 @@ export default {
         }
     },
     components: {
-        Navbar
+        Navbar,
+        ConfirmationModal
     },
     created: function() {
         api.usersApi.getUser(this.$route.params.id)
@@ -91,7 +85,7 @@ export default {
     methods: {
         onSubmit: function(evt) {
             evt.preventDefault();
-            this.$refs.confirmationModal.show();
+            this.$refs.modalC.showModal();
         },
 
         confirm: function(){
@@ -112,7 +106,7 @@ export default {
         },
 
         cancelConfirmation: function(){
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
         }
     }
 }

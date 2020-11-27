@@ -31,26 +31,20 @@
             </b-button>
         </template>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de eliminación">
-            <h1>
-                ¿Está seguro?
-            </h1>
-
-            <h3>
-                Los datos podrían no recuperarse tras realizar esta acción.
-            </h3>
-
-            <div class="separate">
-                <b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-                <b-button class="mt-4" variant="danger btn-lg" @click="deleteUser(user.id)">Confirmar y eliminar</b-button>
-            </div>
-        </b-modal>
+        <ConfirmationModal
+            mode="delete"
+            ref="modalC"
+            @onConfirm="deleteUser(user.id)"
+            @onCancel="cancelConfirmation()"
+        />
+        
     </div>
 </template>
 
 <script>
 
 import api from "../services/api/api";
+import ConfirmationModal from './ConfirmationModal';
 
 export default {
     name: 'UserProfile',
@@ -58,6 +52,9 @@ export default {
     data() {
         return {
         }
+    },
+    components: {
+        ConfirmationModal
     },
     methods: {
         editUser: function(id) {
@@ -77,10 +74,10 @@ export default {
                 });
         },
         confirm: function(){
-            this.$refs.confirmationModal.show();
+            this.$refs.modalC.showModal();
         },
         cancelConfirmation: function(){
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
         }
     }
 }

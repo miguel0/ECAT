@@ -50,20 +50,12 @@
 			</div>
 		</div>
 
-		<b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de inserción">
-		<h1>
-			¿Está seguro?
-		</h1>
-		
-		<h3>
-			Asegúrese de que los datos sean correctos.
-		</h3>
-
-		<div class="separate">
-			<b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-			<b-button class="mt-4" variant="primary btn-lg" @click="confirm()">Confirmar y subir</b-button>
-		</div>
-	</b-modal>
+		<ConfirmationModal
+            mode="add"
+            ref="modalC"
+            @onConfirm="confirm()"
+            @onCancel="cancelConfirmation()"
+        />
 
 </div>
 </template>
@@ -72,11 +64,13 @@
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
 import imgHelper from '../imguploadhelpers';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default {
 	name: 'AddDataManual',
 	components: {
-		Navbar
+		Navbar,
+		ConfirmationModal
 	},
 	data() {
 		return {
@@ -93,7 +87,7 @@ export default {
 	methods: {
 		onSubmit: function(evt) {
 			evt.preventDefault();
-			this.$refs.confirmationModal.show();
+			this.$refs.modalC.showModal();
 		},
 		confirm: async function(){
 			if(this.partId === this.replaceNo) {
@@ -125,7 +119,7 @@ export default {
 		},
 
 		cancelConfirmation: function(){
-			this.$refs.confirmationModal.hide();
+			this.$refs.modalC.hideModal();
 		}
 	}
 }
