@@ -1,4 +1,6 @@
-# ecat
+# ECAT
+
+Frontend web application for e-catalog. Done with [Vue](https://vuejs.org/). Uses [Firebase SDK](https://www.npmjs.com/package/firebase) for authentication. [Oracle Object Storage](https://www.oracle.com/cloud/storage/object-storage.html) used for image storing.
 
 ## Project setup
 ```
