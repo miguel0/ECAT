@@ -185,6 +185,7 @@ export default {
 	justify-content: center;
 }
 .search-card {
+    cursor: pointer;
 	max-width: 30%;
 	min-width: 180px;
 }

@@ -13,7 +13,14 @@
         <b-row>
             <b-col>
                 <b-list-group class="overflow-auto">
-                    <b-list-group-item href="#" @click="viewUser(user.id)" v-for="(user) of this.users" :key="`user_id-${user.id}`" ref="ref-users" class="clickable d-flex align-items-center">
+                    <b-list-group-item
+                        href="#"
+                        @click="viewUser(user.id)"
+                        v-for="(user) of this.users"
+                        :key="`user_id-${user.id}`"
+                        ref="ref-users"
+                        class="clickable d-flex align-items-center"
+                    >
                             <b-avatar variant="primary" class="mr-3" :text="user.name[0]"></b-avatar>
                             <span class="mr-auto">{{user.name}}</span>
                             <b-badge>{{user.role}}</b-badge>

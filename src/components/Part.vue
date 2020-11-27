@@ -52,7 +52,11 @@
                         </b-row>
                     </div>
                     <div id="img" class="text-center">
-                        <a v-bind:href="getImageUrl()" target="_blank"><b-img @mouseover="blur=2" @mouseout="blur=0" :src="getImageUrl()" fluid></b-img></a>
+                        <a
+                            v-bind:href="getImageUrl()"
+                            target="_blank">
+                            <b-img @mouseover="blur=2" @mouseout="blur=0" :src="getImageUrl()" fluid></b-img>
+                        </a>
                     </div>
                 </b-col>
                 <b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }" cols="5" md="6">
@@ -62,7 +66,12 @@
                         <div>
                             <div class="list_no_title overflow-auto">
                                 <b-list-group>
-                                    <b-list-group-item v-for="vehicle in part.foundIn" :key="vehicle.id" @click='goToVehicle(vehicle.id)'>
+                                    <b-list-group-item
+                                        v-for="vehicle in part.foundIn"
+                                        :key="vehicle.id"
+                                        @click='goToVehicle(vehicle.id)'
+                                        class="pointer"
+                                    >
                                         <div class="list-hor numbers"><p>{{ vehicle.name }}</p></div>
                                     </b-list-group-item>
                                 </b-list-group>
@@ -251,5 +260,8 @@ export default {
 }
 .numbers {
 	font-size: medium;
+}
+.pointer {
+    cursor: pointer;
 }
 </style>
