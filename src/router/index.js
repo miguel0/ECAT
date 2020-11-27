@@ -187,7 +187,7 @@ router.beforeEach(async (to, from, next) => {
 					let user = await api.usersApi.getUser(auth.currentUser.uid);
 				
 					if(user.role) {
-						isAdmin = user.role === 'A' ? true : false;
+						isAdmin = user.role === 'A';
 					}
 
 				} catch(err) {
