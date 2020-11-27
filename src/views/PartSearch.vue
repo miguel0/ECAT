@@ -104,7 +104,7 @@ export default {
 			this.hasLoaded = true;
 		})
 		.catch(err => {
-			alert(err.message);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	}
 }

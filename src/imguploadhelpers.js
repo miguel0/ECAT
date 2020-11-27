@@ -34,6 +34,7 @@ async function uploadSinglePicture(folder, file) {
         .catch(err => {
             console.log(err);
         })
+    console.log(imageURL)
     return imageURL;
 }
 

@@ -93,30 +93,34 @@ export default {
 		},
 		confirm: async function(){
 			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+				this.$bvModal.msgBoxOk('El número de parte y el número de reemplazo no pueden ser el mismo.', {centered: true});
 			} else {
-                let folder = 'parts/';
-				this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
-				if (this.imageURL !== '') {
-                    api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
-                        .then(res => {
-                            if (res === true) {
-                                window.history.back();
-                            } else if (res.includes('value too large for column')) {
-                                alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
-                            } else if (res.includes('unique constraint')) {
-                                alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
-                            } else {
-                                console.log(res);
-                                alert("Ocurrió un error.");
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
-                } else {
-                    alert('Error al subir imagen.');
-                }
+				if (this.image != null) {
+                    let folder = 'parts/';
+					this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
+                    if (this.imageURL === '') {
+						this.cancelConfirmation();
+						this.$bvModal.msgBoxOk('Error al subir imagen.', {centered: true});
+						return;
+					}
+				}
+
+				api.partsApi.addPart(this.partId, this.replaceNo, this.name, this.chName, this.spName, this.otherName, this.imageURL)
+					.then(res => {
+						if (res === true) {
+							window.history.back();
+						} else if (res.includes('value too large for column')) {
+							this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
+						} else if (res.includes('unique constraint')) {
+							this.$bvModal.msgBoxOk('Ya existe una parte con ese número de parte o ese número de reemplazo.', {centered: true});
+						} else {
+							this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
+						}
+					})
+					.catch(err => {
+						this.cancelConfirmation();
+						this.$bvModal.msgBoxOk(err.message, {centered: true});
+					});
 			}
 		},
 

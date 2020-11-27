@@ -178,7 +178,7 @@ export default {
 								part["replaceNo"] = ws.getCell('I' + j.toString()).value;
 
 								if (part["id"] === part["replaceNo"]) {
-									alert('Ocurrió un error leyendo el grupo: '+ groupn + ' en la fila: ' + j.toString());
+									this.$bvModal.msgBoxOk(`Ocurrió un error leyendo el grupo: ${groupn} en la fila: ${j.toString()}`, {centered: true});
 									this.uploading = false;
 									return;
 								}
@@ -218,9 +218,9 @@ export default {
 					}
  
 					this.sendToBack(v);
-				}).catch((error)=> {
+				}).catch(()=> {
 					alert(errorMsg);
-					console.log(error);
+					this.$bvModal.msgBoxOk(errorMsg, {centered: true});
 					this.file = null;
 					this.uploading = false;
 				})
@@ -234,13 +234,13 @@ export default {
 				this.file = null;
 
 				if(res === true) {
-					alert('¡El vehículo se añadió correctamente!');
+					this.$bvModal.msgBoxOk('¡El vehículo se añadió correctamente!', {centered: true});
 				} else {
-					alert('Ocurrió el siguiente error:\n' + res);
+					this.$bvModal.msgBoxOk(`Ocurrió el siguiente error: ${res}`, {centered: true});
 				}
 			})
 			.catch(err => {
-				alert("Ocurrió un error: " + err)
+				this.$bvModal.msgBoxOk(err.message, {centered: true});
 			});
 		},
 		confirm: function() {

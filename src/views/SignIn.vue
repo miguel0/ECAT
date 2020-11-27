@@ -25,6 +25,8 @@
 
 export default {
 	name: "SignIn",
+	components: {
+	},
 	data() {
 		return {
             at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at_motors.png',
@@ -47,16 +49,15 @@ export default {
                 switch (err.code) {
                     case "auth/wrong-password":
                     case "auth/user-not-found":
-                        alert("El usuario y/o la contraseña son inválidos.")
+						this.$bvModal.msgBoxOk("El usuario y/o la contraseña son inválidos.", {centered: true});
                         this.clicked = false;
                         break;
                     case "auth/too-many-requests":
-                        alert("El acceso ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
+						this.$bvModal.msgBoxOk("El acceso ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.", {centered: true});
                         this.clicked = false;
                         break;
                     default:
-                        console.log(err)
-                        alert("Hubo un error al iniciar sesión.")
+                        this.$bvModal.msgBoxOk("Hubo un error al iniciar sesión.", {centered: true});
                 }
             });
 		}

@@ -95,7 +95,7 @@ export default {
 			this.imageURL = part.imageURL ? part.imageURL : '';
 		})
 		.catch(err => {
-			alert(err.message);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		})
 	},
 	methods: {
@@ -106,13 +106,15 @@ export default {
 
 		confirm: async function(){
 			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+				this.$bvModal.msgBoxOk('El número de parte y el número de reemplazo no pueden ser el mismo.', {centered: true});
 			} else {
                 if (this.image != null) {
                     let folder = 'parts/';
                     this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
                     if (this.imageURL === '') {
-                        alert('Error al subir imagen.');
+						this.cancelConfirmation();
+						this.$bvModal.msgBoxOk('Error al subir imagen.', {centered: true});
+						return;
                     }
                 }
 
@@ -121,14 +123,14 @@ export default {
                     if(res === true) {
                         window.history.back();
                     } else if(res.includes('value too large for column')) {
-                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+						this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                     } else {
-                        alert("Ocurrió un error.");
+						this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
                     }
                 })
                 .catch(err => {
 					this.cancelConfirmation();
-                    alert(err.message);
+                    this.$bvModal.msgBoxOk(err.message, {centered: true});
                 });
 			}
 		},
