@@ -54,7 +54,7 @@ export default {
 			this.component = component;
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		})
 		
 		api.usersApi.getUser(fb.auth.currentUser.uid)
@@ -64,7 +64,7 @@ export default {
 			}
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	},
 	methods: {

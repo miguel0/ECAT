@@ -83,7 +83,7 @@ export default {
         onSubmit: function(evt) {
             evt.preventDefault();
             if (this.password.localeCompare(this.confPassword) != 0) {
-                alert("Las contraseñas no coinciden.")
+                this.$bvModal.msgBoxOk("Las contraseñas no coinciden.", {centered: true});
             } else {
                 this.$refs.modalC.showModal();
             }
@@ -95,13 +95,13 @@ export default {
                     if(res === true) {
                         window.history.back();
                     } else if(res.includes('value too large for column')) {
-                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                        this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                     } else {
-                        alert("Ocurrió un error." + res);
+                        this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    this.$bvModal.msgBoxOk(err.message, {centered: true});
                 });
         },
 

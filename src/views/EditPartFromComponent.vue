@@ -105,7 +105,7 @@ export default {
                 this.imageURL = part.imageURL ? part.imageURL : '';
             })
             .catch(err => {
-                alert(err.message);
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
             })
 
         api.componentPartsApi.getComponentPart(this.$route.params.cpid)
@@ -114,7 +114,7 @@ export default {
                 this.localQty = componentPart.localQty ? componentPart.localQty : '';
             })
             .catch(err => {
-                alert(err.message);
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
             })
     },
     methods: {
@@ -125,7 +125,7 @@ export default {
 
         confirm: async function(){
             if(this.partId === this.replaceNo) {
-                alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+                this.$bvModal.msgBoxOk('El número de parte y el número de reemplazo no pueden ser el mismo.', {centered: true});
             } else {
                 await this.edit()
             }
@@ -136,7 +136,7 @@ export default {
                 let folder = 'Parts/';
                 this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
                 if (this.imageURL === '') {
-                    alert('Error al subir imagen.');
+                    this.$bvModal.msgBoxOk('Error al subir imagen.', {centered: true});
                 }
             }
 
@@ -146,23 +146,23 @@ export default {
                         return api.componentPartsApi.editComponentPart(this.$route.params.cpid, this.remark, this.localQty);
                         
                     } else if(res.includes('value too large for column')) {
-                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                        this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                     } else {
-                        alert("Ocurrió un error.");
+                        this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
                     }
                 })
                 .then(res => {
                     if(res === true) {
                         window.history.back();
                     } else if(res.includes('value too large for column')) {
-                        alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                        this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                     } else {
-                        alert("Ocurrió un error.");
+                        this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
                     }
                 })
                 .catch(err => {
                     this.cancelConfirmation();
-                    alert(err.message);
+                    this.$bvModal.msgBoxOk(err.message, {centered: true});
                 });
         },
 

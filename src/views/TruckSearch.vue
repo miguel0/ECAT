@@ -151,6 +151,9 @@ export default {
 			this.allTrucks = vehicles;
 			this.hasLoaded = true;
 		})
+		.catch(err => {
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
+		})
 	},
 }
 </script>
