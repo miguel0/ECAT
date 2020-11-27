@@ -38,8 +38,15 @@ export default {
 		},
 		onSubmit(evt) {
 			evt.preventDefault();
-			this.$store.dispatch('changePW', {
-				email: this.form.email
+			this.$store.dispatch('changePW', {email: this.form.email})
+			.then(successMsg => 
+				this.$bvModal.msgBoxOk(successMsg, {centered: true})
+			)
+			.then(() => {
+				location.href= '/';
+			})
+			.catch(() => {
+				this.$bvModal.msgBoxOk('Error al enviar correo de recuperación de contraseña.', {centered: true});
 			});
 		}
 	}

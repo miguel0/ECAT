@@ -18,8 +18,6 @@
 				<b-link href="/requestpwchange">¿Olvidaste tu contraseña?</b-link>
 			</div>
 		</div>
-		<button @click="custom('hehe')">hehehe</button>
-		<button @click="custom('lolol')">trololol</button>
 	</div>
 </template>
 
