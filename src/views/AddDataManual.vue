@@ -93,7 +93,7 @@ export default {
 		},
 		confirm: async function(){
 			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+				this.$bvModal.msgBoxOk('El número de parte y el número de reemplazo no pueden ser el mismo.', {centered: true});
 			} else {
                 if (this.image != null) {
                     let folder = 'parts/';

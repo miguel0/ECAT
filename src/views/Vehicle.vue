@@ -57,7 +57,7 @@ export default {
             this.vehicle = data;
         })
         .catch((err) => {
-            alert(err.message);
+            this.$bvModal.msgBoxOk(err.message, {centered: true});
         })
     },
     methods: {
@@ -80,7 +80,7 @@ export default {
                 this.componentsHaveLoaded = true;
                 return true;
             }).catch(err => {
-                alert(err.message);
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
             });
         }
     }
