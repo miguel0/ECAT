@@ -158,8 +158,21 @@ export default {
 								part["id"] = ws.getCell('B' + j.toString()).value;
 								part["chName"] = ws.getCell('C' + j.toString()).value;
 								part["name"] = ws.getCell('D' + j.toString()).value;
-								part["localQty"] = ws.getCell('E' + j.toString()).value;
-								part["remark"] = ws.getCell('F' + j.toString()).value;
+
+								let qtyStr = ws.getCell('E' + j.toString()).value;
+								qtyStr = qtyStr.toString().trim();
+								let isnum = /^\d+$/.test(qtyStr);
+								if (!isnum) {
+									part["localQty"] = '1';
+									let remark = ws.getCell('F' + j.toString()).value;
+									remark = remark ? remark.toString().trim() + ', ' : '';
+									remark += qtyStr
+									part["remark"] = remark;
+								} else {
+									part["localQty"] = qtyStr;
+									part["remark"] = ws.getCell('F' + j.toString()).value;
+								}
+
 								part["spName"] = ws.getCell('G' + j.toString()).value;
 								part["otherName"] = ws.getCell('H' + j.toString()).value;
 								part["replaceNo"] = ws.getCell('I' + j.toString()).value;
@@ -203,7 +216,7 @@ export default {
 
 						v["groups"].push(group);
 					}
-
+ 
 					this.sendToBack(v);
 				}).catch((error)=> {
 					alert(errorMsg);
