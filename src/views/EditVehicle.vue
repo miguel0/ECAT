@@ -11,10 +11,12 @@
 
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input required v-model="name"></b-form-input>
+                <b-form-text text-variant="danger">Campo requerido</b-form-text>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
 				<b-form-input required v-model="spName"></b-form-input>
+                <b-form-text text-variant="danger">Campo requerido</b-form-text>
 			</b-form-group>
 
 			<b-form-group label="Otros nombres:">

@@ -8,6 +8,7 @@
 			<b-form @submit="onSubmit">
 				<b-form-group>
 					<b-form-input id="top" class="input" v-model="form.email" type="email" placeholder="Correo electrónico" required autofocus></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
 				</b-form-group>
 
 				<div id="request_btns">

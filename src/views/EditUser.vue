@@ -10,9 +10,11 @@
                 </b-form-group>
                 <b-form-group label="Nombre">
                     <b-form-input required v-model="name"></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
                 </b-form-group>
                 <b-form-group label="Correo Electrónico">
                     <b-form-input required v-model="email" type="email"></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
                 </b-form-group>
                 <b-form-group label="Rol">
                     <b-form-select v-model="role" :options="roles"></b-form-select>

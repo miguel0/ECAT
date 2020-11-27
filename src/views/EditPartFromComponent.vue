@@ -14,7 +14,8 @@
                 </b-form-group>
 
                 <b-form-group label="Nombre en inglés:">
-                    <b-form-input v-model="name"></b-form-input>
+                    <b-form-input v-model="name" required></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
                 </b-form-group>
 
                 <b-form-group label="Nombre en español:">
