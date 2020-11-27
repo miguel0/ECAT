@@ -2,7 +2,6 @@ import api from './services/api/api';
 import { pushToOBS } from "./services/api/src/ObjectStorage";
 
 
-//const pullURL = process.env.VUE_APP_ORCL_OBS_PULL;
 const pullURL = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/';
 
 export default {
