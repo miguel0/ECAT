@@ -95,7 +95,7 @@ export default {
                 this.viewUser.role = this.viewUser.role.localeCompare("C") === 0 ? "Consultor" : "Admin";
             })
             .catch(err => {
-                console.log(err);
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
             })
         },
         getAllUsers: function() {

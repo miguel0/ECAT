@@ -106,18 +106,22 @@ export default {
         LoadingSpinner
     },
     created() {
-        api.partsApi.getPart(this.id_part).then(data => {
+        api.partsApi.getPart(this.id_part)
+        .then(data => {
             this.part = data;
+        })
+        .catch(err => {
+            this.$bvModal.msgBoxOk(err.message, {centered: true});
         });
         api.usersApi.getUser(fb.auth.currentUser.uid)
-            .then(data => {
-                if (data.role) {
-                    this.isAdmin = data.role === 'A';
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        .then(data => {
+            if (data.role) {
+                this.isAdmin = data.role === 'A';
+            }
+        })
+        .catch(err => {
+            this.$bvModal.msgBoxOk(err.message, {centered: true});
+        });
     },
     data() {
 		return {
@@ -157,7 +161,6 @@ export default {
 				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
 		},
         editPart() {
-            console.log(this.from_component, this.cpid)
             location.href = this.from_component ? '/editpartfromcomponent/' + this.cpid + "/" + this.part.id : '/editpart/' + this.part.id;
         },
     }

@@ -69,7 +69,8 @@ export default {
             evt.preventDefault();
 
             if (this.newpw.localeCompare(this.confnewpw) !== 0) {
-                alert("Las contraseñas no coinciden.")
+				this.$bvModal.msgBoxOk("Las contraseñas no coinciden.", {centered: true});
+				
             } else {
                 let user = fb.auth().currentUser;
                 let credential = fb.auth.EmailAuthProvider.credential(
@@ -80,17 +81,15 @@ export default {
                 .then(() => {
                         fb.auth().currentUser.updatePassword(this.newpw)
                         .then(() => {
-                            alert("Contraseña actualizada con éxito.");
+							this.$bvModal.msgBoxOk("Contraseña actualizada con éxito.", {centered: true});
                             window.history.back();
                         })
-                        .catch(err => {
-                            console.log(err);
-                            alert("Error al actualizar la contraseña.");
+                        .catch(() => {
+							this.$bvModal.msgBoxOk("Error al actualizar la contraseña.", {centered: true});
                         })
                 })
-                .catch((err) => {
-                    console.log(err);
-                    alert("Error al autenticar la contraseña.");
+                .catch(() => {
+					this.$bvModal.msgBoxOk("Error al autenticar la contraseña.", {centered: true});
                 });
             }
 		}

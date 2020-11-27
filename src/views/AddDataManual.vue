@@ -93,7 +93,7 @@ export default {
 		},
 		confirm: async function(){
 			if(this.partId === this.replaceNo) {
-				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
+				this.$bvModal.msgBoxOk('El número de parte y el número de reemplazo no pueden ser el mismo.', {centered: true});
 			} else {
                 let folder = 'parts/';
 				this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
@@ -103,19 +103,18 @@ export default {
                             if (res === true) {
                                 window.history.back();
                             } else if (res.includes('value too large for column')) {
-                                alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+								this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                             } else if (res.includes('unique constraint')) {
-                                alert('Ya existe una parte con ese número de parte o ese número de reemplazo.');
+								this.$bvModal.msgBoxOk('Ya existe una parte con ese número de parte o ese número de reemplazo.', {centered: true});
                             } else {
-                                console.log(res);
-                                alert("Ocurrió un error.");
+                                this.$bvModal.msgBoxOk("Ocurrió un error.", {centered: true});
                             }
                         })
                         .catch(err => {
-                            console.log(err);
+                            this.$bvModal.msgBoxOk(err.message, {centered: true});
                         });
                 } else {
-                    alert('Error al subir imagen.');
+					this.$bvModal.msgBoxOk('Error al subir imagen.', {centered: true});
                 }
 			}
 		},

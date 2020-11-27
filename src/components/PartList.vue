@@ -136,13 +136,13 @@ export default {
 				if(res === true) {
 					location.reload();
 				} else if(res.includes('child record found')) {
-					alert('No puede borrar una pieza con subpiezas. Trate borrando esas primero.');
+					this.$bvModal.msgBoxOk('No puede borrar una pieza con subpiezas. Trate borrando esas primero.', {centered: true});
 				} else {
-					alert("Ocurrió un error." + res + this.selectedPart);
+					this.$bvModal.msgBoxOk(`Ocurrió un error. ${res} ${this.selectedPart}`, {centered: true});
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				this.$bvModal.msgBoxOk(err.message, {centered: true});
 			});
 		},
 		confirm: function(row){
@@ -168,7 +168,7 @@ export default {
 			}
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	}
 }
