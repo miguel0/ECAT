@@ -1,7 +1,8 @@
 <template>
 	<div v-if="parts && parts.length > 0">
 		<b-table 
-			id="partTable" 
+			id="partTable"
+            class="pointer"
 			hover
 			small
 			:items='parts' 
@@ -174,6 +175,9 @@ export default {
 </script>
 
 <style scoped>
+.pointer {
+    cursor: pointer;
+}
 .separate{
 	display: flex;
 	flex-direction: row;

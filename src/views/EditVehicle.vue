@@ -11,10 +11,12 @@
 
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input required v-model="name"></b-form-input>
+                <b-form-text text-variant="danger">Campo requerido</b-form-text>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
 				<b-form-input required v-model="spName"></b-form-input>
+                <b-form-text text-variant="danger">Campo requerido</b-form-text>
 			</b-form-group>
 
 			<b-form-group label="Otros nombres:">
@@ -45,7 +47,7 @@
 			<b-form-file
 				class="mb-2"
 				v-model="image"
-				:state="Boolean(image)"
+				:state="true"
 				placeholder="Selecciona un archivo o arrástralo aquí..."
 				accept=".jpeg, .jpg, .png"
 				browse-text="Examinar"

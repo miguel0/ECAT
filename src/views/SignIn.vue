@@ -1,6 +1,6 @@
 <template>
 	<div id="signin">
-		<b-img id="logo" src="../assets/logo_at-motors.png" center></b-img>
+		<b-img id="logo" :src="at_motors_logo" center></b-img>
 
 		<div id="content">
 			<b-form @submit="onSubmit">
@@ -10,9 +10,9 @@
 
 				<b-form-group>
 					<b-form-input id="bottom" class="input" v-model="form.password" type="password" placeholder="Contraseña" required></b-form-input>
-				</b-form-group>		
+				</b-form-group>
 
-				<b-button id="submit" type="submit" variant="primary">Iniciar sesión</b-button>		
+				<b-button id="submit" type="submit" v-bind:disabled="clicked" variant="primary">Iniciar sesión</b-button>
 			</b-form>
 			<div id="link">
 				<b-link href="/requestpwchange">¿Olvidaste tu contraseña?</b-link>
@@ -22,23 +22,43 @@
 </template>
 
 <script>
+
 export default {
 	name: "SignIn",
 	data() {
 		return {
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at-motors.png',
 			form: {
 				email: '',
 				password: ''
-			}
+			},
+            clicked: false
 		}
 	},
 	methods: {
 		onSubmit(evt) {
 			evt.preventDefault();
-			this.$store.dispatch('login', {
-				email: this.form.email,
-				password: this.form.password
-			});
+			this.clicked = true;
+            this.$store.dispatch('login', {
+                email: this.form.email,
+                password: this.form.password
+            })
+            .catch((err) => {
+                switch (err.code) {
+                    case "auth/wrong-password":
+                    case "auth/user-not-found":
+                        alert("El usuario y/o la contraseña son inválidos.")
+                        this.clicked = false;
+                        break;
+                    case "auth/too-many-requests":
+                        alert("El acceso ha sido temporalmente bloqueado por realizar demasiados intentos. Espere unos momentos o cambie su contraseña.")
+                        this.clicked = false;
+                        break;
+                    default:
+                        console.log(err)
+                        alert("Hubo un error al iniciar sesión.")
+                }
+            });
 		}
 	}
 }

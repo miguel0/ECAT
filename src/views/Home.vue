@@ -11,7 +11,7 @@
 				img-top
 				@click="goToVehicle()">
 					<b-card-img 
-					:src="require('../assets/img/test/vehicle-default.png')">
+					:src="truckSearchLogo">
 					</b-card-img>
 
 					<b-card-text>
@@ -28,7 +28,7 @@
 				img-top
 				@click="goToPart()">
 					<b-card-img 
-					:src="require('../assets/img/test/individual-parts-default.png')">
+					:src="partSearchLogo">
 					</b-card-img>
 
 					<b-card-text>
@@ -51,7 +51,9 @@
 		},
 		data() {
 			return {
-				isAdmin: false
+				isAdmin: false,
+                truckSearchLogo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Fvehicle-default.png',
+                partSearchLogo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Findividual-parts-default.png'
 			}
 		},
 		methods:{

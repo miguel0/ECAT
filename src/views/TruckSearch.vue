@@ -2,18 +2,18 @@
 <div>
 	<Navbar />
 	<b-container id='content' class='p-5'>
-		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Escribe el nombre, ID o modelo del vehículo...'></b-form-input>
 
 		<div id='filters'>
 			<b-form-group class='mr-2' label='Tipo'>
 				<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
 			</b-form-group>
 			
-			<b-form-group class='mr-4' label='Configuración del motor'>
+			<b-form-group class='mr-4' label='Tipo de ejes'>
 				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
 			</b-form-group>
 
-			<b-form-group class='mr-4' label='Potencia del motor'>
+			<b-form-group class='mr-4' label='Caballos de fuerza'>
 				<b-form-select v-model='motorPower' :options='motorPowerOptions'></b-form-select>
 			</b-form-group>
 
@@ -185,6 +185,7 @@ export default {
 	justify-content: center;
 }
 .search-card {
+    cursor: pointer;
 	max-width: 30%;
 	min-width: 180px;
 }

@@ -64,7 +64,7 @@ export default {
     },
     data() {
         return {
-            users: null,
+            users: [],
             viewUser: null,
             roles: [
                 { short: 'A', role: 'Admin' },
@@ -82,7 +82,7 @@ export default {
         convertRoles: function () {
             for (var user = 0; user < this.users.length; user++) {
                 for (var role = 0; role < this.roles.length; role++) {
-                    if (this.users[user].role.localeCompare(this.roles[role].short) == 0) {
+                    if (this.users[user].role.localeCompare(this.roles[role].short) === 0) {
                         this.users[user].role = this.roles[role].role
                     }
                 }
@@ -92,7 +92,7 @@ export default {
             api.usersApi.getUser(id)
             .then(user => {
                 this.viewUser = user;
-                this.viewUser.role = this.viewUser.role.localeCompare("C") == 0 ? "Consultor" : "Admin";
+                this.viewUser.role = this.viewUser.role.localeCompare("C") === 0 ? "Consultor" : "Admin";
             })
             .catch(err => {
                 console.log(err);

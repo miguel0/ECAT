@@ -2,7 +2,7 @@
 	<div>
 		<b-navbar type='dark' class="atblue">
             <div class="logo" v-on:click=toHome()>
-                <b-img src="../assets/logo_at-motors.png" height="40"></b-img>
+                <b-img :src="at_motors_logo" height="40"></b-img>
             </div>
 			<b-navbar-nav class='ml-auto'>
 				<template v-for='(section, index) in sections'>
@@ -24,6 +24,7 @@ export default {
 	name: 'Navbar',
 	data() {
 		return {
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at-motors.png',
 			sections: [
 				{
 					route: '/home',
@@ -50,7 +51,7 @@ export default {
             location.href = "/home";
         },
 		dropdownClick(str) {
-			if (str == 'logout') {
+			if (str === 'logout') {
 				this.$store.dispatch('logout');
 			} else {
 				location.href = str;

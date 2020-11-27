@@ -19,7 +19,6 @@ const store = new Vuex.Store({
 		async login({ dispatch }, form) {
 			// sign user in
 			const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password);
-			console.log(await fb.auth.currentUser.getIdToken())
 			// fetch user profile and set in state
 			dispatch('fetchUserProfile', user);
 		},

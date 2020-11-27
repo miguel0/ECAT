@@ -7,6 +7,7 @@
 		<b-form @submit="onSubmit">
 			<b-form-group label="Nombre en inglés:">
 				<b-form-input v-model="name" required></b-form-input>
+                <b-form-text text-variant="danger">Campo requerido</b-form-text>
 			</b-form-group>
 
 			<b-form-group label="Nombre en español:">
@@ -25,7 +26,7 @@
 			<b-form-file
 				class="mb-2"
 				v-model="image"
-				:state="Boolean(image)"
+				:state="true"
 				placeholder="Selecciona un archivo o arrástralo aquí..."
 				accept=".jpeg, .jpg, .png"
 				browse-text="Examinar"
