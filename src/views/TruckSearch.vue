@@ -29,11 +29,10 @@
 					v-for='t in filter()'
 					:key='t.id'
 					class='search-card m-3'
-					v-bind:img-src='getImageUrl(t)'
-					img-top
 					@click='goToVehicle(t.id)'
 					>
-					<b-card-text>
+                    <b-card-img :src="getImageUrl(t)" :top=true height="256px" width="100%"></b-card-img>
+					<b-card-text class="mt-3">
 						<p>{{t.name}}</p>
 						<span class="card-badge"><b-badge>{{t.type}}</b-badge></span>&nbsp;
 						<span class="card-badge"><b-badge>{{t.motorConfig}}</b-badge></span>&nbsp;
