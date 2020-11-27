@@ -10,9 +10,11 @@
                 </b-form-group>
                 <b-form-group label="Nombre">
                     <b-form-input required v-model="name"></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
                 </b-form-group>
                 <b-form-group label="Correo Electrónico">
                     <b-form-input required v-model="email" type="email"></b-form-input>
+                    <b-form-text text-variant="danger">Campo requerido</b-form-text>
                 </b-form-group>
                 <b-form-group label="Rol">
                     <b-form-select v-model="role" :options="roles"></b-form-select>
@@ -34,26 +36,19 @@
             </b-form>
         </div>
 
-        <b-modal ref="confirmationModal" size="lg" :hide-footer="true" title="Confirmación de edición">
-            <h1>
-                ¿Está seguro?
-            </h1>
-
-            <h3>
-                Los datos podrían no recuperarse tras realizar esta acción.
-            </h3>
-
-            <div class="separate">
-                <b-button class="mt-4" variant="secondary btn-lg" @click="cancelConfirmation()">Cancelar</b-button>
-                <b-button class="mt-4" variant="warning btn-lg" @click="confirm()">Confirmar y editar</b-button>
-            </div>
-        </b-modal>
+        <ConfirmationModal
+            mode="edit"
+            ref="modalC"
+            @onConfirm="confirm()"
+            @onCancel="cancelConfirmation()"
+        />
     </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
 import api from '../services/api/api';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default {
     name: "EditUser",
@@ -72,7 +67,8 @@ export default {
         }
     },
     components: {
-        Navbar
+        Navbar,
+        ConfirmationModal
     },
     created: function() {
         api.usersApi.getUser(this.$route.params.id)
@@ -85,13 +81,13 @@ export default {
             this.role = user.role ? user.role : '';
         })
         .catch(err => {
-            console.log(err);
+            this.$bvModal.msgBoxOk(err.message, {centered: true});
         })
     },
     methods: {
         onSubmit: function(evt) {
             evt.preventDefault();
-            this.$refs.confirmationModal.show();
+            this.$refs.modalC.showModal();
         },
 
         confirm: function(){
@@ -100,18 +96,19 @@ export default {
                 if(res === true) {
                     window.history.back();
                 } else if(res.includes('value too large for column')) {
-                    alert('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.');
+                    this.$bvModal.msgBoxOk('Uno de los campos es muy largo, trate de modificarlo para que sea más corto.', {centered: true});
                 } else {
-                    alert("Ocurrió un error." + res);
+                    this.$bvModal.msgBoxOk(`Ocurrió un error. ${res}`, {centered: true});
                 }
             })
             .catch(err => {
-                console.log(err);
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
+                this.cancelConfirmation();
             });
         },
 
         cancelConfirmation: function(){
-            this.$refs.confirmationModal.hide();
+            this.$refs.modalC.hideModal();
         }
     }
 }

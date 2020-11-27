@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<b-navbar type='dark' variant='primary'>
-			<b-navbar-brand href="/home">ecat</b-navbar-brand>
+		<b-navbar type='dark' class="atblue">
+            <div class="logo" v-on:click=toHome()>
+                <b-img :src="at_motors_logo" height="40"></b-img>
+            </div>
 			<b-navbar-nav class='ml-auto'>
 				<template v-for='(section, index) in sections'>
 					<b-nav-item v-if='!section.children' :key="`section-${index}`" :href=section.route>{{section.name}}</b-nav-item>
@@ -22,6 +24,7 @@ export default {
 	name: 'Navbar',
 	data() {
 		return {
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at_motors.png',
 			sections: [
 				{
 					route: '/home',
@@ -44,8 +47,11 @@ export default {
 		}
 	},
 	methods: {
+        toHome() {
+            location.href = "/home";
+        },
 		dropdownClick(str) {
-			if (str == 'logout') {
+			if (str === 'logout') {
 				this.$store.dispatch('logout');
 			} else {
 				location.href = str;
@@ -72,6 +78,10 @@ export default {
 								route: '/adddatamanual',
 								name: 'Agregar una parte manualmente'
 							},
+                            {
+                                route: '/addimages',
+                                name: 'Agregar imágenes'
+                            },
 							{
 								route: '/users',
 								name: 'Manejo de usuarios'
@@ -82,12 +92,15 @@ export default {
 			}
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	}
 }
 </script>
 <style scoped>
+.logo {
+    cursor: pointer;
+}
 .raw {
 	border: 0;
 	margin: 0;
@@ -95,5 +108,9 @@ export default {
 }
 .navbar-nav > li{
 	padding-left: 20px;
+}
+.atblue{
+	color: #1f3564;
+	background-color: #1f3564;
 }
 </style>

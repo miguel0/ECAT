@@ -7,6 +7,7 @@ import SignIn from '../views/SignIn';
 import Home from '../views/Home';
 import RequestPWChange from '../views/RequestPWChange.vue';
 import AddDataFile from '../views/AddDataFile';
+import AddImages from "../views/AddImages";
 import ChangePWLoggedIn from '../views/ChangePWLoggedIn.vue';
 import UserPanel from '../views/UserPanel';
 import AddUser from "../views/AddUser";
@@ -15,6 +16,7 @@ import Vehicle from '../views/Vehicle';
 import TruckSearch from '../views/TruckSearch.vue';
 import Component from '../views/Component';
 import EditPart from '../views/EditPart';
+import EditPartFromComponent from "../views/EditPartFromComponent";
 import EditComponent from '../views/EditComponent';
 import AddDataManual from '../views/AddDataManual';
 import PartSearch from '../views/PartSearch.vue';
@@ -50,6 +52,14 @@ const routes = [
 	{
 		path: '/adddatamanual',
 		component: AddDataManual,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
+		path: '/addimages',
+		component: AddImages,
 		meta: {
 			requiresAuth: true,
 			requiresAdmin: true
@@ -116,6 +126,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/editpartfromcomponent/:cpid/:pid',
+		component: EditPartFromComponent,
+		meta: {
+			requiresAuth: true,
+			requiresAdmin: true
+		}
+	},
+	{
 		path: '/editcomponent/:cid',
 		component: EditComponent,
 		meta: {
@@ -154,37 +172,44 @@ const router = new VueRouter({
 	routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+	
 	const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
 	const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
 
-	if (requiresAuth && !auth.currentUser) {
-		next('/');
-		return;
-	}
-	if (!requiresAuth && !auth.currentUser) {
-		next();
-		return;
-	}
+	if(requiresAuth) {
 
-	api.usersApi.getUser(auth.currentUser.uid)
-	.then(data => {
-		let isAdmin = false;
+		if(auth.currentUser) {
 
-		if (data.role) {
-			isAdmin = data.role === 'A' ? true : false;
+			if(requiresAdmin) {
+				let isAdmin = false;
+				try {
+					let user = await api.usersApi.getUser(auth.currentUser.uid);
+				
+					if(user.role) {
+						isAdmin = user.role === 'A';
+					}
+
+				} catch(err) {
+					alert(err.message);
+					return next(false);
+				}
+
+				//console.log("admin required, admin? ", isAdmin);
+				return next(isAdmin);
+
+			}
+
+			//console.log("only auth required, user exists");
+			return next();
+
 		}
-
-		if (requiresAdmin && !isAdmin) {
-			next(false);
-		} else {
-			next();
-		}
-	})
-	.catch(err => {
-		console.log(err);
-		next(false)
-	});
+		//console.log("auth required, no user");
+		return next(false);
+	}
+	//console.log("no auth required");
+	return next();
+	
 });
 
 export default router;

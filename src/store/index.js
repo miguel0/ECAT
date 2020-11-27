@@ -19,17 +19,17 @@ const store = new Vuex.Store({
 		async login({ dispatch }, form) {
 			// sign user in
 			const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password);
-			// TODO:
-			// Remove this print
-			console.log(await fb.auth.currentUser.getIdToken())
 			// fetch user profile and set in state
 			dispatch('fetchUserProfile', user);
 		},
 		async fetchUserProfile({ commit }, user) {
+			
 			if (!user.uid) {
 				logout(commit);
 			} else {
 				// fetch user profile
+				
+				//console.log("calling db...");
 				await api.usersApi.getUser(user.uid).then(data => {
 					if (!data.id) {
 						logout(commit);
@@ -43,28 +43,27 @@ const store = new Vuex.Store({
 						}
 					}
 				}).catch(err => {
+					//console.log("something wrong? commit: ", commit);
 					logout(commit);
 					console.log(err);
 				});
 			}
 		},
 		async logout({ commit }) {
+			//console.log("mid one?");
 			logout(commit);
 		},
-		async changePW({ dispatch }, form) {
-			fb.auth.sendPasswordResetEmail(form.email).then(function() {
+		async changePW(_, form) {
+			return fb.auth.sendPasswordResetEmail(form.email).then(function() {
 				// Email sent.
-				alert('¡Se ha enviado un correo para cambiar su contraseña!');
-				dispatch('logout');
-			}).catch(function(error) {
-				// An error happened.
-				console.log(error);
+				return '¡Se ha enviado un correo para cambiar su contraseña!'
 			});
 		}
 	}
 });
 
 async function logout(commit) {
+	//console.log("entered lougout");
 	// log user out
 	await fb.auth.signOut();
 
@@ -72,7 +71,9 @@ async function logout(commit) {
 	commit('setUserProfile', {});
 
 	// redirect to login view
+	//console.log("forcing logout: ", router.currentRoute.path);
 	if (router.currentRoute.path != '/') {
+		//console.log("redirecting to login?")
 		router.push('/')
 	}
 }

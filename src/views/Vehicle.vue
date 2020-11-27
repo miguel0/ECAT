@@ -57,7 +57,7 @@ export default {
             this.vehicle = data;
         })
         .catch((err) => {
-            console.log("axios error:", err);
+            this.$bvModal.msgBoxOk(err.message, {centered: true});
         })
     },
     methods: {
@@ -79,6 +79,8 @@ export default {
                 this.currentLocalNo = group.localNo;
                 this.componentsHaveLoaded = true;
                 return true;
+            }).catch(err => {
+                this.$bvModal.msgBoxOk(err.message, {centered: true});
             });
         }
     }

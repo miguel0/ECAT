@@ -2,20 +2,22 @@
 <div>
 	<Navbar />
 	<b-container id='content' class='p-5'>
-		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+		<b-form id="search" @submit="filter">
+			<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Escribe el nombre o número de la parte...'></b-form-input>
+			<b-button class="mb-2" type="submit" variant="primary" style="min-width: 200px;">Buscar</b-button>	
+		</b-form>
 		
 		<div v-if="hasLoaded">
 			<h4>Se encontraron ({{partsFound}}) partes</h4>
 			<div id='search-results'>
 				<b-card
-					v-for='p in filter()'
+					v-for='p in filtered'
 					:key='p.id'
 					class='search-card m-3'
-					v-bind:img-src='p.imageURL'
-					img-top
 					@click='goToPart(p.id)'
 					>
-					<b-card-text>
+                    <b-card-img :src="getImageUrl(p)" :top=true height="256px" width="100%"></b-card-img>
+					<b-card-text class="mt-3">
 						{{p.name}}
 					</b-card-text>
 				</b-card>
@@ -27,6 +29,7 @@
 	<PartModal 
 		ref="modalP"
 		:id_part="selectedPart"
+        :from_component="false"
 	/>
 
 </div>
@@ -47,8 +50,8 @@ export default {
 	},
 	data() {
 		return {
-			placeholderImg: 'https://images.ffx.co.uk/tools/FORPOZI3525S.JPG',
 			allParts: [],
+			filtered: [],
 			partsFound: 0,
 			searchText: '',
 			selectedPart: null,
@@ -56,7 +59,8 @@ export default {
 		}
 	},
 	methods: {
-		filter() {
+		filter(evt) {
+            evt.preventDefault();
 			let parts = [];
 			for(let i = 0; i < this.allParts.length; i++) {
 				const search = this.getSimpleString(this.searchText);
@@ -72,7 +76,7 @@ export default {
 				}
 			}
 			this.partsFound = parts.length;
-			return parts;
+			this.filtered = parts;
 		},
 		getSimpleString(str) {
 			return !str ? '' : str.replaceAll('/', '')
@@ -84,16 +88,23 @@ export default {
 		goToPart(partId) {
 			this.selectedPart = partId;
 			this.$refs.modalP.showModal();
+		},
+		getImageUrl(part) {
+			return part.imageURL ? part.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fpart_ph.png';
 		}
 	},
 	created() {
 		api.partsApi.getAllParts()
 		.then(parts => {
-			for(let i = 0; i < parts.length; i++) {
-				parts[i].imageURL = !parts[i].imageURL ? this.placeholderImg : parts[i].imageURL;
-				this.allParts.push(parts[i]);
-			}
+
+			this.allParts = parts;
+			this.filtered = parts;
+			this.partsFound = parts.length;
 			this.hasLoaded = true;
+		})
+		.catch(err => {
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	}
 }
@@ -106,6 +117,12 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 }
+#search {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 #search-results {
 	display: flex;
 	flex-direction: row;
@@ -113,7 +130,8 @@ export default {
 	justify-content: center;
 }
 .search-card {
+    cursor: pointer;
 	max-width: 30%;
-	min-width: 180px;
+	min-width: 30%;
 }
 </style>

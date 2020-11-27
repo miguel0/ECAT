@@ -5,9 +5,9 @@
 			<b-button id="backBtn" size="sm" variant="secondary" href="javascript:history.back()">Atrás</b-button>
 			<b-row>
 				<b-col>
-					<b-img src="../assets/img/test/component.png" fluid round></b-img>
+					<b-img @mouseover="blur=2" @mouseout="blur=0" id="img" :src='getImageUrl()' fluid round></b-img>
 				</b-col>
-				<b-col>
+				<b-col v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 					<h4><b>{{component.name}}</b></h4>
 					<b-row class="text-secondary">
 						<b-col>{{component.spName}} | {{component.chName}} | {{component.otherName}}</b-col>
@@ -18,9 +18,9 @@
 				</b-col>
 			</b-row>
 			<br>
-			<b-row>
+			<b-row v-bind:style="{ filter: 'blur(' + blur + 'px)' }">
 				<b-col>
-					<PartList :parts='component.parts'/>
+					<PartList :parts='component.parts' :component_id="this.$route.params.cid"/>
 				</b-col>
 			</b-row>
 			
@@ -39,7 +39,8 @@ export default {
 	data() {
 		return {
 			component: null,
-			isAdmin: false
+			isAdmin: false,
+			blur: 0
 		}
 	},
 	components: {
@@ -53,7 +54,7 @@ export default {
 			this.component = component;
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		})
 		
 		api.usersApi.getUser(fb.auth.currentUser.uid)
@@ -63,7 +64,7 @@ export default {
 			}
 		})
 		.catch(err => {
-			console.log(err);
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		});
 	},
 	methods: {
@@ -77,9 +78,12 @@ export default {
 			});
 			return component.parts;
 		},
-
 		editComponent(id) {
 			location.href = '/editcomponent/' + id;
+		},
+		getImageUrl() {
+			return this.component.imageURL ? this.component.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fcomponent_ph.png';
 		}
 	}
 }
@@ -91,5 +95,21 @@ export default {
 }
 #backBtn{
 	margin-top: -4%;
+}
+#img {
+    display: flex;
+    flex-direction: row;
+    transition: transform .2s;
+    transform-origin: top left;
+    z-index: 5;
+    position: relative;
+    max-height: 300px;
+}
+#img:hover {
+	transform: scale(2.5);
+    transform-origin: top left;
+    z-index: 3;
+    border: 4px solid black;
+    border-radius: 5px;
 }
 </style>

@@ -2,18 +2,18 @@
 <div>
 	<Navbar />
 	<b-container id='content' class='p-5'>
-		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Buscar...'></b-form-input>
+		<b-form-input class='mb-3' v-model='searchText' type='search' placeholder='Escribe el nombre, ID o modelo del vehículo...'></b-form-input>
 
 		<div id='filters'>
 			<b-form-group class='mr-2' label='Tipo'>
 				<b-form-radio-group v-model='type' :options='typeOptions'></b-form-radio-group>
 			</b-form-group>
 			
-			<b-form-group class='mr-4' label='Configuración del motor'>
+			<b-form-group class='mr-4' label='Tipo de ejes'>
 				<b-form-select v-model='motorConfig' :options='motorConfigOptions'></b-form-select>
 			</b-form-group>
 
-			<b-form-group class='mr-4' label='Potencia del motor'>
+			<b-form-group class='mr-4' label='Caballos de fuerza'>
 				<b-form-select v-model='motorPower' :options='motorPowerOptions'></b-form-select>
 			</b-form-group>
 
@@ -29,11 +29,10 @@
 					v-for='t in filter()'
 					:key='t.id'
 					class='search-card m-3'
-					v-bind:img-src='t.imageURL'
-					img-top
 					@click='goToVehicle(t.id)'
 					>
-					<b-card-text>
+                    <b-card-img :src="getImageUrl(t)" :top=true height="256px" width="100%"></b-card-img>
+					<b-card-text class="mt-3">
 						<p>{{t.name}}</p>
 						<span class="card-badge"><b-badge>{{t.type}}</b-badge></span>&nbsp;
 						<span class="card-badge"><b-badge>{{t.motorConfig}}</b-badge></span>&nbsp;
@@ -63,7 +62,6 @@ export default {
 	},
 	data() {
 		return {
-			placeholderImg: 'https://www.alyousuf.com/wp-content/uploads/2017/02/news-3.jpg',
 			allTrucks: [],
 			trucksFound: 0,
 			searchText: '',
@@ -134,6 +132,10 @@ export default {
 		},
 		goToVehicle(vehicleId) {
 			window.location.href = `/vehicles/${vehicleId}`;
+		},
+		getImageUrl(vehicle) {
+			return vehicle.imageURL ? vehicle.imageURL :
+				'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/placeholders%2Fvehicle_ph.png';
 		}
 	},
 	computed: {
@@ -146,102 +148,11 @@ export default {
 	created() {
 		api.vehiclesApi.getAllVehicles()
 		.then(vehicles => {
-			for(let i = 0; i < vehicles.length; i++) {
-				vehicles[i].imageURL = !vehicles[i].imageURL ? this.placeholderImg : vehicles[i].imageURL;
-
-				// TODO: remove this once we make sure that type, motorconfig, motorpower, and transmission exist
-				vehicles[i].motorConfig = !vehicles[i].motorConfig ? '' : vehicles[i].motorConfig;
-				this.allTrucks.push(vehicles[i]);
-			}
-
-			// Placeholder data
-			this.allTrucks.push(
-				{
-					id: 'buenas1',
-					name: 'truck 01',
-					spName: 'buenas--1',
-					otherName: '',
-					model: 'tE/st-1',
-					type: 'MT GAS',
-					motorConfig: '6x4',
-					motorPower: 20,
-					transmission: 'ZH',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas2',
-					name: 'truck 02',
-					spName: 'buenas--2',
-					otherName: '',
-					model: 'tE/st-2',
-					type: 'MT GAS',
-					motorConfig: '6x4',
-					motorPower: 200,
-					transmission: 'AL',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas3',
-					name: 'truck 03',
-					spName: 'buenas--3',
-					otherName: '',
-					model: 'tE/st-3',
-					type: 'MC DIESEL',
-					motorConfig: '4x2',
-					motorPower: 15,
-					transmission: 'ZH',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas4',
-					name: 'truck 04',
-					spName: 'buenas--4',
-					otherName: '',
-					model: 'tE/st-4',
-					type: 'MC DIESEL',
-					motorConfig: '6x4',
-					motorPower: 201,
-					transmission: 'HW',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas5',
-					name: 'truck 05',
-					spName: 'buenas--5',
-					otherName: '',
-					model: 'tE/st-5',
-					type: 'MT GAS',
-					motorConfig: '4x2',
-					motorPower: 50,
-					transmission: 'ZH',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas6',
-					name: 'truck 06',
-					spName: 'buenas--6',
-					otherName: '',
-					model: 'tE/st-6',
-					type: 'MT GAS',
-					motorConfig: '6x4',
-					motorPower: 1,
-					transmission: 'AL',
-					imageURL: this.placeholderImg
-				},
-				{
-					id: 'buenas7',
-					name: 'truck 07',
-					spName: 'buenas--7',
-					otherName: '',
-					model: 'tE/st-7',
-					type: 'MC DIESEL',
-					motorConfig: '4x2',
-					motorPower: 90,
-					transmission: 'HW',
-					imageURL: this.placeholderImg
-				}
-			);
+			this.allTrucks = vehicles;
 			this.hasLoaded = true;
+		})
+		.catch(err => {
+			this.$bvModal.msgBoxOk(err.message, {centered: true});
 		})
 	},
 }
@@ -276,6 +187,7 @@ export default {
 	justify-content: center;
 }
 .search-card {
+    cursor: pointer;
 	max-width: 30%;
 	min-width: 180px;
 }

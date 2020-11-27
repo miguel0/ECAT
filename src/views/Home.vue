@@ -11,7 +11,7 @@
 				img-top
 				@click="goToVehicle()">
 					<b-card-img 
-					:src="require('../assets/img/test/vehicle-default.png')">
+					:src="require('../assets/img/truck_search.svg')">
 					</b-card-img>
 
 					<b-card-text>
@@ -28,7 +28,7 @@
 				img-top
 				@click="goToPart()">
 					<b-card-img 
-					:src="require('../assets/img/test/individual-parts-default.png')">
+					:src="require('../assets/img/part_search.svg')">
 					</b-card-img>
 
 					<b-card-text>
