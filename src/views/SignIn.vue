@@ -1,6 +1,6 @@
 <template>
 	<div id="signin">
-		<b-img id="logo" src="../assets/logo_at-motors.png" center></b-img>
+		<b-img id="logo" :src="at_motors_logo" center></b-img>
 
 		<div id="content">
 			<b-form @submit="onSubmit">
@@ -27,6 +27,7 @@ export default {
 	name: "SignIn",
 	data() {
 		return {
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at-motors.png',
 			form: {
 				email: '',
 				password: ''

@@ -1,6 +1,6 @@
 <template>
 	<div id="reqpwchange">
-		<b-img id="logo" src="../assets/logo_at-motors.png" center></b-img>
+		<b-img id="logo" :src="at_motors_logo" center></b-img>
 
 		<div id="content">
 			<p>Ingrese su correo electrónico y se le enviará un enlace para cambiar la contraseña.</p>
@@ -24,6 +24,7 @@ export default {
 	name: "RequestPWChange",
 	data() {
 		return {
+            at_motors_logo: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idh6hnyu8tqh/b/ECAT-OSB/o/assets%2Flogo_at-motors.png',
 			form: {
 				email: ''
 			}
