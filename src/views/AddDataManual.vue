@@ -111,6 +111,7 @@ export default {
                             }
                         })
                         .catch(err => {
+							this.cancelConfirmation();
                             this.$bvModal.msgBoxOk(err.message, {centered: true});
                         });
                 } else {
