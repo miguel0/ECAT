@@ -2,7 +2,7 @@
     <div>
         <b-row>
             <b-col sm="9">
-                <b-form-input :placeholder="searchPlaceHolder" type='search'></b-form-input><br>
+                <b-form-input v-model="searched" :placeholder="searchPlaceHolder" type='search'></b-form-input><br>
             </b-col>
             <b-col sm="3">
                 <b-button @click="addUser()" variant="primary">
@@ -16,7 +16,7 @@
                     <b-list-group-item
                         href="#"
                         @click="viewUser(user.id)"
-                        v-for="(user) of this.users"
+                        v-for="(user) of filter()"
                         :key="`user_id-${user.id}`"
                         ref="ref-users"
                         class="clickable d-flex align-items-center"
@@ -38,7 +38,8 @@ export default {
     props: ['users'],
     data() {
         return {
-            searchPlaceHolder: 'Busca usuarios por nombre...'
+            searchPlaceHolder: 'Busca usuarios por nombre...',
+            searched: ''
         }
     },
     methods: {
@@ -47,6 +48,15 @@ export default {
         },
         addUser: function() {
             location.href = '/adduser/';
+        },
+        filter: function () {
+            let results = [];
+            for (let index = 0; index < this.users.length; index++) {
+                if (this.users[index].name.includes(this.searched)) {
+                    results.push(this.users[index]);
+                }
+            }
+            return results;
         }
     }
 }

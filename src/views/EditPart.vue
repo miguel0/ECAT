@@ -114,7 +114,7 @@ export default {
 				alert('El número de parte y el número de reemplazo no pueden ser el mismo.');
 			} else {
                 if (this.image != null) {
-                    let folder = 'Parts/';
+                    let folder = 'parts/';
                     this.imageURL = await imgHelper.uploadSinglePicture(folder, this.image);
                     if (this.imageURL === '') {
                         alert('Error al subir imagen.');

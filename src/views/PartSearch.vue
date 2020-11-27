@@ -133,6 +133,6 @@ export default {
 .search-card {
     cursor: pointer;
 	max-width: 30%;
-	min-width: 180px;
+	min-width: 30%;
 }
 </style>
